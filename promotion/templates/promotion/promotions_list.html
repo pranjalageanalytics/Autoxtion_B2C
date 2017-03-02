@@ -1,0 +1,469 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css">
+ 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+
+<style>
+.pagination>.active>a {
+    z-index: 0;
+    color: #fff;
+    background-color: #f38619;
+    border-color: #f38619;
+    cursor: default;
+}
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+.image3 {
+    padding-left: 101px;
+    width: 250px;
+    height: 110px;
+    background-image: url(/static/images/image2_pr.png);
+    padding-top: 39px;
+    color: #FFF;
+    font-size: x-large;
+}
+.thumbnail:hover{
+ box-shadow:0px 0px 3px 2px lightgrey;
+}
+#line{
+  margin-bottom: -5px;
+}
+#btn{
+width:180px;
+}
+.panel-body {
+    padding-left: 0px;
+    padding-right: 40px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+}
+
+</style>
+
+
+<script>
+
+
+</script>
+<script type="text/javascript">
+$(document).ready(function(){
+	var numItems = $('.thumbnail').length
+	 //alert(numItems);
+	 if(numItems<=7){
+ 	// alert(""less"");
+ 	 $(".view_all_hide").hide();
+ 	}
+
+	$("#close_m").click(function(){
+		//alert("erjhbgwrukbvajhkefgwJH VHJWR");
+	});
+	
+	$("[id$='btn']").click(function(){
+	   // alert("button is clicked");  
+	    id1=$(this).attr('id');
+	    id2=id1.split('-');
+	    id3=id2[0]+"-promo";
+	    //alert(id3);
+	    val=$("#"+id3).val();
+	   // alert(val);
+	   $("#promo_img").hide();
+	   $("#promotion_id").val(val);
+	   $("#image").attr("src","");
+	$.ajax({
+		url:'/promotion/get_promotion/'+val,
+	    type: 'GET',
+	    //data:{value:val},
+	}).done(function(data){
+		console.log(data);
+		//alert(data);
+		for(var i = 0; i < data.length; i++)
+			{
+		     if (i==0){
+		    	 if(data[i].discount==0){
+		             $("#dis").hide();
+		             $("#pri").show();
+		             
+		            }
+		            else{
+		             $("#pri").hide();
+		             $("#dis").show()
+		             
+		            }
+		              $("#discount").text(data[i].discount);
+		              $("#price").text(data[i].price); 
+		        
+		        $("#hidden12").val(data[i].id);
+		        $("#request_id").prop('href','/customer/new/'+val);
+		 		$("#from_date").text(data[i].from_date);
+		 		$("#to_date").text(data[i].to_date);
+		 		$("#description").text(data[i].description);	
+		 		$("#coupon").text(data[i].coupon_code);
+                                $("#total_amount").text(data[i].total_amount);
+		 		var src1=data[i].image;
+
+		 		if(src1){
+		 			$("#promo_img").show();
+		 		var src2=String(src1).replace('media',',/media');
+		 		console.log(src2);
+		 		var src3=String(src2).split(',');
+		 		console.log("splitted "+src3[1]);
+		 		
+		 		
+		 		$("#image").attr("src",src3[1]);
+				console.log(src);
+		 		}
+		 		 $("#company").text(data[i].company);
+		 		 $("#make_year").text(data[i].makeyear);
+		 		 $("#model_id").text(data[i].model_name);
+		 		 $("#service_type").text(data[i].service_id); 
+		     }
+		    /* else if(i==1)
+		    	 {
+		    	 $("#company").text(data[i].company_name);
+		    	 }
+		     else if(i==2)
+		    	 {
+		    	  $("#make_year").text(data[i].makeyear);
+		    	 }
+		     else if(i==3)
+		    	 {
+		    	 $("#model_id").text(data[i].model_name);
+		    	 }
+		     else{
+		    	 $("#service_type").text(data[i].service_type); 
+		     }*/
+		
+		}
+		//$("#company").attr("class","form-control");
+		//$("#service_type").attr("class","form-control");
+		//$("#model_id").attr("class","form-control");
+		//$("#make_year").attr("class","form-control");
+		//$("#discount").attr("class","form-control");
+		//$("#from_date").attr("class","form-control");
+		//$("#to_date").attr("class","form-control");
+		//$("#description").attr("class","form-control");
+		//$("#coupon").attr("class","form-control");
+	});
+	});
+		
+		});
+</script>
+{% endblock %}
+
+
+
+
+     {%block content%}
+    <div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                 PROMOTION LIST</h4>
+
+        </div>
+     <input type="hidden" id="group" value="{{group.name}}">
+     
+  <div  style="min-height: calc(74vh - 40px);">
+  
+  <!-- Breadcrum -->
+
+         <div class="row">
+
+   <a href="{% url "promotion:server_new" %}" class="btn btn-primary" style="margin-bottom:10px;float:right;margin-right: 18px;" id="add_promotion">Add Promotion</a>
+
+</div>
+   
+    <div class="panel panel-default">
+    <center><h3>Latest Promotions</h3></center>
+    <div class="panel-body">
+  
+	<div class="row">
+	  
+		<ul class="thumbnails">
+		{% if object_list %}
+		 {% for server in object_list reversed %}
+		 {% with a=forloop.counter0 b=8 %}
+                  {% if a < b %}
+		 <div class="col-sm-6 col-md-3">
+            <input type="hidden" value="{{server.id}}" id="{{forloop.counter0}}-promo">
+              <div class="thumbnail" >
+               <div class="image3">
+               	{% if server.discount %}
+               {{server.discount}}%
+               {% else %}
+                {{server.price}}
+                {% endif %}
+               </div><hr id="line">
+                <li style="list-style: none;"><div class="caption">
+                  <center> 
+                  <p><strong>From Date:</strong>{{ server.from_date }}</p>
+                  <p><strong>To Date:</strong> {{ server.to_date }}</p>
+                   <p><strong>Total Amount:</strong> {{ server.total_amount }}</p>
+                </center>
+
+                  <p align="center"><button type="button" class="btn btn-primary btn-sm btn-block" data-toggle="modal" data-target="#myModal" id="{{forloop.counter0}}-btn">View</button></p>
+                </div></li>
+              </div> 
+            </div>
+            {% endif %}
+                  {% endwith %}
+           {% endfor %}
+           {% else %}
+          <div  style="min-height: calc(30vh - 40px);">
+           
+           <center><h3 style="color:#f38619;">No promotions added yet</h3></center>
+           
+           </div>
+           {% endif %}
+      </ul>
+       
+  </div>
+
+ {% if object_list %}
+	
+  	{% if count %}
+ 		<center> <a href="{% url "promotion:server_list_all" %}" align="center" style="text-decoration:none;" ><button type="button" class="btn btn-success btn-sm btn-block " style="width: 16%;" >View All</button></a></center>
+  	{% else%}
+  <br><br>
+  {% endif %}
+  {% else %}
+  <br><br><br><br>
+  {% endif %}  </div>
+  </div>
+  
+  
+     <div >
+     <!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+		    <div class="modal-dialog">
+		    
+		      <!-- Modal content-->
+		      <div class="modal-content">
+		        <div class="modal-header" style="background-color:#f4f6f6;color:#000;"> 
+		          <button type="button" id="close_m" class="close" data-dismiss="modal">&times;</button>
+		           <h4 class="modal-title" >
+		           <div class="col-md-8 col-xs-6 col-sm-6">
+					<div class="form-group"> 
+		             <center><span id="service_type" style="font-size=14px;"></span></center>
+			            
+			        </div>
+			        </div>
+		          </h4>
+		        </div>
+		      
+		        <div class="modal-body">
+		        <div class="row">
+		          <div class="col-md-4 col-xs-6 col-sm-6">
+					<div class="form-group"> 
+		            <b>COMPANY:</b>
+		              <label id="company" style="font-weight:normal;"></label>
+		              
+		            </div>
+		           </div>
+		          <div class="col-md-4 col-xs-6 col-sm-6">
+					<div class="form-group"> 
+		             <b>MODEL:</b>
+		              <label id="model_id" style="font-weight:normal;"></label>
+		             
+		            </div>
+		          </div>
+		          <div class="col-md-4 col-xs-6 col-sm-6">
+					<div class="form-group"> 
+		             <b>MAKE YEAR:</b>
+		              <label id="make_year" style="font-weight:normal;"></label>
+		           
+		            </div>
+		          </div> 
+		          </div> 
+		          <div class="row"> 
+            <div class="col-md-6 col-xs-6 col-sm-6">
+     <div class="form-group" id= "dis">    
+               <b>DISCOUNT:</b>
+                <label id="discount" style="font-weight:normal;"></label>%
+              
+              </div>
+             
+            
+     <div class="form-group" id="pri">    
+               <b>PRICE:</b>
+                <label id="price" style="font-weight:normal;"></label>
+              
+              </div>
+             </div>
+		           <div class="col-md-6 col-xs-6 col-sm-6">
+					<div class="form-group">
+		             <b>COUPON CODE:</b>
+		              <label id="coupon" style="font-weight:normal;color:#f38618"></label>
+		           
+		            </div>
+		           </div>
+		          </div>
+		          <div class="row"> 
+		          <div class="col-md-6 col-xs-12 col-sm-12">
+					<div class="form-group">
+		            <b>FROM DATE:</b>
+		            
+		             <label id="from_date" style="font-weight:normal;"></label>
+		         
+		            </div>
+		           </div>
+		           <div class="col-md-6 col-xs-12 col-sm-12">
+					<div class="form-group">
+					 <b> TO DATE:</b>
+					  <label id="to_date" style="font-weight:normal;"></label>
+					
+					</div>
+					</div>
+		          </div>
+		          <div class="row">
+             <div class="col-md-4 col-xs-12 col-sm-12">
+              <div class="form-group">
+      <b> Total amount:</b>
+       <label id="total_amount" style="font-weight:normal;"></label>
+     
+     </div>
+             </div>
+            </div>
+		         <div class="row"> 
+		          <div class="col-md-12 col-xs-12 col-sm-12">
+					<div class="form-group">
+		             <b>Description:</b>
+		            <label id="description" style="font-weight:normal;"></label>
+		          
+		           </div></div>
+		         </div>
+		         
+		         
+		         <div class="row" id="promo_img"> 
+		          <div class="col-md-12 col-xs-12 col-sm-12">
+					<div class="form-group">
+		             
+		            <img id="image" src="" style="font-weight:normal; height:40%; width:100%;"></img>
+		          
+		           </div></div>
+		         </div>
+		         
+		         
+		        </div>
+		        
+		        <div class="modal-footer" style="background-color:#39484A">
+		        
+		        <input type="hidden" name="promo_id" id="hidden12">
+		          <a id="request_id" href=" "><button type="submit" class="btn btn-success" >Request</button></a>
+		          
+		          <button type="button" class="btn btn-primary " id="close_m"  data-dismiss="modal">Close</button>
+		         
+		        </div>
+		      </div>
+		      
+		    </div>
+		  </div>
+      </div>
+ <!--  <div id="pageContentHeader" class="row">
+  <h1 class="col-xs-13" style="margin-left: 18px;margin-bottom:-35px; font-size:18px;">Promotions</h1>
+</div>
+<div class="row">
+
+   <a href="{% url "promotion:server_new" %}" class="btn btn-primary" style="margin-bottom:10px;float:right;margin-right: 18px;" id="add_promotion">Add Promotion</a>
+
+</div>
+<hr class="separator-line">
+   
+    <div class="content-wrapper">
+    <section class="content-header" id="addContent">
+    <table id="promotion" class="display no-wrap responsive" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="border-bottom: none;">
+    <thead>
+          	<tr style="background-color:#39484a;color:white;font-size:14px">
+          	    <th>Service Type</th>
+          		<th>Model</th>
+          		<th>Make Year</th>
+          		<th>Coupon Code</th>
+          		<th id="desc">Description</th>
+          		<th id="act">Action</th>	
+          	</tr>
+          	</thead>
+    <tbody>
+          	{% for server in object_list %}<tr style="font-size:13px">
+          		<td ><a href="{% url "promotion:server_edit" server.id %}" class="link_n">{{ server.Service_id }}</a></td>
+          		<td>{{ server.model_id }}</td>
+          		<td>{{ server.make_year }}</td>
+          		<td>{{server.coupon_code}}</td>
+          		<td class="desc">{{ server.description }}</td>
+          		<td class="act_del"><a href="{% url "promotion:server_delete" server.id %}" data-toggle="tooltip" title="Delete Promotion"><button  class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;&nbsp;Delete</button</a></td>
+          		</tr>
+          	{% endfor %}
+          	</tbody>
+    </table>
+    
+          
+        </section>
+      </div>
+      </div>-->
+
+<div class="modal fade" id="memberModal" tabindex="-1" role="dialog" aria-labelledby="memberModalLabel" aria-hidden="true" style="margin-top:6%;margin-bottom:1%;margin-left:5%;" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+     
+      <div class="modal-body">
+        <!-- <p>However the account provided is not known.<BR>
+        If you just got invited to the group, please wait for a day to have the database synchronized.</p>
+
+        <p>You will now be shown the Demo site.</p> -->
+       <!--  <h2  style="color:#fff; text-align:center; font-weight:lighter;">Welcome to the Auto Xtion Portal!</h2> -->
+
+ <center> <video width="700" height="400" autoplay controls loop>
+   <source src="{% static 'video/AXN2 PRM VER02 121216 HB v1.mp4' %}" type="video/mp4">
+  <source src="{% static 'video/AXN2 PRM VER02 121216 HB v1.ogg' %}" type="video/ogg">
+  Your browser does not support the video tag.
+</video></center>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="#memberModal-close"  data-target="#memberModal" data-toggle="modal" data-backdrop="static" data-keyboard="false">Close</button><!-- data-dismiss="modal" -->
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+<script type="text/javascript">
+$(document).ready(function() {
+ 
+ 
+ $('#memberModal').on('hide.bs.modal', function(e) {    
+        var $if = $(e.delegateTarget).find('video');
+        var src = $if.attr("src");
+        $if.attr("src", '/empty.html');
+        $if.attr("src", src);
+    });
+    
+ 
+    if(localStorage.getItem('popState') != 'shown'){
+     $('#memberModal').modal('show');
+        / $("#memberModal").delay(2000).fadeIn(); /
+        localStorage.setItem('popState','shown')
+        
+    }else{
+     
+     disableAutoplay = localStorage.getItem('disableAP');
+     $('video')[0].autoplay=false
+     var $if = $(e.delegateTarget).find('video');
+        var src = $if.attr("src");
+ 
+    }
+    
+    
+});
+</script>
+
+
+
+
+
+          {% endblock%}
+          

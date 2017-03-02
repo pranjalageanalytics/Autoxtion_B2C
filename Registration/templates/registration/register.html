@@ -1,0 +1,443 @@
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+{% block head %}
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  
+  <script src="{% static 'js/validation/registrationvalid1.js' %}"></script>
+  <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+  <script src="{% static 'js/jquery.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/application.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/tooltip.js' %}"></script>
+   <script type="text/javascript">
+            //<![CDATA[
+            Stripe.publishableKey = '{{ publishable }}';
+            //]]>
+    </script>
+<script>
+$(document).ready(function(){
+	     $('#pass1').tooltip();
+	    
+	    // document.getElementById('landline_number').addEventListener('input', function (e) {
+	         
+	      //   e.target.value = e.target.value.replace(/[^\dA-Z]/g, '').replace(/(.{4})/g, '$1 ').trim();
+	        // });
+	
+	    
+		 var pass11 =document.getElementById('pass1');
+		 var pass22=document.getElementById('pass2');
+		 pass11.onpaste = function(e) {
+		   e.preventDefault();
+		 }
+		 
+		 pass22.onpaste = function(e) {
+			   e.preventDefault();
+			 }
+		 
+	$('#credit_card_number').attr('class','form-control');
+	$('#credit_card_number').attr('placeholder','Card Number');
+	
+	$('#cvv').attr('class','form-control');
+	$('#cvv').attr('placeholder','Security Code');
+	
+	
+	$('#id_website').attr('class','form-control');
+	$('#expiry_month').attr('class','form-control');
+	$("#expiry_month").prepend("<option selected>Month</option>");
+	
+	$('#expiry_year').attr('class','form-control');
+	$("#expiry_year").prepend("<option selected>Year</option>");
+    // Add refresh button after field (this can be done in the template as well)
+   //alert("page loaded");
+    // Click-handler for the refresh-link
+    $("#id_captcha_1").addClass("form-control col-sm-3");
+    $('#captcha-refresh').click(function(){
+     //alert("refresh");
+        var $form = $(this).parents('form');
+        var url = location.protocol + "//" + window.location.hostname + ":"
+                  + location.port + "/captcha/refresh/";
+
+        // Make the AJAX-call
+        $.getJSON(url, {}, function(json) {
+            $form.find('input[name="captcha_0"]').val(json.key);
+            $form.find('img.captcha').attr('src', json.image_url);
+        });
+
+        return false;
+  
+});
+});
+</script>
+
+   
+ 
+   
+    
+    <style>
+   
+.continue:hover{
+	color: #f38619;
+background-color: #fff;
+border-color: #f38619;
+}
+
+.continue{
+	
+	background-color:#f38619;
+	box-border:#f38619;
+	color:#fff;
+}
+a:hover{
+
+}
+
+
+</style>
+<style>
+    label{
+    padding-left:5px;
+    }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container-fluid" style="background-color:#f4f6f6;margin-top:5px;">
+<div class="container register">
+
+<center><h1>Register to your Auto Xtion account</h1></center>
+  <p class="lead text-center">With this account you get access to all Auto Xtion services.</p>
+<center><div class="data_Subscription" ><font color="#f38619;"size:"50"><label data-toggle="modal"data-target="#myModal"><u><span style="cursor:pointer">Auto Xtion Subscription plan</span></u></label></font></div></center> 
+            <hr class="separator-line"style="border-top: 1px solid #c3c5c5;">
+            
+            {% if exist %}
+   <center> <h5 class="alert alert-danger" style="width:30%">{{exist}}</h5></center>
+   {% endif %}
+        
+  <div class="panel-group"> 
+     <form id="user_form" method="post" name="form"action=""> {% csrf_token %}
+        <div class="panel panel-default">
+           <div class="panel-heading" style="background-color:#39484a;color:#fff;padding: 15px 15px;size:15px;">
+             <i class="glyphicon glyphicon-user color"></i>&nbsp; Registration 
+           </div>
+          <div class="panel-body">  
+              <div class="row">
+			     <div class="col-md-4 col-xs-6 col-sm-6">
+	     		     <div class="form-group">
+	     		         <label for="fname">First Name*</label>
+	                          {{user_form.first_name}}
+			                  <div id="error1" style="color:red;"></div>
+                       </div>
+                   </div>
+			       <div class="col-md-4 col-xs-6 col-sm-6">
+			           <div class="form-group">
+			               <label for="lname">Last Name*</label>
+			                  {{user_form.last_name}}			      
+			                   <div id="error2" style="color:red;"></div>
+			            </div>
+			        </div>            
+			          <div class="col-md-4 col-xs-6 col-sm-6">
+			              <div class="form-group">
+			                 <label for="email">Email Id*</label>
+			                   {{user_form.email}}
+			                    <div id="error4" style="color:red;"></div>
+			              </div>
+                       </div>
+                   </div>
+                   <div class="row">
+                       <div class="col-md-4 col-xs-6 col-sm-6">
+                          <div class="form-group">
+                              <label for="password">Password*</label>
+                                {{user_form.password}}
+                                 <div id="error5" style="color:red;"></div>
+		                   </div>
+		               </div>
+		               <div class="col-md-4 col-xs-6 col-sm-6">
+		                  <div class="form-group">
+		                     <label for="confirm">Confirm Password*</label>
+		                           {{user_form.confirm_pass}}		       
+		                           <div id="error6" style="color:red;"></div>
+		                   </div>
+		               </div>			   
+			          <div class="col-md-4 col-xs-6 col-sm-6">
+			             <div class="form-group">
+			                <label for="shopname">Shop Name*</label>
+			                 {{profile_form.shop_name}}			     
+			                  <div id="error7" style="color:red;"></div>
+			             </div>
+			           </div>
+			    </div>
+			     <div class="row">
+                   <div class="col-md-4 col-xs-6 col-sm-6">
+			         <div class="form-group">
+			           <label for="shopadd">Shop Address*</label>
+			             {{profile_form.shop_address}}			     
+			              <div id="error8" style="color:red;"></div>
+			          </div>
+                  </div>
+                  <div class="col-md-4 col-xs-6 col-sm-6">
+			          <div class="form-group">
+			             <label for="website">Website Name</label>
+			                {{profile_form.website}}
+			                 <div id="error12" style="color:red;"></div>			      
+			           </div>
+                   </div>           
+		           <div class="col-md-4 col-xs-6 col-sm-6">
+		               <div class="form-group">
+		                  <label for="abn">ABN*</label>
+		                      {{profile_form.abn}}		       
+		                      <div id="error9" style="color:red;"></div>
+		                </div>
+		            </div>
+		          </div>
+		          <div class="row">		     		          
+		             <div class="col-md-4 col-xs-6 col-sm-6">
+		               <div class="form-group">
+		                 <label for="city">State*</label>
+		                    {{profile_form.city}}		       
+		                     <div id="err" style="color:red;"></div>
+		               </div>
+		            </div>
+		            <div class="col-md-4 col-xs-6 col-sm-6">
+		               <div class="form-group">
+		                   <label for="country">Country*</label>
+		                      {{profile_form.country}}		       
+		                       <div id="err1" style="color:red;"></div>
+		                </div>
+		             </div>
+                  </div>
+                  <div class="row">
+		            <div class="col-md-2 col-xs-2 col-sm-2">
+		                <div class="form-group">
+		                <label for="area_code">AreaCode*</label>
+		                    {{profile_form.area_code}}
+		                   <div id="error001" style="color:#E34234;"></div>
+		                 </div>
+		              </div>
+		               <div class="col-md-3 col-xs-4 col-sm-4">
+					     <div class="form-group">
+					      <label for="phone">Phone Number*</label>
+					       {{profile_form.phone_no}}
+					         
+					         <div id="error3" style="color:red;"></div>
+					       </div>
+					     </div>
+			        </div>
+			           <div class="row">
+			              <div class="col-md-4 col-xs-6 col-sm-6">
+			                <div class="form-group">
+			                <label for="captcha">Captcha*</label>
+			                    {{profile_form.captcha}}
+			                    <span class="glyphicon glyphicon-refresh " id="captcha-refresh" style="cursor:pointer;"></span>
+			                    <div class="errors" style="color:red;"></div>
+			                 </div>
+			              </div>
+			          </div>
+       </div>
+	</div>		
+	
+	<div class="panel panel-default">
+      <div class="panel-heading" style="background-color:#39484a;color:#fff;padding: 15px 15px;size:15px;">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse2">
+          <span class="glyphicon glyphicon-usd"></span>Payment</a>
+        </h4>
+      </div>
+      
+       <div class="panel-body">
+           <div class="container">			 
+             <input type="hidden" name="last_4_digits" id="last_4_digits" value="{{ form.last_4_digits.value }}">
+                <input type="hidden" name="stripe_token" id="stripe_token" value="{{ form.stripe_token.value }}">
+				 <div id="credit-card"{% if user_form.last_4_digits.value %} style="display: none"{% endif %}></div>
+				  <div id="credit-card-errors" style="display:none;color:red;">
+                <div class="alert-message block-message error" id="stripe-error-message"></div>
+              </div>
+                     <div class="row">        
+                     <div class="col-md-4 col-xs-6 col-sm-6">
+                         <label  for="credit_card_number">Card Number*:</label>
+                         <input type="text" name="f1-card" placeholder="Card number..." class="f1-facebook form-control" id="credit_card_number">
+                     </div>
+                     <div class="col-md-6 col-xs-4 ">
+                       <label for="credit_card_number">Cards Accepted</label>
+                        <img src="{% static 'images/card.png' %}">
+                       </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                     <div class="col-md-3 col-xs-3 col-sm-3">
+                         <label  for="cvv">Security Code (CVV) &nbsp; <strong><a href="https://www.cvvnumber.com/cvv.html" style="color: #f35b3f;font-size: 12px;" target="_blank">What is CVV?</a></strong></label>
+                         <input type="text" name="f1-twitter" placeholder="CVV..." class="f1-twitter form-control" id="cvv">
+                          
+                     </div>
+                     </div>
+                     <br>
+                     <div class="row">
+                       
+                           <div class="col-md-3 col-xs-3 col-sm-3">
+                            <label  for="f1-google-plus">Expiry date</label>
+                            <div class="row">
+                            <div class="col-md-6 col-xs-4 col-sm-4">
+                            <select class="small f1-google-plus" id="expiry_month"> {% for month in months %}   <option value="{{ month }}"{% if soon.month == month %} selected{% endif %}>{{ month }}</option> {% endfor %} </select>
+                            </div>
+                            <div class="col-md-6 col-xs-4 col-sm-4">
+                            <select class="small f1-google-plus" id="expiry_year">{% for year in years %} <option value="{{ year }}"{% if soon.year == year %} selected{% endif %}>{{ year }}</option>{% endfor %} </select>
+                      		</div>
+                      </div>
+                       </div>
+                       </div>
+                                <div class="form-group">
+                                 <span class="note"> Your credit card details will be sent directly to our payment processor </span>
+                                 </div>
+				    <div class="row">
+                       <div class=" col-xs-12 col-sm-6">
+                           <div class="form-group">
+                               <p><input id="field_terms" type="checkbox"  name="terms">             
+                                 <label for="field_terms">I accept the <a href="{% static 'pdf/Auto Xtion Membership Agreement- Original.pdf' %}" target="_blank"><font color=#f38619;>Terms and Conditions</font></a></label></p>
+                                  <div id="errors_term" style="color:red;"></div>
+                            </div>
+                         </div>           
+                      </div>         
+			          <div class="row">
+			              <div class="col-md-6 col-xs-6 col-sm-6">
+			                 <div class="form-group">&nbsp;&nbsp;&nbsp;      
+			                   <button type="9" class="btn continue" id="submit_frm" >Register</button>
+			                </div>               
+			              </div>
+			           </div>
+                 
+            </div>         
+            <hr class="separator-line"style="border-top: 1px solid #c3c5c5;">
+      </div>
+      </div>    
+    </form>  
+  </div>     
+ </div>                        
+		                      <center><div class="login">
+                                Click here to
+                              <a href="/registration/login/"> <font color="#f38619;"> Login </font></a></div></center> <br>
+</div>
+</div>  
+   <!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			 <center><h4 class="modal-title"> Subscription Plan</h4></center>
+			</div>
+			<div class="modal-body">
+			   <li class="list-group-item">
+				<h4 style="
+					color: #f59b23;
+					font-weight: 300;
+					/* padding: 20px; */
+					/* margin: 20px; */
+				">Workshop Management System Integrated With Accounting   </h4>
+
+									  <medium>
+							  
+							</medium><ul style="
+					display: block;
+					margin-left: auto;
+					margin-right: auto;
+					border-top: 1px solid #efefef;
+					border-bottom: 1px solid #efefef;
+					margin: 15px 0 30px;
+					padding: 15px 0;
+				">
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					margin-left: 40px;
+					padding: 5px;
+				"> NATIONWIDE BRAND NAME </li>
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					margin-left: 40px;
+					padding: 5px;
+				"> COMMUNICATION PLATFORM between Members & Customers 
+				 <ul>
+				<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Dashboard</li>
+							<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Lead Generation</li>
+				<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Customer View</li>
+							<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Unlimited Promotions</li>
+				 <li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Manage Service Request</li>
+				 <li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Manage Appointments</li>
+						</ul>
+
+				</li>
+							
+				  
+				<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					padding: 5px;
+					margin-left: 40px;
+				color:gray;
+				"> AUTOXTION ON MOBILE - Coming Soon !! </li>
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					padding: 5px;
+					margin-left: 40px;
+				color:gray;
+				"> E-COMMERCE PLATFORM - Future Release !! </li>
+				  </ul>
+				</li>
+						  <li class="list-group-item"><h4 style="
+					color: #f59b23;
+					font-weight: 300;
+					/* padding: 20px; */
+					/* margin: 20px; */
+				">Monthly Service Fee - AUD $50.00</h4>
+
+									  <medium>
+							  <span class="text-gold" style="
+					font-weight: 400;
+					color: #39484a;
+					/* margin-top: 20px; */
+				"></span>
+							     <p>Note : First one months there is no Monthly service fee payable. Within the 1 months , you will have access to load customer information and familiarise yourself with the different features of the platform.</p></medium></li>
+
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal" style= "background-color: #f38619;">Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	
+	 
+
+{%endblock%}
+

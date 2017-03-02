@@ -1,0 +1,108 @@
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Autoxtion</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height:auto;}
+    
+   
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: auto) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+    
+  </style>
+</head>
+<body>
+
+   <nav class="upper-nav data"style="background-color:#fff;box-shadow: 1px 2px 5px #888888;">
+  <div class="container-fluid">
+    <div class=" row ">
+    
+      <div class="col-md-4"></div>
+      
+      <div class="col-md-3"><center><img alt="" src="{% static 'images/logo_new.png' %}"></center></div>
+    </div>
+    
+  </div>
+  </nav>
+   
+<div class=" text-center" style="background-color:#f4f6f6;margin-top:2px;">
+  <div class="row container" >
+    <div class="col-md-2"></div>
+    
+    <div class=" col-md-9 text-left container" style="font-family:calibri;font-size:15px; ">
+      <h2><strong>SUCCESSFUL REGISTRATION OF MEMBERS</strong></h2>
+      <p><strong>Hi Sachin </strong></p>
+      
+      <p>CONGRATULATIONS, YOU HAVE SUCCESSFULLY REGISTERED TO BECOME A MEMBER OF  AUSTRALIA’S FASTEST GROWING MEMBER DRIVEN ORGANISATION IN THE AUTOMOTIVE CARE/ REPAIR INDUSTRY.</p>
+      <p>YOU HAVE TAKEN THE FIRST STEPS TOWARDS PLACING YOUR BUSINESS ON AUTO – PILOT, MAKING THE MARKETING OF YOUR SERVICES TOTALLY EFFORTLESS BY GREATER CUSTOMER INTERACTION and SATISFACTION TO FOLLOW.</p>
+      <p>WE WELCOME YOU ABOARD AND WILL SEND YOU THE “ MEMBERSHIP PACKAGE”, WHICH WILL INCLUDE THE FOLLOWING :</p>
+      <p>i)	YOUR ACCREDITED MEMBERSHIP BANNER– to be displayed in your workshop.</p>
+      <p> ii)	YOUR USER NAME AND PASSWORD WILL GIVE YOU ACCESS TO OUR PLATFORM 24/7 AND ITS MANY DIFFERENT FEATURES WILL MAKE BUSINESS ENJOYABLE AND FUN- LET ME ASSURE YOU THAT IT IS VERY EASY TO OPERATE, SO DO NOT BE OVERWHELMED.</p>
+      <p>iii)	OUR 24 HOUR CUSTOMER SUPPORT SERVICE TO ENSURE THAT YOU DERIVE THE MAXIMUM OUT OF THIS PLATFORM.</p>
+      <p>ONCE AGAIN, WE WELCOME YOU ABOARD AND LOOK FORWARD TO A LONG LASTING PARTNERSHIP TO HELP YOU REALISETHE VISIONS THAT YOU HAD WHEN STARTING YOUR BUSINESS.</p>     
+      <p>MANAGEMENT TEAM</p> 
+      <p>AUTOXTION</p>
+      </div>
+    </div>
+    
+    
+    
+    <hr class="separator-line">
+    <center><div class="login">
+        Click here to Login!
+    <a href="http://192.168.1.80:8000/registration/login/"style="color:#f38619;"> Login </a></div></center>
+</div>
+
+<footer>
+	<div class="foot"style="background-color:#39484A; color: white; padding: 0px;">
+			<div class="row">
+			  <div class=" col-md-10">
+				 <div class="row">
+				   <div class=" col-md-8 ">
+					 <div class="row">
+					 <div class="col-md-1"></div>
+						<div class=" col-md-4 ">
+							<h3>CONTACT US</h3> 
+							<hr class="separator-line">
+							<p><strong>Australia</strong></p>
+							<p>Address: 7 Seville St, North Parramatta NSW 2151</p>
+							<p class="phone"><i class="fa fa-phone"></i>Phone:(02) 9683 4469</p>
+							<p>Email: info@autoxtion.com.au</p>
+					   </div>
+					</div>
+				 </div>
+			</div>
+		  </div>
+		  <div class=" col-md-2 logo"style="padding-top:40px;"><img alt="" src="{% static 'images/logo_new.png' %}">			
+						
+		  </div>
+		</div>
+  </div>
+ </footer>
+
+</body>
+</html>
+
+
+
+ 

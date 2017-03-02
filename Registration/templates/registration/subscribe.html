@@ -1,0 +1,387 @@
+
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<script src="{% static 'js/validation/login.js' %}"></script>
+<style>
+.login:hover{
+	color: #f38619;
+background-color: #fff;
+border-color: #f38619;
+}
+
+.login{
+	
+	background-color:#f38619;
+	box-border:#f38619;
+	color:#fff;
+	
+}
+a:hover{
+
+}
+
+.load {
+        display:none;      
+        width:430px;
+        position:absolute ;
+        top:30px;
+        left:0;
+            
+        
+        z-index: 1000;
+    }
+</style>
+
+<script>
+$(document).ready(function(){
+	
+
+    $("#customer").change(function(){
+		//alert("change");
+
+      var value=$("#customer option:selected").val();
+//$('#login_Box_Div').toggle();
+
+//alert(value);
+if (value==value) {
+	 //alert("if");
+	 
+	  $("signup").hide();
+	  $("#field").show();
+	  
+	 
+	 
+}
+else{
+	 //alert("else");
+	 $("signup").show();
+	 $("#field").hide();
+	
+}	  
+	  
+	 
+	});
+   
+   
+
+        $("#member").change(function(){
+    		//alert("change");
+
+    var valu=$("#member option:selected").val();
+    //$('#login_Box_Div').toggle();
+
+    //alert(valu);
+    if (valu==valu) {
+    	 //alert("if");
+    	 
+    	
+    	  $("#field").hide();
+    	  
+    	 
+    	 
+    }
+    else{
+    	 //alert("else");
+    	 
+    	 $("#field").show();
+    	
+    }	  
+    	  
+    	 
+    	});  
+		 var pass11 =document.getElementById('id_password');
+		 id_password.onpaste = function(e) {
+		   e.preventDefault();
+		 }
+		 
+		 
+});
+		 </script>
+		 <script>
+		 
+		 
+		 $(document).ready(function(){
+				
+				$("#btn").click(function(){
+					
+					$("#id_username").attr("class","form-control");
+					$("#id_password").attr("class","form-control");
+					
+					
+				});
+		 });
+		 </script>
+{% endblock %}
+{% block content %}
+<div class="body" onload="myFunction()"style="margin:0;">
+ <div id="loader"></div>
+
+ <div style="display:none;" id="myDiv" class="animate-bottom"></div>		
+   <div class="container-fluid" style="background-color:#f4f6f6;margin-top:5px;min-height: calc(72vh - 40px);">
+    <div class="main_container">
+   
+     
+       <div class="page-content login-page user-actions">
+         <div class="container new_container">
+         
+        
+            <center><h1>Log in to your Auto Xtion account</h1></center>
+            <p class="lead text-center">With the Auto Xtion account you get access to all Auto Xtion services.</p>
+             <form id="login" method="post"action="">{% csrf_token  %}
+             
+            <div class="row">
+              <div class="col-md-2"></div>
+                <div class="col-sm-3 col-md-8 login-form">
+                 <hr class="separator-line" style="border-top: 1px solid #c3c5c5;">
+            </div></div>            {% if context1 %}
+             <center> <h5 class="alert alert-danger" style="width:30%">{{context1}}</h5></center>
+             {% endif %}
+            <div class="row">
+            <div class="col-md-4"></div>
+                <div class="col-sm-6 col-md-3 login-form">
+                  
+                    <div id="loading2" class="load"><img src="/static/images/l.png" alt="" />Loading!</div>
+                          
+                        <div class="label-custom" style="width:auto;
+                                        
+									    height: auto;
+									    color:white;
+									    padding: 0px 12pt;
+									    text-transform: uppercase;
+									    font-size: 12px;
+									    background-color: #39484a;
+									    border: 1px solid #ccc;
+									    border-radius: 4px;
+									    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);"><h5>Enter Email and password</h5></i></div>
+                      
+                        <div class="form-group"><label class="control-label test" style="padding-top:10px;" for="id_username">Username*</label><input class="form-control " id="id_username" maxlength="254" name="email" placeholder="Username"  title="" /><div id="error1" style="color:red"></div></div>
+                        <div class="form-group"><label class="control-label test" for="id_password">Password*</label><input class="form-control" id="id_password" name="password" placeholder="Password"  title="" type="password" /><div id="error2" style="color:red"></div></div>
+                        <div class="forgot abc"style="padding-bottom:5px;">
+                            <a href="{% url 'password_reset:password_reset_recover' %}" class="forgot-password"><font  color="#f38619;"> Forgot your password?</font></a>
+                        </div>
+                     {% extends "base1.html" %}
+{% load static from staticfiles %}
+{% block head %}
+
+<meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   <script src="https://js.stripe.com/v1/" type="text/javascript"></script>
+   <script src="{% static 'js/jquery.js' %}" type="text/javascript"></script>
+  <script src="{% static 'js/application.js' %}" type="text/javascript"></script>
+  <script type="text/javascript">
+        //<![CDATA[
+        Stripe.publishableKey = '{{ publishable }}';
+        //]]>
+    </script>
+    <style>
+    #submit_frm{
+    color:#fff;
+    background-color:#f38619;
+    border-color:#f38619;
+    }
+     #submit_frm:hover {
+     color:#f38619;
+    background-color:#fff;
+    border-color:#f38619;
+     }
+     
+     .load {
+        display:none;
+        opacity:0.2;     
+        width: 598px;
+        height: 389px;
+        position:absolute ;
+        top:0;
+        left:0;
+       
+        z-index: 1000;
+    }
+     
+    </style>
+  <script>
+$(document).ready(function(){
+	$('#credit_card_number').attr('class','form-control');
+	$('#credit_card_number').attr('placeholder','Card Number');
+	
+	$('#cvv').attr('class','form-control');
+	$('#cvv').attr('placeholder','Security Code');
+	
+	
+	$('#id_website').attr('class','form-control');
+	$('#expiry_month').attr('class','form-control');
+	$("#expiry_month").prepend("<option selected>Month</option>");
+	
+	$('#expiry_year').attr('class','form-control');
+	$("#expiry_year").prepend("<option selected>Year</option>");
+   return false;
+  
+});
+
+</script>
+  {% endblock %}
+  {% block content %}
+ 
+  <!-- Modal -->
+  
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+       <form id="user_form" method="post" name="form" action="/registration/newpayment/"> {% csrf_token %}
+        <div id="loading2" class="load">
+        <center>
+        <img src= "{% static 'images/loader_gif.gif' %}" alt="" />
+        <p ><h1 style="color:#f38619;">Please wait........</h1></p>
+        </center>
+        </div>
+        <div class="modal-header">
+         
+          <h4 class="modal-title">Payment</h4>
+        </div>
+        <div class="modal-body">
+        
+          <div class="container register" style="width:100%;"> 
+    <span style="font-weight: 700; color: #f38619;">{{p}}</span>
+   
+     <div class="row">
+          <div class="col-md-12 col-xs-12 col-sm-6">
+            <div class="form-group">
+            <input type="hidden" name="last_4_digits" id="last_4_digits" value="{{ form.last_4_digits.value }}">
+            <input type="hidden" name="stripe_token" id="stripe_token" value="{{ form.stripe_token.value }}">
+            <noscript>
+              &lt;p&gt;
+                This form requires Javascript to use
+              &lt;/p&gt;
+            </noscript>
+            <div id="credit-card"{% if user_form.last_4_digits.value %} style="display: none"{% endif %}>
+              <div id="credit-card-errors" style="display:none;color:#E34234;">
+                <div class="alert-message block-message error" id="stripe-error-message"></div>
+              </div>
+              <!--  these fields have no names, so they are not submitted to django -->
+           <div class="clearfix">
+
+               <div class="row">
+               
+                     <div class="col-md-6 col-xs-6 col-sm-6">
+				        <div class="form-group">
+				        <strong>Credit card number</strong>
+                          <input class="field" id="credit_card_number" type="text">
+                        </div></div>
+				     <div class="col-md-6 col-xs-4 ">
+                       <label for="credit_card_number">Cards Accepted</label>
+                        <img src="{% static 'images/card.png' %}">
+                       </div>
+                </div>             
+              </div>
+              <div class="clearfix">
+            
+                <label for="cvv">Security code (CVV)</label>
+                 <div class="row">
+                <div class="input">
+                 <div class="col-md-6 col-xs-4 col-sm-6">
+                  <input class="small" id="cvv" type="text">
+                </div>
+                  <div class="col-md-6 col-xs-4 col-sm-6" style="padding-top:5px;">
+                  <strong><a href="https://www.cvvnumber.com/cvv.html" style="color:#f38619;" target="_blank">What is CVV?</a></strong>
+                    </div>
+
+                </div>
+              </div>
+              </div>
+              <div class="clearfix">
+              
+                <label for="expiry_date">Expiry date</label>
+                 <div class="row">
+                <div class="input">
+                  <div class="col-md-4 col-xs-6 col-sm-6">
+                  <select class="small" id="expiry_month">
+                  {% for month in months %}
+                    <option value="{{ month }}"{% if soon.month == month %} selected{% endif %}>{{ month }}</option>
+                  {% endfor %}
+                  </select></div>
+                  <div class="col-md-4 col-xs-6 col-sm-6">
+                  <select class="small" id="expiry_year">
+                  {% for year in years %}
+                    <option value="{{ year }}"{% if soon.year == year %} selected{% endif %}>{{ year }}</option>
+                  {% endfor %}
+                  
+                  </select></div></div></div></div>
+                </div>
+                
+              </div>
+              <span class="note">
+                Your credit card details will be sent directly to our payment processor
+              </span>
+            </div>
+           
+            </div>
+          </div>
+
+          
+           <div class="row">
+	          <div class="col-md-6 col-xs-12 col-sm-6">
+	            <div class="form-group">
+	              {{ form.last_4_digits.value }}
+	            </div>
+	          </div>
+          </div> 
+          
+           <div class="row">
+            <div class="col-md-6 col-xs-6 col-sm-6">
+                 <div class="form-group">&nbsp;&nbsp;&nbsp;      
+                <button type="9" class="btn continue" id="submit_frm" >Payment</button>
+                </div>
+               </div>
+
+			   <div class="col-md-6 col-xs-6 col-sm-6 " >
+				  <div class="" style="float:right;">
+					  <img src="{% static 'images/big.png' %}">
+				  </div></div>
+             </div>
+          </div>
+          
+         
+        </form></div>
+  </div>
+
+   {% endblock %}
+                       
+                        <div class="form-actions">
+                            <button class="btn login" type="submit" id="btn">
+                                <i class="fa fa-sign-in"></i> <a href="/registration/resubscribe/"> Log in</a></button>
+                        </div>
+                      </div> 
+                   </div>                        
+               </form>
+             </div>
+               
+                <!-- <div class="col-sm-6 col-md-3 others-login" style="height:300px;border-left:3px solid #eee;right:5px">
+                    <h4>Log in with other services</h4>
+                    
+                    <br>
+                    
+                    <p class="help-block">If you already have an account, log in first, then connect your service account in the Profile view.</p>
+                </div> -->
+               </div>
+	           <div class="row">
+	              <div class="col-md-2"></div>
+	                <div class="col-sm-3 col-md-8 login-form">
+	                   <hr class="separator-line" style="border-top: 1px solid #c3c5c5;">
+	                </div>
+	            </div>         
+	            
+	              
+	                 
+	                </div>
+	           </div>
+	       </div>
+      
+   <br/>
+  
+		    
+{% endblock %}
+

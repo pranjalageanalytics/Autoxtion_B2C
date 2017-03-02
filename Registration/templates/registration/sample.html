@@ -1,0 +1,280 @@
+
+{% load static from staticfiles %}
+
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <script src="{% static 'js/validation/login.js' %}"></script> 
+ <!--  <script>
+  function validate(){
+	  
+	  var answer=document.getElementById("customer1");
+		var strUser = answer.options[answer.selectedIndex].value;
+		 //alert(strUser);
+		 flag=true;
+		 
+		 if(strUser=="user"){
+			  //alert(strUser);
+				document.getElementById('error3').innerHTML="Please Select valid User !";
+			       document.getElementById("customer1").style.borderColor = "#E34234";
+			       flag=false;
+			        		
+			}
+		 else{
+			 $("error3").hide();
+			 //alert(flag);
+		 }
+		 if(strUser=="Customer"){
+			 //alert("if");
+			 if(document.getElementById('field_terms').checked){
+			    }
+			 else{
+			    	//alert("in else")
+			    	document.getElementById('errors_term').innerHTML=" Please accept terms and conditions!";
+			    	flag=false;
+			        //alert(flag);
+			    }
+		 }
+		 if(id_username.value == ''){
+			 document.getElementById('error1').innerHTML=" This field is required!";
+			 document.getElementById("id_username").style.borderColor = "#E34234";
+		 }
+		 else{
+			 $("#error1").hide();
+	       document.getElementById("id_username").style.borderColor = "#ccc";
+		 }
+		 if(id_password.value==""){
+			 //alert("dfghjk");
+			 document.getElementById('error2').innerHTML=" This field is required!";
+			 document.getElementById("id_password").style.borderColor = "#E34234";
+		 }
+		 else{
+			 $("#error2").hide();
+	       document.getElementById("id_password").style.borderColor = "#ccc";
+		 }
+		//alert(flag+"flag");
+		return flag;
+  }
+  </script> -->
+  <script type="text/javascript">
+  $(document).ready(function(){
+	  $("#btn").click(function(){
+		  flag=true;
+		  if(id_username.value == ''){
+				 document.getElementById('error1').innerHTML=" This field is required!";
+				 document.getElementById("id_username").style.borderColor = "#E34234";
+				 flag=false;
+			 }
+			 else{
+				 $("#error1").hide();
+		       document.getElementById("id_username").style.borderColor = "#ccc";
+			 }
+			if(id_password.value==""){
+				 //alert("dfghjk");
+				 document.getElementById('error2').innerHTML=" This field is required!";
+				 document.getElementById("id_password").style.borderColor = "#E34234";
+				 flag=false;
+			 }
+			 else{
+				 $("#error2").hide();
+		       document.getElementById("id_password").style.borderColor = "#ccc"; 
+			 }
+			return flag;
+	  });
+  });
+  
+  
+  </script>
+<script type="text/javascript">
+  $(document).ready(function(){
+   //alert("hiii");
+	  $("#btn_pay").click(function(){
+		  flag=true;
+
+	if(document.getElementById('input').checked){
+     //             alert("member check");
+				$("#errors_term").hide();
+		    }
+		 	else{
+	//	alert("in else")
+		    	document.getElementById('errors_term').innerHTML=" Please accept terms and conditions!";
+		    	flag=false;
+		        //alert(flag);
+		    }
+ 
+                     if(flag){
+                         formfield.submit();
+}
+			return flag;
+	  });
+  });
+  
+  
+  </script>
+
+  <style>
+  @media (min-width: 1366px)  {
+    .im {
+        
+      /* padding-left:113px;*/
+            padding-top: 6px;
+        
+    }
+}
+  
+ .btn-sm, .btn-group-sm > .btn{
+  	background-color: #FFBF40;
+    border-color: #FFBF40;
+    padding: 5px 10px;
+    font-size: medium;
+    line-height: 1.5;
+    border-radius: 2px;
+  }
+  .panel-default {
+    border-color: #fff;
+}
+.panel-default > .panel-heading {
+    color: #333;
+    background-color: #fff;
+    border-color: #fff;
+}
+.panel-footer {
+    padding: 10px 15px;
+    background-color: #fff;
+    border-top: 1px solid #fff;
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+.btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open > .dropdown-toggle.btn-success {
+    color: #fff;
+    background-color: #f38619;
+    border-color: #f39619;
+}
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+     border: 1px solid transparent; 
+     border-radius: 4px; 
+     -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.0); 
+     box-shadow: 0 1px 1px rgba(0, 0, 0, .0); 
+}
+.form-control{
+	color:#ccc;
+	font-family: Roboto-Regular;
+	
+	font-size: 12px;
+    line-height: 1.3;
+    font-weight: lighter;
+	
+}
+.user,.customer1{
+	color:#6d7980;
+	font-family: Roboto-Regular;
+	text-transform: uppercase;
+	font-size: 12px;
+    
+    font-weight: lighter;
+}
+.use{
+	color:#6d7980;
+	font-size: 24px;
+    line-height: 1.3;
+    font-weight: lighter;
+}
+.cost{
+	font-size: 12px;
+    line-height: 1.3;
+    font-weight: normal;
+}
+.log{
+	padding-top:40px;
+}
+.orange{
+	
+	color:#FFBF40;
+	font-weight: normal;
+}
+@media (min-width:320px) and (max-width:700px){
+	.background{
+		    width: 72%;
+    		margin-left: 46px;
+	}
+	
+	
+}
+@media (min-width:710px) and (max-width:1000px){
+	.background{
+		    width: 75%;
+    		margin-left: 81px;
+	}
+	h2{
+	padding-top:10%;}
+}
+
+.checkboxtext
+{
+  /* Checkbox text */
+  font-size: 110%;
+  display: inline;
+}
+/*# sourceMappingURL=bootstrap.css.map */
+
+  </style>
+  
+</head>{%block content%}
+<body background="{% static 'images/background.png' %}" >
+
+
+ <div class="container" style="padding-top:3%;">
+<h2  style="color:#fff; text-align:center; font-weight:lighter;">Welcome to the Auto Xtion Portal!</h2>
+
+ <center> <video width="320" height="240" autoplay controls>
+  <source src="{% static 'video/AXN AutoXtion VER06 120216 HB v1.mp4' %}" type="video/mp4">
+  <source src="{% static 'video/AXN AutoXtion VER06 120216 HB v1.ogg' %}" type="video/ogg">
+  Your browser does not support the video tag.
+</video></center> <br>
+
+<form role="form" id="formfield" method="POST" action="{% url 'Registration:member_agree' %}" enctype="multipart/form-data">
+{% csrf_token %}
+
+<center>  <input type="checkbox" name="membername" id="input" value={{ context22.id }} >
+<label for="field_terms" style="color:#fff;">I accept the <a href="{% static 'pdf/Auto Xtion Membership Agreement- Original.pdf' %}" target="_blank"><font color=#FFBF40>Terms and Conditions</font></a></label>
+<div id="errors_term" style="color:red;">
+</center> <br> <br> <br>
+
+
+ <center> <button class= "btn  btn-warning" id="btn_pay"> Proceed to Payment  </button> </center>
+ 
+
+</form>
+  
+                    </div>
+                    
+                </div>
+                
+        </div>
+    </div>
+</div>
+
+<hr class="separator-line" style="border-top: 1px solid #fff; opacity:0.5;width:65%;font-weight:200;padding-top:-5px;">
+<div  class="col-md-4 col-sm-offset-2" style="color:#fff;">
+      <font>&copy;Auto Xtion 2016</font>
+   </div>
+<div  class="col-md-2 col-sm-offset-2" style="color:#fff;">
+      <a href="{% url 'Registration:faq' %}" target="_blank"><font color="#FFBF40">FAQ   </font> </a>
+      <a href="{% url 'Registration:pdfopen' %}" target="_blank" ><font color="#FFBF40">| HELP   </font> </a>
+      <a ><font color="#FFBF40">| CONTACT  </font> </a>
+      </div>
+      <div class="col-md-4 col-sm-offset-2">
+      <a style="color:#fff;">    Australia</a>
+      <img src="{% static 'images/icon.gif' %}" >
+   </div> 
+  
+  {% endblock%}
+</body>

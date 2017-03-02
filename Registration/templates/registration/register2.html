@@ -1,0 +1,429 @@
+{% extends "base4.html" %}
+{% load static from staticfiles %}
+
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  <link href="{% static 'css/registration.css' %}" rel="stylesheet">
+  <script src="{% static 'js/tooltip.js' %}"></script>
+   <script src="{% static 'js/validation/reg.val.js' %}"></script> 
+  <script>
+$(document).ready(function(){
+	  $('#pass1').tooltip();
+	   	    var pass11 =document.getElementById('pass1');
+		    var pass22=document.getElementById('pass2');
+		    pass11.onpaste = function(e) {
+		    e.preventDefault();
+		 }
+		 
+		 pass22.onpaste = function(e) {
+			   e.preventDefault();
+			 }
+		 
+	$('#credit_card_number').attr('class','form-control');
+	$('#credit_card_number').attr('placeholder','Card Number');
+	
+	$('#cvv').attr('class','form-control');
+	$('#cvv').attr('placeholder','Security Code');
+	
+	
+	$('#id_website').attr('class','form-control');
+	$('#expiry_month').attr('class','form-control');
+	$("#expiry_month").prepend("<option selected>Month</option>");
+	
+	$('#expiry_year').attr('class','form-control');
+	$("#expiry_year").prepend("<option selected>Year</option>");
+    
+});
+</script>
+  
+<script type="text/javascript">
+  
+  
+  $(document).ready(function () {
+	  			var navListItems = $('div.setup-panel div a'),
+	          	allWells = $('.setup-content'),
+	          	allNextBtn = $('.nextBtn');
+
+	  			allWells.hide();
+
+	 		 	navListItems.click(function (e) {
+	      			e.preventDefault();
+	      			var $target = $($(this).attr('href')),
+	            	$item = $(this);
+
+	      			if (!$item.hasClass('disabled')) {
+	          			navListItems.removeClass('btn-primary').addClass('btn-default');
+	          			$item.addClass('btn-primary');
+	          			allWells.hide();
+	          			$target.show();
+	          			$target.find('input:eq(0)').focus();
+	      			}
+	  			});
+
+	  			allNextBtn.click(function(){
+		  			
+		  				//alert("in true")
+	      				var curStep = $(this).closest(".setup-content"),
+	          			curStepBtn = curStep.attr("id"),
+	         		    nextStepWizard = $('div.setup-panel div a[href="#' + curStepBtn + '"]').parent().next().children("a"),
+	          			curInputs = curStep.find("input[type='text'],input[type='url']"),
+	          			isValid = true;
+
+	      				$(".form-group").removeClass("has-error");
+	      				for(var i=0; i<curInputs.length; i++){
+	          				if (!curInputs[i].validity.valid){
+	              				isValid = false;
+	             			 	$(curInputs[i]).closest(".form-group").addClass("has-error");
+	          				}
+	      				
+	      			}
+		  			
+
+	      			if (isValid)
+	          			nextStepWizard.removeAttr('disabled').trigger('click');
+	  			});
+
+	  			$('div.setup-panel div a.btn-primary').trigger('click');
+	});
+  
+</script>
+  
+
+{%endblock%}
+
+{%block content%}
+<body background="{% static 'images/background.png' %}" >
+<div class="container">
+  <center><h1 style="color:#fff;">Sign Up To the Auto Xtion Portal</h1></center>
+  
+<center><div class="data_Subscription" ><font color="#FFBF40"size:"50"><label data-toggle="modal"data-target="#myModal"><u><span style="cursor:pointer">Auto Xtion Subscription plan</span></u></label></font></div></center> 
+            
+            {% if exist %}
+   <center> <h5 class="alert alert-danger" style="width:30%">{{exist}}</h5></center>
+   {% endif %}
+   <br>
+   <div class="col-md-6 col-sm-offset-3 col-xs-12" style="background-color:#fff; padding-top:20px;border-radius:3px;">
+   
+   <div class="panel-heading" > 
+      
+    	<center><img src="{% static 'images/logo.png' %}" style="width:40%; "></center>
+    </div> 
+    
+
+  <form id="user_form" method="post" name="form">{% csrf_token %}
+    <div class="row setup-content" id="step-1">
+      
+        <div class="col-md-12">
+        
+          
+          <div class="form-group">
+          <div class="col-sm-12">
+            <label class="control-label user" >First Name*</label>
+            {{user_form.first_name}}
+            <div class="user" id="error1" style="color:red;"></div>
+          </div>
+          <div class="col-sm-12">
+            <label class="control-label user" >Last Name*</label>
+            {{user_form.last_name}}
+            <div class="user" id="error2" style="color:red;">
+			      				</div>
+          </div>
+          <div class="col-sm-12">
+            <label class="control-label user" for="email" >Email*</label>
+            {{user_form.email}}
+            <div class="user" id="error4" style="color:red;"> {{user_form.email.errors}}
+			</div>
+          </div>
+
+          <div class="col-sm-12">
+
+                        	 <label for="inputPassword3" class="control-label user">Password*</label>
+                        	 {{user_form.password}}
+                            	
+                        	<div class="user" class="col-md-8" id="error5" style="color:red;"></div>
+                        	</div>
+         
+               					
+		   
+		    <div class="col-sm-12">
+               					<label for="inputPassword3" class="control-label user">Confirm Password*</label>
+               					{{user_form.confirm_pass}}
+                            	
+                				<div  class="user" id="error6" style="color:red;">{{user_form.confirm_pass.errors}}
+                				</div>
+		   </div></div><br>
+		   
+          <center><button class="btn btn-primary nextBtn btn-lg btn1" type="button"  id="create_button">Next</button></center>
+        </div>
+      
+    </div>
+  <!-- second page --> 
+  
+    <div class="row setup-content" id="step-3">
+      
+       
+        		<div class="col-md-6 col-xs-6 col-sm-6">
+         				<div class="form-group">
+         
+			       				<label class="user" for="shopname">Shop Name*</label>
+			       				{{profile_form.shop_name}}
+			     
+			         			<div  class="user" id="error7" style="color:red;">{{profile_form.shop_name.errors}}
+			         			</div>
+	  
+		
+             					<label class="user" for="abn">ABN*</label>
+		      						 {{profile_form.abn}}
+		       
+		        				<div class="user" id="error9" style="color:red;">{{profile_form.abn.errors}}
+		        				</div>
+          				</div> 
+          		</div>
+				<div class="row user">
+						<div class="col-md-6 col-xs-6 col-sm-6">
+								 <div class="form-group">
+		 									<label class="control-label user">Address*</label>
+            								{{profile_form.shop_address}}
+            								<div class="user" id="error8" style="color:red;">{{profile_form.shop_address.errors}}
+			      					</div>
+		            				
+        						</div>
+        				</div>
+        		</div>
+         <div class="col-md-12">
+	   			<div class="row user">
+	  
+			  		<div class="col-md-6 col-xs-6 col-sm-6">
+			     		<div class="form-group">
+		            					<label for="state">State*</label>
+		       							{{profile_form.city}}
+		       							<div class="user" id="error11" style="color:red;">{{profile_form.city.errors}}
+		       							</div>
+		      		   </div>
+              		</div>
+              		 <div class="col-md-6 col-xs-6 col-sm-6">
+		            		
+		            					<label for="country">Country*</label>
+		       							{{profile_form.country}}
+		       							<div class="user" id="error13" style="color:red;">{{profile_form.country.errors}}
+		       							</div>
+		       				
+		         	 </div>
+		         </div>
+		         <div class="row user">
+		         	 <div class="col-md-6 col-xs-6 col-sm-6">
+							<div class="form-group">
+			      					<label class="user" for="website">Website Name</label>
+			      					{{profile_form.website}}
+			  					   <div class="user" id="error12" style="color:red;">{{profile_form.website.errors}}
+			  					   </div>
+	  						</div>
+	  				</div>
+	                           <div class="col-md-6 col-xs-6 col-sm-6">
+			     		<div class="form-group">
+			      				<label for="phone">Postal Code*</label>
+			       				{{profile_form.postal_code}}
+			         
+			         			<div class="user" id="error_post" style="color:red;">
+			         			</div>
+			      		 </div>
+			     	</div>
+               		
+			     </div>
+			     <div class="row user">
+			     	<div class="col-md-6 col-xs-6 col-sm-6">
+                			<div class="form-group">
+                				<label for="area_code">Area Code</label>
+                    			{{profile_form.area_code}}
+                   				<div class="user" id="error001" style="color:#E34234;">
+                   				</div>
+                 			</div>
+              		</div>
+               		<div class="col-md-6 col-xs-6 col-sm-6">
+			     		<div class="form-group">
+			      				<label for="phone">Phone Number*</label>
+			       				{{profile_form.phone_no}}
+			         
+			         			<div class="user" id="error3" style="color:red;">{{profile_form.phone_no.errors}}
+			         			</div>
+			      		 </div>
+			     	</div>
+			  	</div>
+			  	<div class="row user">
+			  	  <div class="col-md-3"></div>
+              			<div class="col-md-4 col-xs-4 col-sm-4">
+                				<div class="form-group" style="width:30%;">
+                					<label for="captcha">Captcha*</label>
+                    				{{profile_form.captcha}}
+                    
+                    				<div class="user" id="errors" style="color:red;width:1200px;">{{profile_form.captcha.errors}}
+                    				</div>
+                				</div>
+              			</div>
+              	</div>
+              <center><div class="row user1">
+              
+             <div class="form-group">
+              <p><input id="field_terms" type="checkbox"  name="terms">
+             
+                <label for="field_terms">I accept the <a href="{% static 'pdf/Auto Xtion Membership Agreement- Original.pdf' %}" target="_blank"><font color=#FFBF40>Terms and Conditions</font></a></label></p>
+             <div class="user" id="errors_term" style="color:red;"></div>
+             </div>
+           
+          </div></center>
+       
+     
+	 
+	  
+          <center><button class="btn btn-success btn-lg"  id="submit" style=:"background-color:#FFBF40;">Submit</button></center>
+        </div>
+      
+    </div>
+  </form>
+  <div class="stepwizard col-md-offset-4" >
+
+    <div class="stepwizard-row setup-panel">
+      <div class="stepwizard-step">
+        <a href="#step-1" type="button" class="btn btn-primary btn-circle"><i class="glyphicon glyphicon-user color"></i></a>
+        <p>Acount</p>
+      </div>
+      
+      <div class="stepwizard-step">
+        <a href="#step-3" type="button" class="btn btn-default btn-circle" disabled="disabled"><i class="glyphicon glyphicon-home"></i></a>
+        <p>Profile</p>
+      </div>
+    </div>
+ </div>
+  </div>
+</div>
+<!-- Modal -->
+	  <div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			 <center><h4 class="modal-title"> Subscription Plan</h4></center>
+			</div>
+			<div class="modal-body">
+			   <li class="list-group-item">
+				<h4 style="
+					color: #f59b23;
+					font-weight: 300;
+					/* padding: 20px; */
+					/* margin: 20px; */
+				">Workshop Management system integrated with Accounting </h4>
+
+									  <medium>
+							  
+							</medium><ul style="
+					display: block;
+					margin-left: auto;
+					margin-right: auto;
+					border-top: 1px solid #efefef;
+					border-bottom: 1px solid #efefef;
+					margin: 15px 0 30px;
+					padding: 15px 0;
+				">
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					margin-left: 40px;
+					padding: 5px;
+				"> NATIONWIDE BRAND NAME </li>
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					margin-left: 40px;
+					padding: 5px;
+				"> COMMUNICATION PLATFORM between Members & Customers 
+				 <ul>
+				<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Dashboard</li>
+							<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Lead Generation</li>
+				<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Customer View</li>
+							<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Unlimited Promotions</li>
+				 <li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Manage Service Request</li>
+				 <li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Manage Appointments</li>
+						</ul>
+
+				</li>
+							
+				  
+				<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					padding: 5px;
+					margin-left: 40px;
+				color:gray;
+				"> AUTOXTION ON MOBILE - Coming Soon !! </li>
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					padding: 5px;
+					margin-left: 40px;
+				color:gray;
+				"> E-COMMERCE PLATFORM - Future Release !! </li>
+				  </ul>
+				</li>
+						  <li class="list-group-item"><h4 style="
+					color: #f59b23;
+					font-weight: 300;
+					/* padding: 20px; */
+					/* margin: 20px; */
+				">Monthly Service Fee - AUD $50.00 <font size="3"><sup>**</sup>Excluding GST</font></h4>
+
+									  <medium>
+							  <span class="text-gold" style="
+					font-weight: 400;
+					color: #39484a;
+					/* margin-top: 20px; */
+				"></span>
+							     <p>Note :You will have access to load customer information and familiarise yourself with the different features of the platform.</p></medium></li>
+
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal"  id="modal" >Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+	
+	 
+
+</body>
+{%endblock%}

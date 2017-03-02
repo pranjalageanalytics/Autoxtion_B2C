@@ -1,0 +1,287 @@
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet" media="all">
+<link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="all">
+<script src="{% static 'js/validation/lead_form.js' %}"></script>
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<link href="{% static 'css/font-awesome1.css' %}" type="text/css" rel="stylesheet" media="all">
+<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.formset/1.2.2/jquery.formset.js"></script>
+<script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+ <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+ <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ <script src="{% static 'js/validation/customer_register_form.js' %}"></script>
+ <style>
+.vin_box{
+    background-image: url('../../static/images/square.gif');    
+    width: 495px;
+    height: 36px;
+    margin-right:2px;
+    font-family: monospace;
+    font-size: 14px;   
+    letter-spacing: 21px;
+    background-size: 29px 36px;
+}
+</style>
+<script>
+  $(function() {
+	  $( "[id$='reg_expiry_date']").datepicker({dateFormat:'dd/mm/yy'});
+
+  });
+  </script>
+
+<script type="text/javascript">
+
+
+$('select option:first-child').attr("selected", "selected");
+		$(document).ready(function(){
+			
+			
+			//alert("page add lead");
+			$("table tr td input[type='text']").addClass("form-control form-group col-md-2");
+			$("table tr td input[type='number']").addClass("form-control form-group col-md-2");
+			//$("select").prepend("<option selected>Please select</option>");
+			
+			$("#id_company").change(function(){
+				company=$("#id_company option:selected ").text();
+				//alert("company"+company);
+				$.ajax({
+					url:'/CRM/get_models/',
+					type: "GET",
+					data:{company:company},
+				}).done(function(data){
+					$("#id_model").empty();
+					 $("#id_model").prepend("<option selected>Please Select</option>");
+					 $.each(data,function(key,value)
+					{
+						
+						 $("#id_model").append('<option value="'+data[key].id+'">'+data[key].model_name+'</option>');
+						 
+					});
+			});
+			});
+		});
+			
+	</script>
+{%endblock%}
+{%block content%}
+<input type="hidden" id="group" value="Customer">
+<div class="container register" style="min-height: calc(73vh - 40px);">
+                <hr class="separator-line">
+        
+   {% if msg %}
+   <label id="error_password1" class="alert alert-danger" id="errorfield1">{{msg}} 
+	&nbsp;&nbsp;&nbsp;
+   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+</label>
+   {% endif %}
+   
+   {% if msg2 %}
+   <label id="error_password2" class="alert alert-warning" id="errorfield2">{{msg2}}
+&nbsp;&nbsp;&nbsp;
+   <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+</label>
+   {% endif %}
+   <form method="post" name="form"> {% csrf_token %}
+ <div class="panel-group" id="accordion">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+     
+        <h4 class="panel-title">
+     
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse1"  style="text-decoration: none;">
+           <i class="glyphicon glyphicon-user color"></i> Personal Details</a>
+        </h4>
+      </div>
+      
+      <div id="collapse1" class="panel-collapse collapse in">
+      <div class="panel-body">
+
+        {{leadform.id.as_hidden}}
+			 
+              <div class="row">
+				 <div class="col-md-4 col-xs-6 col-sm-6">
+					<div class="form-group">
+					  <label for="name">Name*</label>
+                        {{ leadform.name}}<div id="error1" style="color:red"></div>
+                        
+					</div>
+				</div>
+
+				<div class="col-md-4 col-xs-6 col-sm-6">
+					<div class="form-group">
+					<label for="address">Address*</label>
+						 {{ leadform.address}}<div id="error2" style="color:red"></div>
+					  
+					</div>
+				</div>
+                <div class="col-md-4 col-xs-6 col-sm-6">
+				 <div class="form-group">
+				 <label for="license">License Id</label>
+				  {{ leadform.licenseid}}<div id="error3" style="color:red"></div>
+							
+			    </div>
+			  </div>
+			  </div>
+
+			 <!--------end-------->
+
+             <div class="row">
+				 <div class="col-md-4 col-xs-6 col-sm-6">
+					<div class="form-group">
+					<label for="email">Email Id*</label>
+					 {{ leadform.email}}<div id="error4" style="color:red"></div>
+							
+					</div>
+			 </div>
+			 <div class="col-md-4 col-xs-6 col-sm-6">
+						<div class="form-group">
+						<label for="phone">Phone Number*</label>
+							 {{ leadform.phone}}<div id="error5" style="color:red"></div>
+					   
+						</div>
+					</div>
+
+			 </div>
+
+        
+      </div>
+       
+       </div>
+      </div>
+    </div>
+    
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          
+           <a data-toggle="collapse" data-parent="#accordion" href="#collapse2" style="text-decoration: none;"> <i class="fa fa-car" ></i>
+          Vehicle Details:<center style="color:#f38619">Once you submit a vehicle details you can add other vehicle</center></a>
+        </h4>
+      </div>
+      
+        <div class="panel-body">
+       
+            
+
+              <div class="row item">
+
+              
+				 <div class="col-md-2 col-xs-6 col-sm-6">
+					<div class="form-group">
+					 <label for="vno">Registration Number*</label>
+                        {{ vehicleform.vehicle_no}} <div id="errors" style="color:red"></div>
+          				              
+					</div>
+				</div>
+
+				<div class="col-md-3 col-xs-6 col-sm-6">
+					<div class="form-group">
+					<label for="company">Company*</label>
+						{{ vehicleform.company}}
+					  
+					</div>
+				</div>
+ 		<div class="col-md-3 col-xs-6 col-sm-6">
+				 <div class="form-group">
+				 <label for="cmodel" > Model*</label>
+				  {{ vehicleform.model}}
+							
+			    </div>
+			  </div>
+			  
+
+			 <!--------end-------->
+
+             
+				 <div class="col-md-3 col-xs-6 col-sm-6">
+					<div class="form-group">
+					<label for="myear"> {{ vehicleform.makeyear.label}}*</label>
+					{{ vehicleform.makeyear}}
+							
+					</div>
+			 </div>	
+			 
+			
+			 
+		
+				 
+
+      </div>
+      <div class="row">
+			  <div class="col-md-3 col-xs-6 col-sm-6" style="margin-top:10px;">
+     <div class="form-group">
+      <label for="name">{{ vehicleform.reg_expiry_date.label}}</label>
+     {{ vehicleform.reg_expiry_date}}
+     <div id="error6" style="color:red"></div>
+     </div>
+    </div>
+<div class="col-md-3 col-xs-6 col-sm-6" style="margin-top:10px;" id="vin">
+                 <div class="form-group">
+<label for="name">{{ vehicleform.vin_no.label}}</label>
+
+                   {{ vehicleform.vin_no}}
+                    <div id="err9" style="color:red"></div>
+                </div>
+             </div>
+</div>
+      <br>
+<hr class="seperator-line">      
+
+
+
+		 <br>
+		 <div class="row">
+	      <div class="col-md-1"></div>			 
+	         <div class="col-md-4 col-xs-6 col-sm-6">
+					<div class="form-group">      
+                <button type="submit"  class="btn btn-success" id="submit_frm">SUBMIT</button>
+                </div>
+               </div>
+             </div>
+             </div>
+   </form>
+      </div>
+
+
+<!-- modal delete vehicle -->
+
+<div id="ext_cust" class="modal " role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+        <h4 class="modal-title">Delete Vehicle:</h4>
+      </div>
+      <div class="modal-body">
+      <form action="{% url 'CRM:deleteVehicle' %}"  method="post">
+      {% csrf_token %}
+      <p>Are you sure that you want to delete this vehicle</p>
+        <p><input type="hidden" id="vehdel_id" value="" name="veh_del"></p>
+        <p><input type="hidden" id="leadveh_id" value="" name="leadveh_id"></p>
+      
+      </div>
+      <div class="modal-footer">
+      <input type="submit" value="Delete" class="btn btn-warning">
+        <button type="button" class="btn btn-default close1" >Cancel</button>
+      </div>
+    </div>
+    </div>
+</form>
+  </div>
+</div>
+
+{%endblock%}
+
+
+
+
+  

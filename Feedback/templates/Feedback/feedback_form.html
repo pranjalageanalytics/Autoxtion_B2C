@@ -1,0 +1,229 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<style>
+
+
+/****** Style Star Rating Widget *****/
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+.rating {
+  border: none;
+  float: left;
+font-size:20px;
+}
+
+.rating > input { display: none; }
+.rating > label:before {
+  margin: 5px;
+  font-size: 1.25em;
+  font-family: FontAwesome;
+  display: inline-block;
+  content: "\f005";
+  
+  
+}
+
+.rating > .half:before {
+  content: "\f089";
+  position: absolute;
+}
+
+.rating > label {
+  color: #ddd;
+ float: right;
+}
+
+/***** CSS Magic to Highlight Stars on Hover *****/
+
+.rating > input:checked ~ label, /* show gold star when clicked */
+.rating:not(:checked) > label:hover, /* hover current star */
+.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
+
+.rating > input:checked + label:hover, /* hover current star when changing rating */
+.rating > input:checked ~ label:hover,
+.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
+.rating > input:checked ~ label:hover ~ label { color: #FFED85;  }
+    </style>
+
+    
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+//  Check Radio-box
+    $(".rating input:radio").attr("checked", false);
+    $('.rating input').click(function () {
+        $(".rating span").removeClass('checked');
+        $(this).parent().addClass('checked');
+    });
+
+    $('input:radio').change(
+    function(){
+        var userRating = this.value;
+         //alert(userRating);
+        $("#myhidden1").val(userRating);
+       
+    });
+
+
+
+/* }); */
+
+});
+</script>
+
+  
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/validation/feedback_validation.js' %}"></script>
+<script>
+$(document).ready(function(){
+	$("#save_btn").click(function(){
+		
+		 
+	var status=validate();
+	//alert(status);
+	if (status){
+		$("#feedbackForm").submit();
+	}
+	 
+	});
+});
+	function validate(){
+		
+		var comm=comment.value;
+		var status=false;
+		if (comm){
+			/* alert(" true "); */
+			 if( comment.value.length>255)
+			  {
+			   alert("comment more than 255");
+			   $("#error11").show();
+			    document.getElementById('error11').innerHTML="Comment cannot be greater than 255 words!";
+			   document.getElementById("comment").style.borderColor = "#E34234";
+			   flag=false;
+			  }else{
+				flag=true;
+			}
+			 
+		}
+		else{
+			
+			
+			    document.getElementById('error11').innerHTML=" field is required !";
+			    document.getElementById("comment").style.borderColor = "#E34234";
+			    flag=false;
+		
+		}
+	 var userRating =$("#myhidden1").val();
+                  
+	 if($("#myhidden1").val()==0)
+	{
+		//alert("val is 0");
+                document.getElementById('error1').innerHTML=" Please select a star !";
+       
+       		flag=false;
+        }
+	else
+	{
+		//alert("val is not 0");
+		document.getElementById('error1').innerHTML=" ";
+
+		}
+ //alert(flag);
+		return flag;
+	}
+</script>
+<script type="text/javascript" src="{% static 'js/noty.js' %}"></script>
+
+{% endblock %}
+{% block content %}
+<input type="hidden" id="group" value="{{group.name}}">
+ <div class="page-header">
+             <h4 class="" style="color: #6B748A;font-size:17px;"><span class="glyphicon glyphicon-th-list"></span>
+                 FEEDBACK FORM</h4>
+
+        </div>
+        {% if msg %}
+<ul class="noty-wrapper i-am-new" id="noty_top">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+       <div class="noty_bar" id="noty_453371394759536000">
+          <div class="noty_message"><span class="noty_text">
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{ msg }} </span>
+          </div></div></li></ul>{% endif %}
+<div class="row" id="save"style="margin-right:8px;">   
+              
+          
+          <div class="dropdown pull-right">
+             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+               <i class="fa fa-floppy-o"></i> Save
+                <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+
+                       <li><a   id="save_btn" name="save" style="cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i> Save </a></li>
+                   </ul>
+             </div>
+        </div>
+  
+		
+<div >
+
+    <div class="row contact-upper-section">
+            
+
+             <div class="contact-form col-sm-11">
+                    
+   <form action="#" method="post" id="feedbackForm" onsubmit="return validate();">
+   {% csrf_token %}
+   <input id="myhidden" name="customer" type="hidden" value="{{request.user.id}}">
+  <input id="myhidden1"  type="hidden" value="0">
+  <div class="row">
+<div class="col-md-4 col-md-offset-1">
+<h3>Kindly rate for our service:</h3>
+</div>
+  <div class="form-group col-md-1">
+
+				    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_date" ></label>  
+			     
+		</div>
+		<div class="col-md-11 col-md-offset-1">
+<fieldset class="rating" style="size:100px;">
+    <input type="radio" style="size=100px" id="star5" name="rating" value="5" /><label class = "full" for="star5" ></label>
+
+    <input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" ></label>
+
+    <input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" ></label>
+
+    <input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" ></label>
+
+    <input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" ></label>
+    <div id="error1" style="color:#E34234;font-size:12px;"></div>
+
+</fieldset>
+</div>
+</div>
+	<br>	
+          <div class="row" id="comment_block">
+			<div class="col-md-11 col-md-offset-1 col-sm-6">
+		<textarea rows="5" cols="30" name="comment" placeholder="Enter comment here" id="comment" maxlength="250" class="form-control"></textarea>
+		
+				<div id="error11" style="color:#E34234;font-size:12px;"></div>
+			</div>
+		</div>
+		
+		
+		
+		<br>
+    <!-- <button type="button" onClick="saveFun();" class="btn btn-success" id="save" name="save" >Save </button>-->
+     
+     </form>
+            </div>
+
+        </div>
+ 
+</div>
+{% endblock %}

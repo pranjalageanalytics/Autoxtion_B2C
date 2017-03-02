@@ -1,0 +1,124 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"> 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+
+<style>
+.pagination>.active>a {
+    z-index: 2;
+    color: #fff;
+    background-color: #fbb946;
+    border-color: #fbb946;
+    cursor: default;
+}
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+
+</style>
+
+{% endblock %}
+
+
+<body>
+
+     {%block content%}
+
+     <input type="hidden" id="group" value="{{customerGroup.name}}">
+  <div class="" style="width=80%">
+  
+  <!-- Breadcrum -->
+   <div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                  REQUEST HISTORY</h4>
+
+        </div>
+
+  
+  
+ {% if messages %}
+    <div class="col-md-4 color03">
+        <ul class="messages">
+            {% for message in messages %}
+            <label id="error_update" class="alert alert-success">{{ message }}</label>
+                
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% for app in var3 %}
+<div class="col-md-11" style="margin-bottom: 5px;">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#{{forloop.counter0}}" href="#{{forloop.counter0}}" style="background-color: #6B748A;color: white;">
+                                <h4 class="panel-title">
+				<span style="margin-left: 32px;">{{app.customer.name}} {{app.customer.last_name}} :- {% if app.request.service_type %}
+           {{app.request.service_type}}{% else %} {{app.service_type}}{% endif %}</span><span style="float: right;"><strong>Date:</strong> {{app.date}}
+                                  
+                                  <i class="glyphicon glyphicon-chevron-down color pull-right" style="color: white;"></i>
+                                </h4>
+                            </div>
+                            <div id="{{forloop.counter0}}" class="panel-collapse collapse">
+                                <div class="panel-body" style="background-color: #efefef;" >
+                                <div>
+{% if detail %}
+{% for cell in detail %}
+{% with a=cell.appointment.pk b=app.pk %}
+{% if a = b %}
+
+
+<div class="row">
+		   <div class="col-md-3">
+                   			<strong>Service Type:</strong>{{cell.service}}
+					</div>
+					
+					<div class="col-md-3">
+                   			<strong>Price:</strong>{{cell.amount}}
+					</div>
+					<div class="col-md-6">
+                   			<strong>Description:</strong>{{cell.description}}
+					</div>
+					
+</div>
+
+<br>
+{% for sub in sub_detail %}
+{% with c=cell.pk d=sub.upcellappointment.pk %}
+{% if c = d %}
+
+<div class="row">
+		   <div class="col-md-3">
+                   			<strong>Service Type:</strong>{{sub.subservicetype}}
+					</div>
+								
+</div>
+
+{% endif %}
+{% endwith %}
+{% endfor %}
+
+{% endif %}
+{% endwith %}
+{% endfor %}
+{% else %}
+<div class="row"> <div class="col-md-3">
+            NO UPSELL ADDED FOR THIS APPOINTMENT
+           </div>
+          </div>
+  {% endif %}
+</div>
+                                    </div>
+                            </div>
+                        </div>
+                        
+{% endfor %}
+
+      </div>
+          {% endblock%}
+          
+</body>
+</html>

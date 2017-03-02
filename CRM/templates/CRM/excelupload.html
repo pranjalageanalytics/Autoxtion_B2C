@@ -1,0 +1,144 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% block head %}
+
+<style>
+.upload-drop-zone {
+  height: 200px;
+  border-width: 2px;
+  margin-bottom: 20px;
+}
+
+/* skin.css Style*/
+.upload-drop-zone {
+  color: #ccc;
+  border-style: dashed;
+  border-color: #ccc;
+  line-height: 200px;
+  text-align: center
+}
+.upload-drop-zone.drop {
+  color: #222;
+  border-color: #222;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+
+.panel-default>.panel-heading {
+    color: #cccccc;
+    background-color: #39484A;
+    border-color: #ddd;
+}
+</style>
+</style>
+ <script type="text/javascript">
+$(document).ready(function(){
+	$("#js-upload-submit").click(function(){
+		 var fileUpload = $("#id_file");
+		 var str = fileUpload.val();
+    	 //alert("upload data"+fileUpload.val());
+		 var n = str.endsWith(".xlsx");
+		 var m = str.endsWith(".xls");
+		 flag=true;
+
+		 if (str == "")
+			 {
+			 document.getElementById('lblError').innerHTML=" Please upload file";
+			 //alert("please upload file");
+			 flag=false;
+			 }
+		 else{
+			 if (n||m)
+				 {
+				 $("#lblError").hide();
+				// document.getElementById('lblError').innerHTML="File format correct";
+				// alert("file format correct");
+				 flag=true;
+				 }
+			 else{
+				 document.getElementById('lblError').innerHTML="Please upload file in '.xlsx' or '.xls' format only";
+				// alert("file format is not correct");
+				 flag=false;
+			 }
+			 }
+		return flag;
+	});
+});
+</script>
+
+{%endblock%}
+
+{% block content %}
+<input type="hidden" id="group" value="{{group.name}}">
+<div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                  EXCEL UPLOAD</h4>
+
+        </div>
+	{% if msg %}
+	<label  class="alert alert-success" >{{msg}}</label>
+{% endif %}
+      <div class="row" style="padding-top:10px;">
+      	
+          <div class= "col-md-4 col-xs-12">
+          <div class="panel panel-default">
+		   <div class="panel-heading" style="background-color:#6B748A;" ><h4 style="color:#fff;">Please upload</h4></div>
+		  <div class="panel-body" style="padding-bottom:29px;">
+		  <h4>Select file from your computer</h4>
+		  	<form action="." method="post" enctype="multipart/form-data" >
+		                             {% csrf_token %}
+		                             <div class="form-inline">
+		                                <div class="form-group">
+		                                     {{form.file}}
+
+		                                    <div class="row" id="lblError" style="color: red;margin:5px 0px 5px 0px;"></div> 
+		                                </div>
+		                                <div class="text-left">
+                  	  <button type="submit" class="btn btn-sm btn-success" id="js-upload-submit">Upload files</button>
+				    </div>		                             </div>
+		                           </form> </div>
+  			
+          </div> </div>
+           <div class="col-md-8 col-xs-12" >
+	          <div class="panel panel-default">
+		         <div class="panel-heading" style="background-color:#6B748A;"><strong><h4 style="color:#fff;">Demo Excel-Sheet</h4></strong>
+                         <button class="btn btn-xs btn-info pull-right" style="color:#fff;margin-top:-30px;">
+     <a style="text-decoration:none;color:#fff;" href="{% url 'CRM:downloadexceltemplate' %}" >Download Template</a>
+    </button>
+  
+                       </div>
+		        <div class="panel-body">
+	         		<img src="{% static 'images/demoupload.PNG' %}" style="max-width:100%;">
+				</div></div></div>
+          <div class= "col-md-12 col-xs-12">
+           <div class="panel panel-default">
+ 
+  	<div class="panel-heading" style="background-color:#6B748A;"><strong><h4 style="color:#fff;">Instructions:</h4></strong></div>
+  				<div class="panel-body">
+  				<ul style="font-size: 14px;">
+					  	 <li>File must be in format .xlsx or .xls.</li>
+					  	 <li>File must not contain repeated e-mail id's.</li>
+					  	 <li>File must contain valid e-mail id's.</li>
+					 	 <li>Company name, Model must be in full form e.g. 'Volkswagen' instead of 'VW'.</li>
+					  	 <li>File must not have any empty entry.</li>
+					  	 <li>Before uploading a file please check for spelling's once again and email.</li>
+					  </ul>
+				</div>
+ 
+</div>
+</div>
+          
+          
+         
+             
+	        
+ 
+	         </div>   
+	         </div>       
+{% endblock %}
+    

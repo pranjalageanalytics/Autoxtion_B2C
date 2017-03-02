@@ -1,0 +1,67 @@
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<link href="{% static 'css/style.css' %}" type="text/css" rel="stylesheet" media="all">
+<style>
+    .center {text-align: center; margin-left: auto; margin-right: auto; margin-bottom: auto; margin-top: auto;} 
+.hero-unit{float:right;}
+.hero-unit h1{
+
+			font-size:190px;
+
+			text-align:center;
+
+			margin-bottom:20px;
+
+			margin-top:0px;
+
+			color:#f38619;
+
+		}
+.hero-unit p{
+
+			font-weight:600;
+
+			font-size: 16px;
+
+			text-align:center;
+
+			color:#f38619;
+
+			padding-top:10px;
+
+		}
+.hero-unit p a{
+			color:#000;
+			text-decoration:none;
+}
+.hero-unit p a:hover{
+
+			color: #2c383a;
+
+			text-decoration:none;}
+
+</style>
+{% endblock %}
+{% block content %}
+<div  style=" background-color: #f4f6f6;height:100%;margin-top:5px;">
+<div class="container">
+<div class="jumbotron" style="background-color:#f4f6f6;" >
+  <div class="row">
+
+    <div class="span12"><div class="image">
+		<img alt="" src="/static/images/icon.png">	</div>
+      <div class="hero-unit center">
+          <h1>Page Unavailable</h1>
+         <p>Sorry, but the requested page is unavailable due to a server hiccup.</p>
+	<p>Our Technical team have been notified, we will try to resolve the issue as soon as possible.</p>
+                   
+        </div>
+      
+     
+    </div>
+  </div>
+        </div>
+</div>
+    </div>
+{% endblock %}

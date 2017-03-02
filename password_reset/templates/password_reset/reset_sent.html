@@ -1,0 +1,38 @@
+{% extends "base4.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+{%block head%}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+ 
+ 
+  
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+  
+{%endblock%}
+{% block content %}
+<body background="{% static 'images/background.png' %}" >
+<div class="data_recover" style="padding-top:50px;">
+<div class="container"  style=" min-height: calc(85vh - 40px);" >
+ 
+ <div class="row">
+     
+     <div  class="col-md-6 col-sm-offset-3">
+         <div class="panel-heading">   
+          <center><img src="{% static 'images/auto_100.png' %}" ></center>
+          </div>
+      
+  <center><h2 style="color:#FFBF40;font-size: 24px;">Password recovery mail sent !!</h2></center>
+
+      
+      <div class="input-group">
+		<p style="font-size:16px; color:#fff; padding-top:30px;">{% blocktrans with ago=timestamp|timesince %}An email was sent to <strong>{{ email }}</strong> {{ ago }} ago. Use the link in it to set a new password.{% endblocktrans %}</p>
+		<center ><B><a href="/registration/login/" > <label style="color:#FFBF40;text-decoration:none;cursor:pointer;font-size: 20px;"> login </label></a></B></center>
+		</div>
+		</div>		
+	</div>
+	</div>		
+    </div>
+    </body>
+{% endblock %}

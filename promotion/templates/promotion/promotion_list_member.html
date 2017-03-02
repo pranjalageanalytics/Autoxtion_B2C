@@ -1,0 +1,187 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"> 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="{% static 'js/noty.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/wickedpicker.js' %}"></script>
+ <script type="text/javascript" src="{% static 'js/validation/filter_promotion.js' %}"></script>
+<style>
+.pagination>.active>a {
+    z-index: 0;
+    color: #fff;
+    background-color: #fbb946;
+    border-color: #fbb946;
+    cursor: default;
+}
+
+.btn-change {
+    color: #2e6da4;
+    background-color: #fff;
+    border-color: #2e6da4;
+}
+
+.input-sm {
+  background-image:url('/static/images/698627-icon-111-search-128.png');
+  background-position: 162px 3px;
+  background-repeat: no-repeat;
+  border: 1px solid #ddd;
+ }
+
+
+#promotion_table_filter{
+ color:#fff;
+ }
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+</style>
+
+
+<script>
+$(document).ready(function(){
+	$('#promotion_table').DataTable({
+		responsive: {
+	        details: false
+	    }
+	});
+        $("#id_month").attr("class","form-control");
+	$("#id_date_promo_0").attr("class","form-control");
+	$("#id_date_promo_1").attr("class","form-control");
+	$("#id_date_promo_0").attr("placeholder","From date");
+	$("#id_date_promo_1").attr("placeholder","To date");
+	$("#id_date_promo_0" ).datepicker({dateFormat:'yy-mm-dd'});
+	$("#id_date_promo_1" ).datepicker({dateFormat:'yy-mm-dd'});
+
+});
+
+</script>
+{% endblock %}
+
+
+<body>
+
+     {%block content%}
+     <div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                  PROMOTION LIST</h4>
+
+        </div>
+     <input type="hidden" id="group" value="{{group.name}}">
+     
+  <div >
+  
+  <!-- Breadcrum -->
+
+{% if messages %}
+<ul class="noty-wrapper i-am-new" id="noty_top">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+       <div class="noty_bar" id="noty_453371394759536000">
+       {% for message in messages %}
+          <div class="noty_message"><span class="noty_text">
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{ message }} </span>
+          </div> {% endfor %}</div></li></ul>{% endif %}
+<div class="row">
+
+   <a href="{% url "promotion:server_new" %}" class="btn btn-primary" style="margin-bottom:10px;float:right;margin-right: 16px;" id="add_promotion">
+ <span class="glyphicon glyphicon-plus-sign"></span>
+    Add Promotion
+   </a>
+   <a href="{% url "promotion:promotion_history" %}" class="btn btn-change" style="margin-bottom:10px;float:right;margin-right: 8px;" id="promotion_history">
+    <span class="glyphicon glyphicon-time"></span>
+
+    Promotion History
+   </a>
+
+<div class="dropdown pull-right" style="margin-right:8px;">
+    <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Filters
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-toggle="modal" data-target="#myModal" ><i class="fa fa-filter" aria-hidden="true"></i>&nbsp;&nbsp;Filters</a></li>
+      <li><a href="/promotion/list"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp;All Results</a></li>
+    </ul>
+  </div>
+
+</div>
+
+
+
+
+    <div class="content-wrapper">
+    <section class="content-header" id="addContent">
+    <table id="promotion_table" class="display no-wrap responsive" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="border-bottom: none;">
+    <thead>
+          	<tr style="background-color: #6B748A;color:white;font-size:14px">
+          	    <th>Service Type</th>
+          		<th>Model</th>
+          		<th>Make Year</th>
+          		<th>Coupon Code</th>
+          		<th id="desc">Description</th>
+          		<th id="act">Action</th>	
+          	</tr>
+          	</thead>
+    <tbody>
+          	{% for server in filter.qs %}<tr style="font-size:13px">
+          		<td ><a href="{% url "promotion:server_edit" server.id %}" class="link_n">{{ server.Service_id }}</a></td>
+          		<td>{{ server.model_id }}</td>
+          		<td>{{ server.make_year }}</td>
+          		<td>{{server.coupon_code}}</td>
+          		<td class="desc">{{ server.description }}</td>
+          		<td class="act_del"><a href="{% url "promotion:server_delete" server.id %}" ><button  class="btn btn-danger btn-xs"><span class="glyphicon glyphicon-trash"></span>&nbsp;&nbsp;&nbsp;Delete</button</a></td></tr>
+          	{% endfor %}
+          	</tbody>
+    </table>
+    
+          
+        </section>
+      </div>
+      </div>
+ <div class="modal fade modal" id="myModal" role="dialog">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Filter</h4>
+        </div>
+        <div class="modal-body">
+       <form action="" method="get">
+          <div class="row">
+       <div class="col-md-10 col-md-offset-3">
+               <div class="row">
+		       <div class="col-md-6">
+		       <div class="form-group">
+			        <label for="email">Date Promotion:</label>
+		        {{ filter.form.date_promo }}
+		        </div></div></div>
+                        <label>OR</label>
+		           <div class="row">
+		       <div class="col-md-6">
+		       <div class="form-group">
+			        <label >Month Promotion:</label>
+		        {{ filter.form.month }}
+		        </div></div></div>
+		       <input type="submit" class="btn btn-success"/>
+</div></div>
+    </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="promo_filter">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+          {% endblock%}
+          
+</body>
+</html>

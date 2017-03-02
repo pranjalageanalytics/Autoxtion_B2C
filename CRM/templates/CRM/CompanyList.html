@@ -1,0 +1,96 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- DataTables CSS -->
+<meta charset="utf-8"></meta>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"> 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+ 
+  
+
+
+ 
+<script type="text/javascript" src="{% static 'js/noty.js' %}"></script>
+<!-- DataTables CSS -->
+
+<style>
+.pagination>.active>a {
+    z-index: 0;
+    color: #fff;
+    background-color: #fbb946;
+    border-color: #fbb946;
+    cursor: default;
+}
+
+</style>
+<script>
+$(document).ready(function() {
+    	$('#companytable').DataTable({
+    		  responsive: {
+    		         details: false
+    		     }
+    		 });
+});
+</script>
+{% endblock %}
+{%block content%}
+<div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                  COMPANY LIST</h4>
+
+        </div>
+{% if messages %}
+<ul class="noty-wrapper i-am-new" id="noty_top">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+       <div class="noty_bar" id="noty_453371394759536000">
+          <div class="noty_message"><span class="noty_text">
+          {% for message in messages %} {% if message.tags %}
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{ message }} </span>
+          {% endif %}
+        {% endfor %}
+          </div>
+         </div>
+        </li>
+       </ul>
+    {% endif %}
+    <input type="hidden" id="group" value="{{ user.groups.all.0 }}">
+<div class="row">
+	<a href="{% url 'CRM:addCompany' %}"  class="btn btn-primary " style="margin-bottom:10px;float:right;margin-right: 18px;"><span class="glyphicon glyphicon-plus-sign""></span> Add Company</a>
+</div>
+    <table id="companytable" class="display no-wrap responsive table" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="border-bottom: none;">
+          	<thead>
+          	<tr style="background-color: #6B748A;color:white;font-size:14px">
+          	<div  style="display:none ">
+        	<button type="submit" class="btn btn-default pull-left" data-toggle="modal" data-target="#myModal" data-dismiss="modal" id="countcustomer2" >INACTIVATE real</button>
+   		 <!-- onclick="saveFunc();" -->
+      			</div>
+          		<!-- <th >ID</th> -->
+          		<th>Company Name</th>
+
+          		<th>E-mail</th>
+
+          		<th>Phone</th>
+
+          	</tr>
+          	</thead>
+          	<tbody>
+          	{% for company in list %}
+          	<tr style="font-size:13px">
+          		<input type="hidden" class="" type="checkbox" name="leadname3[]" value="1" />
+          		<td>
+                    <a href="{% url 'CRM:UpdateCompany' company.id%}">{{company.company_name}}</a></td>
+          		<td>{{company.email}}</td>
+                <td>{{company.phone}}</td>
+
+          	</tr>
+          	{% endfor %}
+          	</tbody>
+          	</table>
+{% endblock %}

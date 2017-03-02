@@ -1,0 +1,200 @@
+
+{% load static from staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<title>Auto Xtion</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+{% block head %}
+<style>
+    .faqHeader {
+        font-size: 27px;
+        margin: 20px;
+        color:#f38619;
+    }
+
+    .panel-heading [data-toggle="collapse"]:after {
+        font-family: 'Glyphicons Halflings';
+        content: "\e250"; /* "play" icon */
+        float: right;
+        color: #F58723;
+        font-size: 18px;
+        line-height: 22px;
+        /* rotate "play" icon from > (right arrow) to down arrow */
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+    }
+
+    .panel-heading [data-toggle="collapse"].collapsed:after {
+        /* rotate "play" icon from > (right arrow) to ^ (up arrow) */
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+        color: #454444;
+    }
+</style>
+
+
+
+{% endblock %}
+{% block content %}
+<div class="container-fluid" style="background-color:#f4f6f6;">
+<div class="container">
+<h1>FAQ </h1>
+<hr class="separator-line"style="border-top: 1px solid #c3c5c5;">
+    
+
+   
+    <div class="panel-group" id="accordion">
+        <div class="faqHeader">Payment</div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion" href="#collapseOne">What is Stripe?</a>
+                </h4>
+            </div>
+            <div id="collapseOne" class="panel-collapse collapse in">
+                <div class="panel-body">
+                   We are using Stripe is a third-party payment solution, that makes it possible to accept credit card and debit card payments. 
+                   It's secure and quick - you can almost process payments immediately.
+                   Learn more about Stripe at <strong>www.stripe.com</strong>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTen">Is Stripe secure?</a>
+                </h4>
+            </div>
+            <div id="collapseTen" class="panel-collapse collapse">
+                <div class="panel-body">
+                   Yes. Stripe follows the most strict requirements for security in the industry.
+                     Learn more about Stripe's security-https://stripe.com/docs/security
+
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEleven">Is Stripe PCI compliant?</a>
+                </h4>
+            </div>
+            <div id="collapseEleven" class="panel-collapse collapse">
+                <div class="panel-body">
+                    
+             Yes. Stripe is certified as a PCI Level 1 Service Provider.
+             <strong>-https://stripe.com/docs/security</strong>
+
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">How does Stripe handle false cards and orders?</a>
+                </h4>
+            </div>
+            <div id="collapseTwo" class="panel-collapse collapse">
+                <div class="panel-body">
+                   Stripe prevents fraud by detecting activities that are suspicious. For example, transactions for repeated orders will be rejected. Stripe also works with global partners and credit card networks to monitor fraud.
+                   Learn more about how Stripe prevents fraud - <strong>https://support.stripe.com/questions/avoiding</strong>-fraud-and-disputes
+
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Why was my payment declined?</a>
+                </h4>
+            </div>
+            <div id="collapseThree" class="panel-collapse collapse">
+                <div class="panel-body">
+                    Declines can happen for a variety of reasons.
+                     When you submit a payment to we contact your bank according to the Card Details you entered, they have automated systems that determine whether or not to accept the payment.
+                     These systems take various signals into account, such as your customer’s spending habits, account balance, and card information like the expiration date and CVC
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFive">How can I avoid declines?</a>
+                </h4>
+            </div>
+            <div id="collapseFive" class="panel-collapse collapse">
+                <div class="panel-body">
+                   Asking for the CVC helps. Collecting more information helps banks decide whether or not to accept a transaction.
+                    <br />
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSix">How long do refunds take to reach my account?</a>
+                </h4>
+            </div>
+            <div id="collapseSix" class="panel-collapse collapse">
+                <div class="panel-body">
+                    There is no refund policy, you are not on a contract basis. For more details send us a feedback.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseEight">How do I get my payment receipt?</a>
+                </h4>
+            </div>
+            <div id="collapseEight" class="panel-collapse collapse">
+                <div class="panel-body">
+                   You will receive your payment receipt on your registered Auto Xtion email Id.
+
+ 
+                </div>
+            </div>
+        </div>
+       
+
+        <div class="faqHeader">Subscription Plan </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseFour">What is my Subscription Plan?</a>
+                </h4>
+            </div>
+            <div id="collapseFour" class="panel-collapse collapse">
+                <div class="panel-body">
+                    See you Profile Page for information.
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title">
+                    <a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseSeven">When will I have to pay for Monthly service fee?</a>
+                </h4>
+            </div>
+            <div id="collapseSeven" class="panel-collapse collapse">
+                <div class="panel-body">
+                    On the first of every month, you will be required to pay a fee of A$50.00 for availing Auto Xtion services.
+                </div>
+            </div>
+        </div>
+    </div>
+  </div></div>
+{%endblock%}

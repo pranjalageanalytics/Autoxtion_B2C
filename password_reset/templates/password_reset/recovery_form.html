@@ -1,0 +1,81 @@
+{% extends "base4.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+{%block head%}
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<style>
+.recover:hover{
+ color: #fff;
+background-color: #f38619;
+border-color: #f38619;
+}
+.errorlist {
+list-style-type:none;
+    color: red;
+    width: 101%;
+}
+
+.recover{
+ 
+ background-color:#f38619;
+ box-border:#f38619;
+ color:#fff;
+}
+.log{
+padding-top:5%;}
+</style>
+<script>
+$(document).ready(function(){
+ $("#btn").click(function() {
+  $("#id_username_or_email").attr("class","form-control");
+  flag=true;
+  if(id_username_or_email.value==""){
+   document.getElementById('error2').innerHTML=" This field is required!";
+   
+   flag=false;
+   }
+  
+  return flag;
+ });
+});
+
+
+</script>
+{%endblock%}
+{% block content %}
+<body background="{% static 'images/background.png' %}" >
+<div class="data_recover"><br>
+<div class=container  style=" min-height: calc(80vh - 40px);">
+   
+<div class="row log">
+          <div  class="col-md-6 col-sm-offset-3"></div>
+      
+         <div class="panel-heading">   
+          <center><img src="{% static 'images/auto_100.png' %}" ></center>
+          </div>
+          <center >
+                		<h3 style="color:#fff;">
+                			Kindly enter your registered Email !!</h3>
+                		
+                		
+                	</center>
+         </div>
+         <div  class="col-md-4 col-sm-offset-4" style="padding-top:15px;">
+   			<center><form method="post" action="#"  role="form" style="width:100%;">
+			   {% csrf_token %}
+			   {% csrf_token %}
+			   {{ form.as_p }}
+			   <div id="error2" style="color:red"></div><br>
+   <input class="btn recover  btn-block " id="btn" type="submit" value="{% trans 'Recover my password' %}" style="width:100%;"  >   
+  </form></center>
+  
+        <center><div class="login" style="color:#6d7980"> Click here to
+    <a href="/registration/login/"> <font style="color:FFBF40;text-decoration:none;"> Login </font></a></div></center><br><br>
+    </div>
+    
+
+
+</div></div>
+ <br/> <br/> </div>
+ </body>
+{% endblock %}

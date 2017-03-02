@@ -1,0 +1,108 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/timeline.css' %}">
+ 
+ <style>
+ hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #6B748A;
+}
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+ </style>
+ 
+{% endblock %}
+{% block content%}
+ <input type="hidden" id="group" value="{{group.name}}">
+<div>
+   
+    
+ <div class="page-header">
+             <h4 class="" style="color: #6B748A;font-size:17px;"><span class="glyphicon glyphicon-th-list"></span>
+                	CUSTOMER HISTORY</h4>
+
+        </div>
+  <div class="dropdown pull-right ">
+         <a onclick="window.history.go(-1); return false;" style="text-decoration:none;">
+            <button type="button" class="btn btn-primary " data-dismiss="modal">
+               <i class="fa fa-reply" aria-hidden="true">
+               </i> Back</button>
+           </a>    
+            
+             </div>
+    
+	 {% for app in var3 %}
+<div class="col-md-11" style="margin-bottom: 5px;">
+                            <div class="panel-heading" data-toggle="collapse" data-parent="#{{forloop.counter0}}" href="#{{forloop.counter0}}" style="background-color: #6B748A;color: white;">
+                                <h4 class="panel-title">
+                                   {{ app.status }} on {{app.date_update}} for request  {{ app.request.service_type }}<span style="float: right;"><strong>Date:</strong> {{app.date}}   
+                                  
+                                  <i class="glyphicon glyphicon-chevron-down color pull-right" style="color: white;"></i>
+                                </h4>
+                            </div>
+                            <div id="{{forloop.counter0}}" class="panel-collapse collapse">
+                                <div class="panel-body" style="background-color: #efefef;">
+                                <div>
+
+{% for cell in detail %}
+{% with a=cell.appointment.pk b=app.pk %}
+{% if a = b %}
+
+ <div class=" row col-md-4">
+                   			<strong>Status:</strong>
+                   			{% if cell.accept = False %}
+								Decline
+							
+							{% else %}
+								Accepted
+							{% endif %}
+					</div>
+<div class="row">
+		   <div class="col-md-4">
+                   			<strong>Service Type:</strong>{{cell.service}}
+					</div>
+					
+					<div class="col-md-2">
+                   			<strong>Price:</strong>{{cell.amount}}
+					</div>
+					<div class="col-md-6">
+                   			<strong>Description:</strong>{{cell.description}}
+					</div>
+					
+</div>
+
+
+{% for sub in sub_detail %}
+{% with c=cell.pk d=sub.upcellappointment.pk %}
+{% if c = d %}
+
+<div class="row">
+		   <div class="col-md-6">
+                   			<strong>Sub Service Type:</strong>{{sub.subservicetype}}
+					</div>
+								
+</div>
+
+{% endif %}
+{% endwith %}
+{% endfor %}
+
+<hr>
+
+{% endif %}
+{% endwith %}
+{% endfor %}
+</div>
+                                    </div>
+                            </div>
+                        </div>
+          
+{% endfor %}     
+ 
+{% endblock %}

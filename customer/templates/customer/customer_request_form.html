@@ -1,0 +1,373 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<style>
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+.desc{
+height:40px;
+padding-top: 25px;
+}
+.thumb-image{
+
+height:400px;
+width:400px;
+}
+</style>
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+  <script src="{% static 'js/validation/request_validation.js' %}"></script>
+ <link rel="stylesheet" href="{% static 'css/wickedpicker.css' %}">  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+ <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>  
+  <script type="text/javascript" src="{% static 'js/wickedpicker.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/noty.js' %}"></script>
+ <script type="text/javascript" src="{% static 'js/bootstrap-imageupload.js' %}"></script>
+<script type='text/javascript'>
+$( document ).ready(function() {
+	var hv = $('#myhidden3').val();
+	var hv1 = $('#myhidden4').val();
+	//alert(hv);
+	//alert(hv1)
+	if (hv.length<1) {
+	    //alert("in if");
+	    //$(select).prop('disabled',false);
+	    
+	}
+	else{
+		//alert("in else");
+		$('#id_service_type').empty();
+		$('#id_service_type').append("<option value="+hv+">"+hv1+"</option>");
+		//$("#id_service_type").prop('disabled',true);
+	}
+	
+    
+    
+});
+
+
+$(function() {
+    $('#id_customer').change(function() {
+    	
+        // if changed to, for example, the last option, then
+        // $(this).find('option:selected').text() == D
+        // $(this).val() == 4
+        // get whatever value you want into a variable
+        var x = $(this).val();
+        // and update the hidden input's value
+        $('#myhidden').val(x);
+    });
+
+    
+   $('#id_promotion').change(function() {
+    	
+        // if changed to, for example, the last option, then
+        // $(this).find('option:selected').text() == D
+        // $(this).val() == 4
+        // get whatever value you want into a variable
+        var x = $(this).val();
+        // and update the hidden input's value
+        $('#myhidden2').val(x);
+        
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+$("#button_submit").click(function(){
+	
+	
+	
+	 var fileUpload = $("#id_image");
+	 var str = fileUpload.val();
+	// alert("upload data"+fileUpload.val());
+	 var n = str.endsWith(".png");
+	 var m = str.endsWith(".jpeg");
+	 var p = str.endsWith(".jpg");
+	var n1 = str.endsWith(".PNG");
+	 var m1 = str.endsWith(".JPEG");
+	 var p1 = str.endsWith(".JPG");
+
+	  flag=true;
+
+	 if (str != "")
+		 {
+		
+	
+	 
+		 if (n||m||p||n1||m1||p1)
+			 {
+			 var fuData = document.getElementById('id_image');
+			 var FileUploadPath = fuData.value;
+			// alert(FileUploadPath);
+			 var size = (fuData.files[0].size/1024)/1024;
+			 //alert(size);
+			 if(size>1)
+				 {
+				 document.getElementById('lblError').innerHTML="Size should be less than 1MB";
+					// alert("file format is not correct");
+					 flag=false;
+				 }
+			 else{
+			 $("#lblError").hide();
+			// document.getElementById('lblError').innerHTML="File format correct";
+			// alert("file format correct");
+			 flag=true;
+			 }
+			 }
+		 else{
+			 document.getElementById('lblError').innerHTML="Please upload file in '.png' or '.jpeg'or 'jpg' format only";
+			// alert("file format is not correct");
+			 flag=false;
+		 }
+		 }
+	return flag;
+});
+});
+</script>   
+
+<script>
+
+$(document).ready(function(){
+	//for disable fields
+	console.log('function called');
+	//for disable fields
+	console.log('function called');
+	
+	
+	//for applying class to fields
+	//$("#id_image").attr("class","form-control");
+	$("#id_customer").attr("type","hidden");
+	$("#id_promotion").attr("class","form-control");
+	$("#id_description").attr("class","form-control");
+	$("#id_service_type").attr("class","form-control");
+	$("#id_customer").attr("class","form-control");
+	$("#id_date").attr("class","form-control");
+	$("#id_from_time").attr("class","form-control");
+	$("#id_to_time").attr("class","form-control");
+	$(".data_request").attr("class","form-control");
+	  $( "#id_date" ).datepicker({minDate:0,dateFormat:'dd/mm/yy'});
+	    $('#id_from_time').wickedpicker();
+	    $('#id_to_time').wickedpicker();
+	   
+	  });
+       
+
+$.ajax({
+	 url:'/customer/get_lead/',
+        type:"GET",
+  }).done(function(data){
+	console.log(data);
+	   $('#myhidden').val(data.customer);
+	  
+});
+
+
+</script>
+<style>
+.row{
+margin-right:0px;
+}
+.seperator{
+border-top: 4px solid #F38619;
+}
+.active_class{
+color:#f38619;
+}
+</style>
+
+{% endblock %}
+{% block content %}
+ <div class="page-header">
+             <h4 class="" style="color: #6B748A;font-size:17px;"><span class="glyphicon glyphicon-th-list"></span>
+                  REQUEST FORM</h4>
+
+        </div>
+ <div class="row">   
+               
+          
+          <div class="dropdown pull-right">
+ <a href="{% url 'customer:server_list'  %}">
+            <button type="button" class="btn btn-primary "data-dismiss="modal">
+               <i class="fa fa-reply" aria-hidden="true">
+               </i> Back</button>
+           </a>
+             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+               <i class="fa fa-floppy-o"></i> Save
+                <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                       <li><a id="button_submit" type="submit"style="cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i> Save and Exit</a></li>
+  
+                   </ul>
+             </div>
+        </div>
+  
+
+
+
+<input type="hidden" id="group" value="{{group.name}}">
+  
+{% if form.errors %}
+    
+<ul class="noty-wrapper i-am-new" id="noty_top">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+       <div class="noty_bar" id="noty_453371394759536000">
+       {% for field in form %}
+        {% for error in field.errors %}
+          <div class="noty_message"><span class="noty_text">
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{ error|escape }}</span>
+          </div> {% endfor %} {% endfor %}
+          
+          {% for error in form.non_field_errors %}
+        <div class="noty_message"><span class="noty_text">
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{ error|escape }}</span>
+          </div>
+    {% endfor %}
+          
+          </div>
+          </li></ul>
+      
+     {% endif %}
+<div class="row contact-upper-section ">
+		
+		 
+            <div class="col-md-7"  >
+                {% if promo_detail %}
+                 <div class="row ">
+                   	<div class="col-md-4">
+                   			<strong>Company:</strong><a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.company}}</a>
+					</div>
+				
+				
+                   	<div class="col-md-4">
+                   <strong>Model:</strong> <a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.model_id}}</a>
+					</div>
+			
+				
+                   	<div class="col-md-4">
+                   <strong>Make year:</strong> <a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.make_year}}</a>
+					</div>
+				</div>
+				<div class="row">
+                   	<div class="col-md-4 ">
+                   <strong>Discount:</strong> <a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.discount}}</a>
+					</div>
+				
+          		
+                   	<div class="col-md-4">
+                   <strong>Coupon Code:</strong> <a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.coupon_code}}</a>
+					</div>
+				</div>
+				<div class="row">
+                   	<div class="col-md-4">
+                   <strong>From Date:</strong> <a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.from_date}}</a>
+					</div>
+				
+                   	<div class="col-md-4 ">
+                   <strong>To Date:</strong><a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.to_date}}</a>
+					</div>
+				</div>
+             <div class="row ">
+                   	<div class="col-md-12 ">
+                   <strong>Description:</strong> <a class="data_request" style="background-color:#f2f2f2;color:#000;">{{promo_detail.description}}</a>
+                   
+					</div>
+				</div>
+				<input type="hidden" name="promo_id" id="promotion_id" value="{{promo_detail.pk}}">
+				 {% endif %}
+                </div>
+               
+          <div class="contact-form col-sm-7">
+               
+                <form class="form-horizontal" id="request_form" action="" enctype="multipart/form-data" method="post">{% csrf_token %}
+
+           
+                    <div class="form-group">
+				    
+				            <label for="id_customer" class="control-label"></label>
+        
+           
+                          <input id="myhidden" name="customer" type="hidden"  value="{{request.user.id}}"> 
+				     
+				     </div>
+				 <div class="form-group">
+				     
+				     <label for="id_promotion" class="control-label"></label>           
+                          <input id="myhidden2" name="promotion" type="hidden"  value="{{promo}}"> 
+				    
+				      </div>
+
+
+    <input id="myhidden3"  type="hidden"  value="{{promo_detail.Service_id.pk}}"> 
+    <input id="myhidden4"  type="hidden"  value="{{promo_detail.Service_id}}">
+         <div class="form-group">
+			    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_service_type">Vehicle:</label>  
+			     <div class="col-md-7 col-xs-7 col-sm-7">
+                    {{form.vehicle}}<div id="error_veh"style="color:red"></div>	 
+  			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+ 
+     <div class="form-group">
+			    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_service_type">Service Type:</label>  
+			     <div class="col-md-7 col-xs-7 col-sm-7">
+                    {{form.service_type}}<div id="error1"style="color:red"></div>	 
+  			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+     <div class="form-group">
+			    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_date">Date:</label>  
+			     <div class="col-md-7 col-xs-7 col-sm-7">
+                      {{form.date}}<div id="error7"style="color:red"></div>	
+ 
+  			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+    
+	 <div class="form-group">
+			    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_date">From time:</label>  
+			     <div class="col-md-7 col-xs-7 col-sm-7">
+                        {{form.from_time}}<div id="error8"style="color:red"></div>	
+  			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_date">To time:</label>  
+			     <div class="col-md-7 col-xs-7 col-sm-7">
+                        {{form.to_time}}<div id="error9"style="color:red"></div>	
+  			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+            <div class="form-group">
+			    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_service_type">Request Description:</label>  
+			     <div class="col-md-7 col-xs-7 col-sm-7">
+                        {{form.description}}<div id="error2"style="color:red"></div>	
+  			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-5 col-xs-5 col-sm-5 control-label" for="id_service_type">Image:</label>  
+			     <div class="col-md-7 col-xs-7 col-sm-7">
+                        {{form.image}} <div class="row" id="lblError" style="color: red;margin:5px 0px 5px 0px;"></div> 
+  			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+          
+                 </form>
+            </div>
+            <div class="col-md-5">
+            <div id="image-holder" style="padding-top:43px;"></div>
+            </div>
+
+        </div>
+       
+    </div>
+
+{% endblock %}

@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:harsh@yopmail.com
+FN:harsh kapur
+N:kapur;harsh;;;
+NOTE:Address_harsh\,Adelaide\,Australia
+TEL;TYPE=cell:123456789
+URL:www.harshshop.com
+END:VCARD

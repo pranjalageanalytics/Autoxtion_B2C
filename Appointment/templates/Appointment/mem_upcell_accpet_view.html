@@ -1,0 +1,260 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+ <style>
+ ol, ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+    margin-left: -38px;
+    list-style: none; 
+}
+ </style>
+
+
+<script>
+
+$(document).ready(function(){
+
+	$("#promo").click(function() {
+		//alert("click");
+		promo_form.submit();
+	});
+	
+	$(".hide_service").hide();
+	$(".service_type").attr("disabled", true);
+	$(":checkbox:checked").prop('disabled', true)
+	
+	$("[id$='-accept']").each(function() {
+	$(this).addClass("acc_rej");
+	 });
+		
+	 $(":checkbox:not(:checked)").each(function(){
+		 //alert($(this).attr('class'));
+		 
+		 if($(this).attr('class')=="acc_rej"){
+			 
+			 //alert("p")
+		 }
+		 else{
+			$(this).parent().remove(); 
+		 }
+	    });
+	var sum = 0;
+    $(".tot_amount").each(function() {
+   	 var	t= $(this).val();
+    	//alert(t);
+    	
+    	//sum += +$(this).val();
+    	sum += Number($(this).val());
+        //alert(sum);
+});
+    $("#total_amount").val(sum);
+    
+	$("#total_amount").prop('disabled', true);
+    $(".tot_amount").prop('disabled', true);
+    $('.desc_text').prop('disabled', true);
+    
+    
+    
+	$(".desc_text").height(80);
+	
+	$('#add_more').click(function() {
+        cloneMore('div.table:last', 'form');
+    });
+	
+
+	
+	$("[id$='-service']").change(function(){
+		//alert("change");
+		idservice=$(this).attr('id');
+		//alert(idservice);
+		cnt=idservice.split('-');
+	    //alert(id1);
+	    idsub='id_form-'+cnt[1]+'-sub_service';
+	    
+	    //id_form-0-sub_service
+	    console.log("sub  "+idsub);
+	    console.log("cnt  "+cnt[1]);
+	    var op=$('option:selected', $(this)).val();
+	    //alert(op);
+	    
+	   $.ajax({
+            url : '/appointment/subservice_ajax',
+            type : "GET",
+            data:{serviceid : $('option:selected', $(this)).val()}
+                }).done(function(data) {
+               //alert(data);
+    dict=data;
+                $('#id_form-'+cnt[1]+'-sub_service').prop("disabled", false);
+                $('#id_form-'+cnt[1]+'-sub_service').empty();
+                //$('#idsub').append('<option value="Please Select">Please Select</option>');
+                for (var i = 0; i < data.length; i++) //	id_form-0-sub_service_0, name=form-0-sub_service
+                    {           
+                $('#id_form-'+cnt[1]+'-sub_service').append('<option value="'+data[i].id+'">'+data[i].service_type_name+'</option>');
+                //$('#id_form-'+cnt[1]+'-sub_service').append('<li><input id=id_form-'+cnt[1]+'-sub_service_'+cnt[1]+' name=form-'+cnt[1]+'-sub_service type="checkbox" value="'+data[i].id+'">'+data[i].service_type_name+'</li>');
+                 //$("#idsub").append($('<option>', {value:data[i].id, text: data[i].service_type}));
+            } 
+            }); 
+	   
+	});
+	
+	$("[id$='-amount']").keyup(function() {
+		//alert("keypress");
+	var sum = 0;
+     $(".tot_amount").each(function() {
+    	 var	t= $(this).val();
+     	//alert(t);
+     	
+     	//sum += +$(this).val();
+     	sum += Number($(this).val());
+         //alert(sum);
+});
+     $("#total_amount").val(sum);
+	});	
+	
+	$("[id$='-service']").change(function(){
+		//alert("change");
+		idservice=$(this).attr('id');
+		//alert(idservice);
+		cnt=idservice.split('-');
+		
+	});
+	
+ 
+ 
+ $("#id_member").attr("type","hidden");
+ 
+ 
+ $(".selectfilter").attr("class","form-control read_only");
+ $(".read_only").attr('readonly','readonly');
+ $("#id_model_id").attr("class","form-control");
+
+ 
+ 
+ 
+ dict=null;
+    $("#id_company" ).change(function() {
+var op=$('option:selected', $(this)).text();
+  //alert(op);
+ 
+            $.ajax({
+            url : '/promotion/test',
+            type : "GET",
+            data:{companyid : $('option:selected', $(this)).val()}
+                }).done(function(data) {
+                //alert(data);
+    dict=data;
+                $('#id_model_id').prop("disabled", false);
+                $('#id_model_id').empty();
+                $('#id_model_id').append('<option value="Please Select">Please Select</option>');
+                for (var i = 0; i < data.length; i++)
+                    {           
+                 $('#id_model_id').append('<option value="'+data[i].id+'">'+data[i].model_name+'</option>');
+            }  });
+        
+            
+
+    });
+    
+    
+    });
+</script>
+
+
+
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+             <h4 class="" style="color: #6B748A;"><span class="glyphicon glyphicon-th-list"></span>
+                 UPSELL FORM</h4>
+
+        </div> 
+  <form class="form-horizontal" action='' method="POST"id="promo_form" onsubmit="return validate();">{% csrf_token %}
+ <div class="row"style="margin-right: 0px;margin-left:0px;">   
+       <div class="col-md-12 ">         
+          
+          <div class="dropdown pull-right">
+             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+               <i class="fa fa-floppy-o"></i> Action
+                <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                       <li><a href="{%  url 'Appointment:server_list'  %}"><i class="fa fa-reply" aria-hidden="true"></i>Back</a></li>    
+                   </ul>
+             </div>
+</div></div>
+
+  
+<input type="hidden" id="group" value="{{group.name}}">
+<input type="hidden" id="edit" value="{{edit}}">
+<div class="" >  
+
+    <div class="promotion" >      
+       
+	  <form class="form-horizontal" action='' method="POST"id="promoform" onsubmit="return validate();">{% csrf_token %}
+	  
+	  	 {{ testform.management_form}}
+  <div class='table'>
+      {% for form in testform %}
+       
+      {{ form.id }}
+      
+        <fieldset>
+        <div>
+		   <div class="row">
+		   <div class="col-md-1">
+                   			<strong>Accept:</strong>{{form.accept}}
+					</div>
+				<!-- <div class="hide_service"><input type="hidden" id="11" value="{{form.service}}"></div> -->
+		   <div class="col-md-4">
+                   			<strong>Service Type*:</strong>{{form.service}}
+					</div>
+					
+					<div class="col-md-4">
+                   			<strong>Sub Service:</strong>{{form.sub_service}}
+					</div>
+					<div class="col-md-2">
+                   			<strong>Price:</strong>{{form.amount}}
+					</div>
+		   </div>
+		   <div class="row">
+		   <div class="col-md-4">
+                   			<strong>Description*:</strong>{{form.description}}
+					</div>
+					
+			</div>
+			</div>
+		
+		<hr style="margin-top: 20px;margin-bottom: 20px;border: 0;border-top: 3px solid #eee;">
+			 
+		{% endfor %}
+		
+		</div>
+		<div class="col-md-4 col-sm-offset-8" style="    margin-bottom: 23px;">
+		<strong>Total Amount:</strong>
+		<input class="form-control" id="total_amount" name="tot_amount" type="text">
+		</div>
+		
+		
+		
+			
+		    <div class="form-group">
+		      <!-- Button -->
+		     
+		    </div>
+       </fieldset>
+    </form> 
+     
+ </div>
+</div>
+   
+{% endblock %}

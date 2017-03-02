@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:payment@yopmail.com
+FN:payment dgh
+N:dgh;payment;;;
+NOTE:123456789\,New South Wales\,Australia
+TEL;TYPE=cell:987654321
+URL:www.shop.com
+END:VCARD

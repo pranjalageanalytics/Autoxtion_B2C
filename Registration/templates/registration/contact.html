@@ -1,0 +1,227 @@
+
+{% load static from staticfiles %}
+
+
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="{% static 'css/fontawesome.css' %}" rel="stylesheet">
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<link href="{%static 'css/utils.css'%}" rel="stylesheet"/>
+<script type="text/javascript" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+<style>
+.btn-success:hover, .btn-success:focus, .btn-success.focus, .btn-success:active, .btn-success.active, .open > .dropdown-toggle.btn-success {
+    color: #fff;
+    background-color: #f38619;
+    border-color: #f39619;
+}
+.glyphicon {
+    position: relative;
+    top: 9px;
+    display: inline-block;
+    font-family: 'Glyphicons Halflings';
+    font-style: normal;
+    font-weight: normal;
+    line-height: 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+.btn-block {
+    display: block;
+    width: 100%;
+    padding-right: 0;
+    padding-left: 0;
+}
+.fc-button, .btn, .size-md {
+    line-height: 32px;
+    height: 34px;
+    min-width: 34px;
+}
+.fc-button, .btn {
+    font-size: 14px;
+    font-weight: normal;
+    position: relative;
+    display: inline-block;
+    padding: 0 12px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    text-align: center;
+    white-space: nowrap;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+    background-image: none;
+    -o-user-select: none;
+}
+.bg-facebook {
+    color: #fff !important;
+    background: #3b5998;
+}
+.btn.bg-facebook:hover {
+    background: #304b85;
+}
+.glyph-icon {
+    text-align: center;
+}
+a, a:visited, a:focus, a:active, *:visited, *:focus, *:active {
+    outline: none;
+}
+.bg-twitter {
+    color: #fff !important;
+    background: #3a92c8;
+}
+.bg-google {
+    color: #fff !important;
+    background: #dd4b39;
+}
+.mrg15T {
+    margin-top: 15px !important;
+}
+@media(min-width:320px) and (max-width:400px){
+	.separator-line{
+		margin-top:30px;
+		    
+	}
+	.container{
+		width: 75%;
+	}
+	a{
+		width: 51%;
+    margin-left: 53px;
+	}
+	.btn-block {
+    display: block;
+     width:  51% !important;
+     margin-top:5px;
+}
+}
+@media(min-width:410px) and (max-width:700px){
+	.separator-line{
+		margin-top:100px;
+	}
+	.container{
+		width: 75%;
+		padding-top: 3px;
+	}
+	.btn-block {
+    display: block;
+     width:  51% !important;
+     margin-top:5px;
+     margin-left: 54px;
+}
+@media(min-width:720px) and (max-width:1366px){
+	.separator-line{
+		margin-top:120px;
+	}
+	.container{
+		
+		padding-top: 60px;
+	}
+}
+@media(min-width:760px) and (max-width:1000px){
+	h2{
+		margin-left: 157px;
+	}
+	.container{
+		margin-left: -73px;
+		padding-top: 157px;
+	}
+	.separator-line {
+    margin-top: 325px;
+}
+    
+}
+/* @media only screen and (max-width: 2000px){
+	.separator-line{
+		margin-top:170px;
+	}
+}  */
+/*# sourceMappingURL=bootstrap.css.map */
+
+
+  </style>
+  <style>
+.log{
+padding-top:5%;
+}
+  </style>
+  
+</head>
+<body background="{% static 'images/background.png' %}" >
+
+<div class="container" style="min-height: calc(88vh - 40px);">
+ <div class="panel-heading log">   
+          <center><img src="{% static 'images/auto_100.png' %}" ></center>
+          </div>
+    
+<h2  style="color:#fff; text-align:center; font-weight:lighter;">Contact to the Auto Xtion !</h2>
+    <div class="row">
+        <div class="col-md-6 col-sm-offset-3 background" style="background-color:#fff;border-radius:3px;">
+           <div class="col-md-12">
+            <div class="row mrg15T ">
+                <div class="col-md-4">
+                    <a href="https://www.facebook.com/autoxtion/?fref=ts" title="Facebook" target="_blank" class="btn btn-block tooltip-button bg-facebook" data-original-title="Follow us on Facebook">
+                                   <i class="fa fa-facebook" style="padding-top: 6px;width: 20px;" ></i>    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="https://twitter.com/auto_xtion?lang=en" title="Twitter" target="_blank" class="btn btn-block tooltip-button bg-twitter" data-original-title="Follow us on Twitter">
+                       <i class="fa fa-twitter" style="padding-top: 6px;width: 20px;" ></i>
+                    </a>
+                </div>
+                <div class="col-md-4">
+                    <a href="https://au.linkedin.com/in/ravi-naik-513054117" title="Linkedin" target="_blank" class="btn btn-block tooltip-button bg-google" data-original-title="Follow us on Google+">
+                        <i class="fa fa-linkedin" style="padding-top: 6px;width: 20px;" ></i>
+                    </a>
+                </div>
+            </div>
+            <div class="divider mrg25T mrg25B"></div>
+            <h3> Get in touch</h3>
+            <ul class="contact-list mrg15T mrg25B reset-ul">
+                <li >
+                    <span class="glyphicon glyphicon-home" style="color:#f38619;"></span>
+                    <p style="padding-left: 33px;margin-top: -8px;">P.O BOX 2557
+                    North Parramatta ,1750</p>
+                </li>
+                <li >
+                <span class="glyphicon glyphicon-phone" style="color:#f38619;"></span>
+                   <p style="padding-left: 33px;margin-top: -8px;">(636) 517-1243</p>
+                </li>
+                <li >
+                   <span class="glyphicon glyphicon-envelope" style="color:#f38619;"></span>
+                    <p style="padding-left: 33px;margin-top: -8px;"> info@autoxtion.com.au</p>
+                </li>
+                  <li >
+                   <span class="glyphicon glyphicon-globe" style="color:#f38619;"></span>
+                    <p style="padding-left: 33px;margin-top: -8px;"><a href="https://www.autoxtion.com.au/" title="" target="_blank"> www.autoxtion.com.au</a></p>
+                </li>
+
+
+
+            </ul>
+            <div class="divider mrg25T mrg25B"></div>
+            <h3 class="mrg15B">About us</h3>
+            <p class="font-gray-dark">Our vision is to strive for excellence in this innovative world through the eyes of our members by demanding the best and keeping in line with expectations.</p>
+        </div>
+                
+        </div>
+    </div>
+</div>
+<hr class="separator-line" style="border-top: 1px solid #fff; opacity:0.5;width:65%;font-weight:200;padding-top:-5px;">
+<div  class="col-md-4 col-sm-offset-2" style="color:#fff;">
+      <font>&copy;Auto Xtion  {% now "Y" %}</font>
+   </div>
+<div  class="col-md-2 col-sm-offset-2" style="color:#fff;">
+      <a href="{% url 'Registration:faq' %}" target="_blank"><font color="#FFBF40">FAQ   </font> </a>
+   
+      <a ><font color="#FFBF40">| CONTACT  </font> </a>
+      </div>
+      <div class="col-md-4 col-sm-offset-2">
+      <a style="color:#fff;">    Australia</a>
+      <img src="{% static 'images/icon.gif' %}" >
+   </div> 
+
+
+</body>

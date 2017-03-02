@@ -1,0 +1,328 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+<!-- Custom Theme files -->
+<link href="{% static 'css/bootstrap.css' %}" type="text/css" rel="stylesheet" media="all">
+
+<!-- //Custom Theme files -->
+<!-- js -->
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<!-- //js -->
+<!-- font-awesome icons -->
+<link href="{% static 'css/font-awesome.css' %}" rel="stylesheet">
+<!-- //font-awesome icons -->
+<!-- start-smooth-scrolling-->
+<script type="text/javascript" src="{% static 'js/move-top.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/easing.js' %}"></script>
+<link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+<!--//end-smooth-scrolling-->
+
+  <style>
+
+.nav-list a, .nav-list strong, .nav-list .share-options {
+    background: #fff !important;
+    border-bottom: 1px solid #fff !important;
+    font-size: 14px;
+    font-weight: 500;
+    color: #f38619 !important;
+    padding: 15px;
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    transition-duration: 0.2s;
+}
+.nav-list a:hover, .nav-list .share-options:hover {
+    background: #fef2e7 !important;
+    color: #4b5658;
+}
+.nav > li > a {
+    position: relative;
+    display: block;
+    padding-left:  15px !important;
+ padding-left:  15px !important;
+
+}
+
+.col-md-2, .col-sm3{
+padding-left:0px !important;
+}
+.affix-row{
+     margin-left: 0px !important;
+}
+.navbar-right{
+ margin-right: -15px;
+}
+#normal_count{
+	background-color:#00bca4 !important;
+}
+ @media (min-width: 992px){
+.col-md-10 {
+    width: 82.333333%;
+}
+}
+  
+  .panel {
+      border: 1px solid #27a026;
+      /* border: 1px solid #f38619; */
+      border-radius:0 !important;
+      transition: box-shadow 0.5s;
+  }
+  .panel:hover {
+      box-shadow: 5px 0px 40px rgba(0,0,0, .2);
+  }
+  .panel-footer /* .btn:hover */ {
+      /* border: 1px solid #f4511e; */
+      background-color: #fff !important;
+      color: #27a026;
+  }
+  .panel-heading {
+      color: #27a026 !important;
+      background-color: #fff !important;
+      padding: 25px;
+      border-bottom: 1px solid transparent;
+      border-top-left-radius: 0px;
+      border-top-right-radius: 0px;
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+  }
+  .panel-footer {
+      background-color: white !important;
+  }
+  .panel-footer h3 {
+      font-size: 32px;
+  }
+  .panel-footer h4 {
+      color: #aaa;
+      font-size: 14px;
+  }
+  .panel-footer .btn {
+      margin: 15px 0;
+      background-color: #27a026;
+      color: #fff;
+  }
+  @media screen and (max-width: 768px) {
+    .col-sm-4 {
+      text-align: center;
+      margin: 25px 0;
+    }
+    
+ 
+ 
+  </style>
+
+{%endblock%}
+
+{% block content %}
+   <input type="hidden" id="group" value="{{group.name}}">
+<div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                ENROLMENT</h4>
+
+        </div>
+ <div >
+  <center><div class="data_Subscription" ><font color="#FFBF40"size:"50"><label data-toggle="modal"data-target="#myModal"><u><span style="cursor:pointer">Auto Xtion Subscription plan</span></u></label></font></div></center> 
+  <br>
+  
+  <div class="row">
+    <div class="col-sm-4 col-xs-12 col-md-offset-1">
+      <div class="panel panel-default text-center">
+        <div class="panel-heading">
+          <h3>Monthly Service Fee </h3>
+                  </div>
+        <div class="panel-body" style="color: black;">
+          <p><strong>Holistic</strong> Dashboard</p>
+          <p><strong>Easy</strong> CRM</p>
+          <p><strong>Service</strong> Request</p>
+          <p><strong>Unlimited</strong> Promotions</p>
+          <p><strong>Schedule</strong> Appointments</p>
+        </div>
+        <div class="panel-footer" style="color: black;">
+        <h3>A$50.00 <!-- <font size="3"><sup>**</sup>Excluding GST</font> --></h3>
+          <h4>per month</h4>
+          <button class="btn btn-lg" type="button" style="background-color:#fff;color:#27a026;border: 1px solid #27a026;">ENROLED</button>
+           <button class="btn btn-lg btn-success" type="submit" data-toggle="modal" data-target="#confirm_unsubscribe">UNSUBSCRIBE</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="col-sm-4 col-xs-12 col-md-offset-2">
+      <div class="panel panel-default text-center" style="border: 1px solid #f73210;">
+        <div class="panel-heading" style="color:#f73210 !important;">
+          <h3>Our Premium Services</h3>
+<!-- <h5>  <br></h5> -->
+        </div>
+        <div class="panel-body" style="color: black;">
+        <br>
+          <p><strong>NationWide</strong> Branding</p>
+          <p><strong>Communication Platform</strong> Member/Customer</p><br><br><br>
+          
+        </div>
+        <div class="panel-footer" style="color: black;">
+        <br>
+          <p><strong>Auto Xtion</strong> Mobile - Coming Soon!!</p>
+          <p><strong>E-Commerce</strong> Platform - Future Release !!</p>
+          <p><strong>Group Buying</strong> Discounts - Future Release !!</p>
+          <br><br><br>
+        </div>
+      </div>
+    </div> 
+      
+  </div>
+  
+</div>
+
+
+<div id="confirm_unsubscribe" class="modal " role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" class="close">&times;</button>
+        <h4 class="modal-title">Unsubscribe</h4>
+      </div>
+      <div class="modal-body">
+      <form action="/registration/unsubscribe/"  >
+      {% csrf_token %}
+      <p>Are you sure that you want to Unsubscribe</p>
+      
+      <div class="modal-footer">
+      <input type="submit" value="Yes" class="btn btn-success">
+        <button type="button"  class=" btn btn-primary" data-dismiss="modal" >No</button>
+      </div>
+    
+</form></div>
+  </div>
+</div>
+</div>
+
+<div class="modal fade" id="myModal" role="dialog">
+		<div class="modal-dialog modal-lg">
+		  <div class="modal-content">
+			<div class="modal-header">
+			  <button type="button" class="close" data-dismiss="modal">&times;</button>
+			 <center><h4 class="modal-title"> Subscription Plan</h4></center>
+			</div>
+			<div class="modal-body">
+			   <li class="list-group-item">
+				<h4 style="
+					color: #f59b23;
+					font-weight: 300;
+					/* padding: 20px; */
+					/* margin: 20px; */
+				">Workshop Management system integrated with Accounting </h4>
+
+									  <medium>
+							  
+							</medium><ul style="
+					display: block;
+					margin-left: auto;
+					margin-right: auto;
+					border-top: 1px solid #efefef;
+					border-bottom: 1px solid #efefef;
+					margin: 15px 0 30px;
+					padding: 15px 0;
+				">
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					margin-left: 40px;
+					padding: 5px;
+				"> NATIONWIDE BRAND NAME </li>
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					margin-left: 40px;
+					padding: 5px;
+				"> COMMUNICATION PLATFORM between Members & Customers 
+				 <ul>
+				<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Dashboard</li>
+							<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Lead Generation</li>
+				<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Customer View</li>
+							<li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Unlimited Promotions</li>
+				 <li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Manage Service Request</li>
+				 <li class="glyphicon glyphicon-ok" style="
+					float: none;
+					display: inherit;
+					margin-left: 20px;
+					padding: 5px;
+				"> Manage Appointments</li>
+						</ul>
+
+				</li>
+							
+				  
+				<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					padding: 5px;
+					margin-left: 40px;
+				color:gray;
+				"> AUTOXTION ON MOBILE - Coming Soon !! </li>
+							<li class="glyphicon glyphicon-star" style="
+					float: none;
+					display: inherit;
+					padding: 5px;
+					margin-left: 40px;
+				color:gray;
+				"> E-COMMERCE PLATFORM - Future Release !! </li>
+				  </ul>
+				</li>
+						  <li class="list-group-item"><h4 style="
+					color: #f59b23;
+					font-weight: 300;
+					/* padding: 20px; */
+					/* margin: 20px; */
+				">Monthly Service Fee - AUD $50.00 <font size="3"><sup>**</sup>Excluding GST</font></h4>
+
+									  <medium>
+							  <span class="text-gold" style="
+					font-weight: 400;
+					color: #39484a;
+					/* margin-top: 20px; */
+				"></span>
+							     <p>Note :You will have access to load customer information and familiarise yourself with the different features of the platform.</p></medium></li>
+
+			</div>
+			<div class="modal-footer">
+			  <button type="button" class="btn btn-default" data-dismiss="modal"  id="modal" >Close</button>
+			</div>
+		  </div>
+		</div>
+	  </div>
+{% endblock %}
+

@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:swati@yopmail.com
+FN:swati gautam
+N:gautam;swati;;;
+NOTE:address swati\,New South Wales\,Australia
+TEL:987654321
+URL:www.shop.com
+END:VCARD

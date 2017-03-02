@@ -1,0 +1,35 @@
+
+{% load static from staticfiles %}
+
+
+{%block head%}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+  
+  
+{%endblock%}
+<body>
+{% block content%}
+{%endblock%}
+<hr class="separator-line" style="border-top: 1px solid #fff; opacity:0.5;width:65%;font-weight:200;padding-top:-5px;">
+<div  class="col-md-4 col-sm-offset-2" style="color:#fff;">
+      <font>&copy;Auto Xtion 2016</font>
+   </div>
+<div  class="col-md-2 col-sm-offset-2" style="color:#fff;">
+      <a href="{% url 'Registration:faq' %}" target="_blank"><font color="#FFBF40">FAQ   </font> </a>
+      <a href="{% url 'Registration:pdfopen' %}" target="_blank" ><font color="#FFBF40">| HELP   </font> </a>
+      <a href="{% url 'Registration:contact' %}" target="_blank"><font color="#FFBF40">| CONTACT  </font> </a>
+      </div>
+      <div class="col-md-4 col-sm-offset-2">
+      <a style="color:#fff;">    Australia</a>
+      <img src="{% static 'images/icon.gif' %}" >
+   </div> 
+
+</body>
+

@@ -1,0 +1,97 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/timeline.css' %}">
+ 
+ <style>
+ hr {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    border-top: 1px solid #6B748A;
+}
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+ </style>
+ 
+{% endblock %}
+{% block content%}
+ <input type="hidden" id="group" value="{{group.name}}">
+<div>
+   
+    
+ <div class="page-header">
+             <h4 class="" style="color: #6B748A;font-size:17px;"><span class="glyphicon glyphicon-th-list"></span>
+                	APPOINTMENT HISTORY</h4>
+
+        </div>
+
+<a href="{% url "Appointment:appointment_history" %}"  style="color:white;" class="pull-right">
+      <button class="btn btn-primary " type="button" style="margin-bottom:10px;margin-right:16px;">
+          <span class="fa fa-reply"></span>   Back
+              </button>
+</a>
+<div>
+
+</div>
+    
+	
+<div class="col-md-11" style="margin-bottom: 5px;">
+                           
+                            
+
+{% for cell in detail %}
+
+
+ <div class=" row col-md-4">
+                   			<strong>Status:</strong>
+                   			{% if cell.accept = False %}
+								Decline
+							
+							{% else %}
+								Accepted
+							{% endif %}
+					</div>
+<div class="row">
+		   <div class="col-md-4">
+                   			<strong>Service Type:</strong>{{cell.service}}
+					</div>
+					
+					<div class="col-md-2">
+                   			<strong>Price:</strong>{{cell.amount}}
+					</div>
+					<div class="col-md-6">
+                   			<strong>Description:</strong>{{cell.description}}
+					</div>
+					
+</div>
+
+
+{% for sub in sub_detail %}
+
+
+<div class="row">
+		   <div class="col-md-6">
+                   			<strong>Sub Service Type:</strong>{{sub.subservicetype}}
+					</div>
+								
+</div>
+
+
+{% endfor %}
+
+<hr>
+
+
+{% endfor %}
+</div>
+                                    </div>
+                            </div>
+                        </div>
+          
+   
+ 
+{% endblock %}

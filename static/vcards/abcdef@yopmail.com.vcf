@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:abcdef@yopmail.com
+FN:abcd sdfd
+N:sdfd;abcd;;;
+NOTE:sdfghjk\,New South Wales\,Australia
+TEL;TYPE=cell:123456789
+URL:www.shop.com
+END:VCARD

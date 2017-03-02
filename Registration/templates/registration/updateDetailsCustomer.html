@@ -1,0 +1,169 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+
+{% block head %}
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/validation/updatepassword.js' %}"></script>
+<script src="{% static 'js/validation/update_cprofile.js' %}"></script>
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<script src="{% static 'js/tooltip.js' %}"></script>
+
+<script>
+
+$("#id_name").attr("class","form-control");
+$("#id_address").attr("class","form-control");
+$("#id_licenseid").attr("class","form-control");
+$("#id_email").attr("class","form-control");
+$("#id_phone").attr("class","form-control");
+</script>
+
+<script>
+$(document).ready(function(){
+ $('#new_password').tooltip();
+ 
+
+});
+</script>
+
+<style>
+    label{
+    padding-left:5px;
+    }
+</style>
+
+{% endblock %}
+
+
+{%block content%}
+
+<input type="hidden" id="group" value="{{group.name}}">
+
+   <div class="container">
+      <ol class="breadcrumb">
+       <li><a href="#">Profile</a></li>
+       </ol>
+       
+       
+       {% if context1 %}
+   <label id="error_update" class="alert alert-success">{{context1}}</label>
+   {% endif %}
+       {% if errorpassword %}
+   <label id="error_password" class="alert alert-danger" id="errorfield">{{errorpassword}}</label>
+   {% endif %}
+    {% if context2 %}
+   <label id="error_password" class="alert alert-danger" id="errorfield">{{context2}}</label>
+   {% endif %}
+     <div class="panel-heading">
+             <ul class="nav nav-tabs">
+                  <li id="tab1" class="active"><a href="#tab1default" data-toggle="tab">Update Profile</a></li>
+                  <li id="tab2" ><a href="#tab2default" data-toggle="tab">Change Password</a></li>
+             </ul>
+      </div>
+      
+   <div class="panel-body" style="min-height: calc(62vh - 40px);">
+       <div class="tab-content">
+       
+          <div class="tab-pane fade in active" id="tab1default">
+          <form method="post" action="{% url 'Registration:updatedetails' user.id %}"> {% csrf_token %}
+                           <div class="row">
+						      <div class="col-md-4">
+								<div class="form-group">
+								<label for="fname">First name*</label>
+								  {{update_profile.name}}<div id="error1" style="color:#E34234"></div>
+								</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+									<label for="saddress">Address*</label>
+										{{update_profile.address}}<div id="error2" style="color:#E34234"></div>
+									</div>
+								</div>
+			         		 </div>
+			         		 <div class="row">
+							   <div class="col-md-4">
+								 <div class="form-group">
+								 <label for="licenseid">License Id</label>
+								   {{ update_profile.licenseid}}<div id="error3" style="color:#E34234"></div>
+								 </div>
+							   </div>
+							</div>
+                            <div class="row">
+							  <div class="col-md-4">
+								<div class="form-group">
+								<label for="emailid">Email Id*</label>
+								 {{update_profile.email}}<div id="error4" style="color:#E34234"></div>
+								</div>
+							  </div>
+							</div>
+					        <div class="row">
+							  <div class="col-md-4">
+								<div class="form-group">
+								<label for="phone">Phone number*</label>
+											 {{ update_profile.phone}}<div id="error5" style="color:#E34234"></div>
+								</div>
+							   </div>
+					         <div class="col-md-4">
+         <div class="form-group">
+         <label for="phone">Emergency number</label>
+           {{update_profile.Emg_no}}
+           <div id="error6" style="color:#E34234"></div>
+         </div>
+          </div>
+							   
+							 
+							    
+							    </div>
+							    
+							     <div class="row">
+								     <div class="col-md-4">
+										 <div class="dropdown">
+										  <button type="submit"  id="btn"  class="btn btn-success">Submit</button>
+										 </div>
+									</div>
+				               </div>
+				              </form>
+					     </div>
+					 
+					                  
+					  
+					    <div class="tab-pane fade" id="tab2default">
+					    <form method="post" action="{% url 'password_reset:password_change' user.id %}"> {% csrf_token %} 
+					        <div class="row">
+								<div class="col-md-4">
+								 <div class="form-group">
+								  <label for="cpassword">Old Password*</label>
+								  {{updatepassword.oldPassword}}<div id="errs" style="color:red"></div>
+								 </div>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-4">
+								 <div class="form-group">
+								 <label for="cpassword">New Password*</label>
+								  {{updatepassword.new_password}}<div id="err1" style="color:red"></div>
+								 </div>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-4">
+								  <div class="form-group">
+								  <label for="cpassword">Confirm Password*</label>
+								{{updatepassword.confirm_pass}}<div id="qwerty" style="color:red"></div>
+								  </div>
+								</div>
+                             </div>
+                              <div class="row">
+								     <div class="col-md-4">
+										 <div class="dropdown">
+										  <button type="submit"   id="submit_frm" class="btn btn-success">Submit</button>
+										 </div>
+									</div>
+				               </div>
+				               </form>
+                        </div>
+                        
+                </div>
+           </div>
+   
+    </div>
+{% endblock%}

@@ -1,0 +1,209 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+
+{% block head %}
+
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/validation/updatepassword.js' %}"></script>
+<script src="{% static 'js/validation/Update_profile.js' %}"></script>
+
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+<script src="{% static 'js/tooltip.js' %}"></script>
+
+<script>
+$(document).ready(function(){
+	$('#new_password').tooltip();
+	$('#id_website').attr('class','form-control');
+
+});
+</script>
+<style>
+    label{
+    padding-left:5px;
+    }
+    
+
+</style>
+<style>
+
+
+</style>
+
+
+{% endblock %}
+
+
+{%block content%}
+
+<input type="hidden" id="group" value="{{group.name}}">
+
+   <div class="container">
+      <ol class="breadcrumb">
+       <li><a href="#">Profile</a></li>
+       </ol>
+       {% if context1 %}
+   <label id="error_update" class="alert alert-success">{{context1}}</label>
+   {% endif %}
+       {% if errorpassword %}
+   <label id="error_password" class="alert alert-danger" id="errorfield">{{errorpassword}}</label>
+   {% endif %}
+     <div class="panel-heading">
+             <ul class="nav nav-tabs">
+                  <li id="tab1" class="active"><a href="#tab1default" data-toggle="tab">Update Profile</a></li>
+                  <li id="tab2" ><a href="#tab2default" data-toggle="tab"style=" font-size: 17px;">Change Password</a></li>
+             </ul>
+      </div>
+     
+   <div class="panel-body">
+       <div class="tab-content">
+     
+          <div class="tab-pane fade in active" id="tab1default">
+          <form method="post" action="{% url 'Registration:updatedetails' user.id %}"> {% csrf_token %}
+                          
+                           <div class="row">
+						      <div class="col-md-4">
+								<div class="form-group">
+								<label for="fname">First name*</label>
+								  {{update_profile.first_name}}
+								  <div id="error1" style="color:#E34234"></div>
+								</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+									<label for="lname">Last name*</label>
+										{{update_profile.last_name}}
+										<div id="error2" style="color:#E34234"></div>
+									</div>
+								</div>
+			         		 </div>
+			         		 	<div class="row">
+							   	<div class="col-md-2 col-xs-2 col-sm-2">
+					                <div class="form-group">
+					                <label for="area_code">Area Code*</label>
+					                    {{update_profile.area_code}}
+					                   <div id="error001" style="color:#E34234;"></div>
+					                 </div>
+					              </div>
+							   <div class="col-md-2 col-xs-4 col-sm-4">
+								 <div class="form-group">
+								 <label for="phoneno">Phone number*</label>
+								   {{update_profile.phone_no}}
+								   <div id="error3" style="color:#E34234"></div>
+								 </div>
+							   </div>
+							   	
+							   	</div> 
+			         		
+                            <div class="row">
+							  <div class="col-md-4">
+								<div class="form-group">
+								<label for="shopname">Shop name*</label>
+								 {{update_profile.shop_name}}
+								 <div id="error4" style="color:#E34234"></div>
+								</div>
+							  </div>
+							  <div class="col-md-4">
+								<div class="form-group">
+								<label for="website">Website</label>
+								{{update_profile.website}}<div id="error12" style="color:red;"></div>
+								  
+								</div>
+								</div>
+							</div>
+					        <div class="row">
+							  <div class="col-md-4">
+								<div class="form-group">
+								<label for="saddress">Shop address*</label>
+									{{update_profile.shop_address}}
+									<div id="error5" style="color:#E34234"></div>
+								</div>
+							   </div>
+					         
+							   <div class="col-md-2">
+								  <div class="form-group">
+									<label for="country">Country*</label>
+									  {{update_profile.country}}
+									  <div id="error6" style="color:#E34234"></div>
+									
+								   </div>
+								  </div>
+							 
+							     <div class="col-md-2">
+								 <div class="dropdown">
+								 <label for="city">State*</label>
+									{{update_profile.city}}
+								  </div>
+								  </div>
+							    </div>
+							    <div class="row">
+			         		  
+							    <div class="col-md-4">
+								 <div class="form-group">
+								 <label for="phoneno">Emergency number</label>
+								   {{update_profile.Emg_no}}
+								   <div id="error7" style="color:#E34234"></div>
+								 </div>
+							   </div>
+							</div>
+							  
+							    
+							     <div class="row">
+								     <div class="col-md-4">
+										 <div class="dropdown">
+										  <button type="submit" id="btn" class="btn btn-success">Submit</button>
+										 </div>
+									</div>
+				               </div>
+				              </form>
+					             </div>  
+					  
+					    <div class="tab-pane fade" id="tab2default">
+					    <form method="post" action="{% url 'password_reset:password_change' user.id %}"> {% csrf_token %} 
+					        <div class="row">
+								<div class="col-md-4">
+								 <div class="form-group">
+								  <label for="cpassword">Old Password*</label>
+								  {{updatepassword.oldPassword}}
+								  <div id="errs" style="color:red"></div>
+								 </div>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-4">
+								 <div class="form-group">
+								 <label for="cpassword">New Password*</label>
+								  {{updatepassword.new_password}}
+								  <div id="err1" style="color:red"></div>
+								 </div>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-4">
+								  <div class="form-group">
+								  <label for="cpassword">Confirm Password*</label>
+									{{updatepassword.confirm_pass}}
+									<div id="qwerty" style="color:red"></div>
+								  </div>
+								</div>
+                             </div>
+                                 
+                              <div class="row">
+								     <div class="col-md-4">
+										 <div class="dropdown">
+										  <button type="submit" id="submit_frm" class="btn btn-success">Submit</button>
+										 </div>
+									</div>
+				               </div>
+				               </form>
+                        </div>
+                        </div>
+					      
+ 
+					  </div>
+					        
+                </div>
+          
+   
+   
+   </div>
+{% endblock%}

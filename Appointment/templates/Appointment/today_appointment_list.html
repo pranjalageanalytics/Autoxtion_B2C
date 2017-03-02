@@ -1,0 +1,248 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"> 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+
+<style>
+
+.input-sm {
+    background-image: url(/static/images/698627-icon-111-search-128.png);
+    background-position: 162px 3px;
+    background-repeat: no-repeat;
+    border: 1px solid #ddd;
+}
+#appointment_table_filter{
+color:#fff;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    z-index: 1000;
+    display: none;
+    float: left;
+    min-width: 150px;
+    padding: 5px 0;
+    margin: 2px 0 0;
+    font-size: 14px;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    border: 1px solid #ccc;
+    border: 1px solid rgba(0,0,0,.15);
+    border-radius: 4px;
+    -webkit-box-shadow: 0 6px 12px rgba(0,0,0,.175);
+    box-shadow: 0 6px 12px rgba(0,0,0,.175);
+}
+
+
+
+
+.pagination>.active>a {
+    z-index: 2;
+    color: #fff;
+    background-color: #fbb946;
+    border-color: #fbb946;
+    cursor: default;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+</style>
+
+
+<script>
+
+
+
+$(document).ready(function(){
+	
+	$('.act_del').click(function() {
+		  //alert(this.id);
+		  //$("#app_done").attr("href","app_done/"+this.id );
+		$("#app_done").attr("action","app_done/"+this.id );
+		});
+	
+	$('#appointment_table').DataTable({
+		responsive: {
+	        details: false
+	    }
+	});
+$('[data-toggle="tooltip"]').tooltip();
+});
+
+</script>
+{% endblock %}
+
+
+<body>
+
+     {%block content%}
+  <!-- Breadcrum -->
+  
+    <div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                TODAYS APPOINTMENT LIST</h4>
+
+        </div>
+     <input type="hidden" id="group" value="{{group.name}}">
+  <div >
+  
+
+  
+  
+ {% if messages %}
+    <div class="col-lg-12 color03">
+      
+            {% for message in messages %}
+            <label id="error_update" class="alert alert-success" style="padding: 9px;">{{ message }}</label>
+            {% endfor %}
+       
+    </div>
+{% endif %}
+
+ 
+    <div class="content-wrapper">
+   
+    <section class="content-header" id="addContent">
+    
+    <table id="appointment_table" class="display no-wrap responsive" cellspacing="0" width="100%" role="grid" aria-describedby="example_info" style="border-bottom: none;">
+    <thead>
+          	<tr style="background-color:#6B748A;color:white;font-size:14px">
+          	    <th id="col_cust">Customer</th>
+          		<th>Request</th>
+          		<th>Date</th>
+          		<th class="from_time">From time</th>
+          		<th class="to_time">To Time</th>
+          		<th>Status</th>
+          		<th  style="width: 100px;">Action</th>
+          		
+          		
+          	</tr>
+          	</thead>
+    <tbody>
+          	{% for Appointment in object_list reversed %}<tr style="font-size:13px">
+          	    {% with a=Appointment.status.id b=7 %}
+          		{% ifequal a b %}
+          		<td class="cust_name"><span class="link_n">{{ Appointment.customer }}</span></td>
+          		{% endifequal %}
+          		{% ifnotequal a b %}
+          		<td class="cust_name"><a href="{% url "Appointment:server_edit" Appointment.id  %}" class="link_n">{{ Appointment.customer }}</a></td>
+          		{% endifnotequal %}
+          		{% endwith %}
+          		
+          		<td>{{ Appointment.request }}</td>
+          		<td>{{ Appointment.date }}</td>
+          		<td class="from_time">{{ Appointment.from_time }}</td>
+          		<td class="to_time">{{ Appointment.to_time }}</td>
+          		
+          		
+          		{% with l=Appointment.status.id m=5 n=7 %}
+	            {% ifequal l m %}
+	            <td id= "status_id"><label class="label label-info">{{ Appointment.status }}</label>
+	            {% if Appointment.upcell_status %}
+	            <a href="{% url "Appointment:member_view_upcell_accepted" Appointment.id  %}" style="text-decoration: none;"><label class="act_del label label-success"style="cursor: hand;">{{ Appointment.upcell_status }}</label></a></td>
+	            {% else %}
+	            </td>
+	            {% endif %}
+	            {% endifequal %}
+	            {% ifequal l n %}
+	            <td id= "status_id"><label class="label label-success">{{ Appointment.status }}</label></td>
+	            
+	            {% endifequal %}
+	            {% endwith %}
+            
+          		{% with a=Appointment.status.id b=7 %}
+          		{% ifequal a b %}
+          		<td class="act_del"></td>
+          		
+          		{% endifequal %}
+          		{% ifnotequal a b %}
+          		  
+                        <td id="{{Appointment.id}}" class="text-center">
+         
+            				<div class="dropdown">
+      					<button class="btn btn-danger btn-sm dropdown-toggle" type="button" data-toggle="dropdown">Actions
+     					 <span class="caret"></span></button>
+     					 <ul class="dropdown-menu">
+      					  <li class="act_del"><a href="{% url "Appointment:server_done" Appointment.id  %}" ><span class="fa fa-money" aria-hidden="true" style="color: #f73210;"></span>&nbsp;&nbsp;Complete Job</a></li>
+        				<li class="act_del"><a href="{% url "Appointment:server_delete" Appointment.id  %}"><span class="glyphicon glyphicon-trash" style="color: #f73210;"></span>&nbsp;&nbsp;&nbsp;Delete</a></li>
+       					{% if Appointment.totalamount %}
+       					<li class="act_del"><a href="{% url "Appointment:upcell_app_update" Appointment.id  %}"><span class="glyphicon glyphicon-plus" style="color: #f73210;"></span>&nbsp;&nbsp;&nbsp;Update UpSell</a></li>
+       					{% else %}
+       					<li class="act_del"><a href="{% url "Appointment:upcell_app_add" Appointment.id  %}"><span class="glyphicon glyphicon-plus" style="color: #f73210;"></span>&nbsp;&nbsp;&nbsp;Add UpSell</a></li>
+       					{% endif %}
+       					  
+        				
+        				
+        				{% if Appointment.totalamount %}
+        				
+        				<li class="acc_upsell"><a href="{% url "Appointment:customer_upcell_update" Appointment.id  %}"><span class="glyphicon glyphicon-pencil" style="color: #f73210;"></span>&nbsp;&nbsp;&nbsp;Accept Upsell</a></li>
+        				{% else %}
+        				
+        				<li class="acc_upsell"><span>No Upsell Yet</li>
+        				{% endif %}
+      					</ul>
+  					  </div>
+          			  </td>
+          			  
+          			 
+          		{% endifnotequal %}
+          		{% endwith %}
+
+          	{% endfor %}    	
+          	</tbody>
+    </table>
+    
+      
+         </section>
+         
+         
+      </div>
+      </div>
+     
+     <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Are You Sure you want to complete this Service?</h4>
+        </div>
+        <div class="modal-body">
+       <div class="box-body"  >
+                  
+                </div>
+      
+        </div>
+        
+        <form id="app_done" method="post" >{% csrf_token %}
+          <label for="textarea" style="padding-left:15px;">Comments</label>
+          <div class="container">
+    <textarea name= "coment" rows="4" cols="78" placeholder="Any Comments for Customer"></textarea>
+      
+          
+         </div>
+         <br>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-warning" style= "margin-left:16px;">Yes</button>
+      <a href="{% url 'Appointment:server_list'  %}"><button type="button" class="btn btn-default" data-dismiss="modal">No</button></a>
+        </div>
+        </form>
+      </div>
+      
+    </div>
+  </div>
+          {% endblock%}
+          

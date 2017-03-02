@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:yash@yopmail.com
+FN:jack demo
+N:demo;jack;;;
+NOTE:pune\,New South Wales\,Australia
+TEL;TYPE=cell:123456789
+URL:www.google.com
+END:VCARD

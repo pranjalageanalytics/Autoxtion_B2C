@@ -1,0 +1,169 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"> 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+
+<style>
+.pagination>.active>a {
+    z-index: 2;
+    color: #fff;
+    background-color: #fbb946;
+    border-color: #fbb946;
+    cursor: default;
+}
+
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+
+</style>
+
+<script>
+$(document).ready(function(){
+	$("#promo_btn").click(function() {
+		//alert("click");
+		promo_form.submit();
+	});
+
+    });
+</script>
+
+{% endblock %}
+
+
+<body>
+
+     {%block content%}
+  <!-- Breadcrum -->
+  
+    <div class="page-header">
+             <h4 class="" style="color: #6B748A;font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+		{% with g=group.name g_c="Company" %}
+          	 {% ifequal g g_c  %}
+                   UPSELL DETAILS
+                 {% else %}
+                JOB DONE
+                {% endifequal %}{% endwith %}
+                  </h4>
+
+        </div>
+     <input type="hidden" id="group" value="{{group.name}}">
+ <div class="row" >   
+          <div class="dropdown pull-right ">
+           <a href="{%  url 'Appointment:server_list'   %}">
+            <button type="button" class="btn btn-primary " data-dismiss="modal">
+               <i class="fa fa-reply" aria-hidden="true">
+               </i> Back</button>
+           </a>
+             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown" id="job_done">
+               <i class="fa fa-floppy-o"></i> Save
+                <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                       <li><a id="promo_btn"style="cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i> Save and Exit</a></li>
+                     </ul>
+            </div>
+          
+        </div>
+        <br>
+     <div class="row">
+		   <div class="col-md-4">
+                   			<strong>Customer:</strong>{{appointment_detail.customer}}
+					</div>
+					
+					<div class="col-md-5">
+                   			<strong>Request:</strong>{{appointment_detail.request}}
+					</div>
+					<div class="col-md-3">
+                   			<strong>Date:</strong>{{appointment_detail.date}}
+					</div>
+					
+</div>
+
+<div class="row">
+		   <div class="col-md-4">
+                   			<strong>From Time:</strong>{{appointment_detail.from_time}}
+					</div>
+					
+					<div class="col-md-5">
+                   			<strong>To Time:</strong> {{appointment_detail.to_time}}
+					</div>
+					<div class="col-md-3">
+                   			<strong>Total Amount:</strong> {{appointment_detail.totalamount}}
+					</div>
+					
+</div>
+
+
+      <hr>
+    <div>
+   {% for cell in detail %}
+
+<strong>Status:</strong>
+
+{% if cell.accept = False %}
+Decline
+{% endif %}
+{% if cell.accept = True %}
+Accepted
+{% endif %}
+
+
+
+
+<div class="row">
+		   <div class="col-md-4">
+                   			<strong>Service Type:</strong>{{cell.service}}
+					</div>
+					
+					<div class="col-md-2">
+                   			<strong>Price:</strong>{{cell.amount}}
+					</div>
+					<div class="col-md-6">
+                   			<strong>Description:</strong>{{cell.description}}
+					</div>
+					
+</div>
+
+
+{% for sub in sub_detail %}
+{% with c=cell.pk d=sub.upcellappointment.pk %}
+{% if c = d %}
+
+<div class="row">
+		   <div class="col-md-4">
+                   			<strong>Sub Service Type:</strong>{{sub.subservicetype}}
+					</div>
+								
+</div>
+
+{% endif %}
+{% endwith %}
+{% endfor %}
+<hr>
+{% endfor %}
+    </div>
+{% with g=group.name g_c="Company"%}
+    {% ifequal g g_c %}
+    {% else %}
+      <form id="promo_form" method="post" >{% csrf_token %}
+          <label for="textarea" style="padding-left:15px;">Comments</label>
+          <div class="container">
+    <textarea name= "coment" rows="4" cols="78" placeholder="Any Comments for Customer"></textarea>
+      
+          
+         </div>
+         <br>
+       
+        </form>
+        {% endifequal %}
+        {% endwith %}
+    </body>
+    
+          {% endblock%}
+          

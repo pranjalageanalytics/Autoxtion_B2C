@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:autotest@yopmail.com
+FN:AutoTest AutoLast
+N:AutoLast;AutoTest;;;
+NOTE:Street 1 \, Sydney\,Sydney\,Australia
+TEL;TYPE=cell:0121212121
+URL:
+END:VCARD

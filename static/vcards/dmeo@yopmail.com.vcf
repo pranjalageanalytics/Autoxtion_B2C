@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:dmeo@yopmail.com
+FN:demo demo
+N:demo;demo;;;
+NOTE:demo shop address\,Cairns\,Australia
+TEL;TYPE=cell:123456789
+URL:www.youtube.com
+END:VCARD

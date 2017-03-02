@@ -1,0 +1,693 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="{% static 'css/user.css' %}">
+   <link rel="stylesheet" href="{% static 'css/userform.css' %}">
+   <link rel="stylesheet" href="{% static 'css/timelinee.css' %}">
+    <script src="{% static 'js/validation/Update_profile.js' %}"></script> 	
+    <script src="{% static 'js/validation/updatepassword.js' %}"></script>
+    <!-- <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">  -->   
+    <link rel="stylesheet" href="{% static 'css/tile-box.css' %}">
+     <script src="{% static 'js/jquery-core.js.download' %}"></script> 
+	
+		<script src="{% static 'js/noty.js' %}"></script> 
+		 <script src="{% static 'js/tooltip.js' %}"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<script src="{% static 'js/piegage.js.download' %}"></script> 
+    <script src="{% static 'js/piegage-demo.js.download' %}"></script> 
+      <link rel="stylesheet" href="{% static 'css/piegage.css' %}">
+  
+ <link rel="stylesheet" href="{% static 'css/wickedpicker.css' %}">  
+  <script type="text/javascript" src="{% static 'js/wickedpicker.js' %}"></script>		 
+		 
+<style>
+.nav-list a, .nav-list strong, .nav-list .share-options {
+    background: #fff !important;
+    border-bottom: 1px solid #fff !important;
+    font-size: 14px;
+    font-weight: 500;
+    color: #f38619 !important;
+    padding: 15px;
+    display: block;
+    position: relative;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    
+    transition-duration: 0.2s;
+}
+
+.nav-list a:hover, .nav-list .share-options:hover {
+    background: #fef2e7 !important;
+    color: #4b5658;
+}
+
+.footer{
+ font-size: 14px !important;
+font: -webkit-control !important; 
+ 
+}
+#dashboard_cust,#crm,#service_request,#promotion_mem,#appointment,#feedback,#id_notification,#id_video{
+ font-size:small ! important;
+}
+
+.h3, h3 {
+    font-size: 24px;
+}
+
+.h1, .h2, .h3, h1, h2, h3 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+.h1, .h2, .h3, .h4, .h5, .h6, h1, h2, h3, h4, h5, h6 {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+}
+
+
+
+
+
+
+#country,#id_city{
+border:solid;
+border-width:2px;
+border-color:#e8ebed;
+border-radius:5px;
+background:#e8ebed;
+}
+fieldset .grid-25 label, fieldset .grid-25 strong, fieldset .grid-20 label, fieldset .grid-20 strong {
+    font-weight: 500;
+    display: block;
+    font-size: 14px;
+    margin: 10px 15px 10px 0!important;
+    }
+.grid-25
+{
+    padding: 0 8px!important;
+    
+}
+fieldset {
+    padding: 0 0 0px;
+    margin-bottom: 7px;
+    border-bottom: None!important; 
+}
+
+.img-rounded {
+    border-radius: 50%;
+    
+    }
+.contained {
+    background: #fff;
+    padding: 10px 15px;
+    margin-bottom: 30px;
+    position: relative;
+    border-radius: 4px;
+    box-shadow: 0 2px 0 0 rgba(0,0,0,0.1);
+}
+
+.sidebar #sidebar-nav li:hover {
+    background: #e8ebed !important;
+    color: #4b5658;
+}
+.nav-list {
+    border-top: none;
+    margin: 4px !important;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+ 
+ .upload-field-profile {
+    float: left;
+    margin: 0px 20px 5px -48px;
+    background-size: cover;
+}
+.deprecated-avatar-large {
+    width: 90px;
+    height: 90px;
+}
+.deprecated-avatar {
+    background-color: #d4d9dd;
+    width: 88px;
+    height: 88px;
+    overflow: hidden;
+    border: 5px solid #edeff0;
+    border-radius: 50%;
+    background-position: center;
+    background-size: contain;
+    display: inline-block;
+}
+.sidebar #sidebar-nav {
+    background: #e8ebed !important;
+    overflow: hidden;
+    margin: 20px 43px -266px;
+    border-radius: 5px;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.1);
+}
+.input-text, textarea {
+    background: #e8ebed;
+    margin: 0;
+    font-size: 14px;
+    color: #576366;
+    width: 100%;
+    font-family: "Gotham Rounded A", "Gotham Rounded B", "Gotham Rounded", "Helvetica Neue", Helvetica, Arial, sans-serif;
+    
+    outline: 0;
+    border: 2px solid #e8ebed;
+    -webkit-appearance: none;
+    border-radius: 5px;
+    box-shadow: 0;
+    box-sizing: border-box;
+    transition: .2s;
+}
+.upload_bt{
+	background-color:#fff;
+	color:#337ab7 !important;
+	border:1px solid #337ab7 !important;
+}
+.btn-success {
+    color: #fff;
+    background-color: #5cb85c;
+    border-color: #5cb85c;
+   
+    }
+.btn-success:hover {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+}
+</style>
+<script>
+  $(function() {
+	  $( "[id$='id_member_mech_license_expiry_date']").datepicker({minDate:0,dateFormat:'dd/mm/yy'});
+	  $( "[id$='id_member_ARC_license_expiry_date']").datepicker({minDate:0,dateFormat:'dd/mm/yy'});
+
+
+  });
+  </script>
+
+  <script>
+  $(document).ready(function(){
+	  $('#new_password').tooltip();
+	  
+	  $(".x").click(function(){
+	        $("#Prsonal_id").show();
+	        $("#chnage_password").hide();
+	        $("#time_line1").hide();
+	        
+	    });
+	  $(".y").click(function(){
+	        $("#chnage_password").show();
+	        $("#Prsonal_id").hide();
+	        $("#time_line1").hide();
+	    });
+	  $(".z").click(function(){
+	        $("#chnage_password").hide();
+	        $("#Prsonal_id").hide();
+	        $("#time_line1").show();
+	    });
+	  
+  });
+  </script>
+  
+<script>
+$(document).ready(function(){
+$("#upload").click(function(){
+	
+	
+	
+	 var fileUpload = $("#id_user_image");
+	 var str = fileUpload.val();
+	// alert("upload data"+fileUpload.val());
+	 var n = str.endsWith(".png");
+	 var m = str.endsWith(".jpeg");
+	 var p = str.endsWith(".jpg");
+	  flag=true;
+	var n1 = str.endsWith(".PNG");
+	 var m1 = str.endsWith(".JPEG");
+	 var p1 = str.endsWith(".JPG");
+
+	 if (str == "")
+		 {
+		// alert("in if");
+		 document.getElementById('lblError').innerHTML=" Please upload file";
+		 //alert("please upload file");
+		 flag=false;
+		 }
+	
+	 else{
+		if (n||m||p ||n1||m1||p1)
+			 {
+			var fuData = document.getElementById('id_user_image');
+			 var FileUploadPath = fuData.value;
+			// alert(FileUploadPath);
+			 var size = (fuData.files[0].size/1024)/1024;
+			 //alert(size);
+			 if(size>1)
+				 {
+				 document.getElementById('lblError').innerHTML="Size should be less than 1MB";
+					// alert("file format is not correct");
+					 flag=false;
+				 }
+			 else{
+			 $("#lblError").hide();
+			// document.getElementById('lblError').innerHTML="File format correct";
+			// alert("file format correct");
+			 flag=true;
+			 }			 }
+		 else{
+			 document.getElementById('lblError').innerHTML="Please upload file in '.png' or '.jpeg'or 'jpg' format only";
+			// alert("file format is not correct");
+			 flag=false;
+		 }
+		 }
+	return flag;
+});
+});
+</script>   
+{% endblock %}
+
+
+{% block content %}
+<input type="hidden" id="group" value="{{group.name}}">
+
+   {% if context1 %}
+<ul class="noty-wrapper i-am-new" id="noty_top">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+       <div class="noty_bar" id="noty_453371394759536000">
+          <div class="noty_message"><span class="noty_text">
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{context1}}</span>
+          </div> </div></li></ul>{% endif %}
+             {% if errorpassword %}
+<ul class="noty-wrapper i-am-new" id="noty_top">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+       <div class="noty_bar" id="noty_453371394759536000">
+          <div class="noty_message"><span class="noty_text">
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{errorpassword}}</span>
+          </div> </div></li></ul>{% endif %}
+   
+   
+         <body style="padding:0px;"><br>
+ <div class="col-container ">
+  <aside data-layout-element="sidebar" class="sidebar col col-30-tablet-desktop">
+      <select id="nav-list-select" data-featurette="nav-list-mobile-select">
+          <option  id="personal_detail">Personal Details</option>
+          <option  id="passsword" >Change Password</option>
+          <option  id="timeline">TimeLine</option>
+         
+      </select>
+       <div class="row">
+      <div class="col-md-10" style="margin-left:30px;"; >
+                <a  class="tile-box tile-box-alt btn-info" ";>
+                    <div class="tile-header">
+                        Profile Completed 
+                    </div>
+                    <div class="tile-content-wrapper">
+                   
+                        <div class="chart-alt-10 easyPieChart" data-percent="{{val|add:'1'}}" style="width: 100px; height: 100px; line-height: 100px;"><span>{{val}}</span>%<canvas width="100" height="100"></canvas></div>
+                    </div>
+                </a>
+            </div>
+            </div>
+      <div class="row">
+      <ul id="sidebar-nav">
+          <li
+            class="x "
+            >
+              <a >Personal Details</a>
+          </li>
+          <li
+            class="y"
+            >  
+              <a >Change Password</a>
+          </li>
+          <li
+            class="z"
+            >
+              <a >TimeLine</a>
+          </li>
+         
+      </ul>
+      </div>
+    
+
+  </aside>           
+ <div class="col col-70-tablet-desktop">
+   <div class="grid-container" id="Prsonal_id">
+    <div class="grid-100">
+      <div class="contained">
+        <div class="grid-100">
+          <form class="featurette left-labels" data-featurette="accounts-form"  action="{% url 'Registration:updatedetails' user.id %}"  method="post">{% csrf_token %}
+          
+          
+             <fieldset>
+            
+              <div class="row">
+              <div class="col-md-3 col-sm-12">
+                <label style=" padding-top: 35px">Your photo</label>
+                
+              </div>
+              <div class="col-md-3 col-sm-12">
+                 {% if image1.user_image%}
+      <img  id="user_img"  alt="" class="img-rounded"   src="/media/{{image1.user_image}}" style="width:100px;height:100px;cursor:pointer;">
+      {%else%}
+       <img  id="user_img"  alt="" class="img-rounded"   src="{% static 'images/default_avatar.png' %}" style="width:100px;height:100px;cursor:pointer;">
+      {%endif%}
+                  </div>
+                <div class="col-md-6 col-sm-11">
+                 <button type="button" class="btn upload_bt" data-toggle="modal" data-target="#upload_image" id="change_photo"  style="margin-left:20px;">Change photo</button>
+                 <p>Your photo can also be updated over here </p>
+               </div>
+               
+                 </div>
+            </fieldset>
+            <hr>
+             <fieldset>
+            <div class=" pull-right">
+            <button class="button primary"id="Submit_btn">Update</button>
+             </div>
+             </fieldset>
+          <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>First Name:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+               {{update_profile.first_name}}<div id="error1" style="color:#E34234"></div>
+</div>            </div>
+          </fieldset>
+
+          <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Last Name:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+               {{update_profile.last_name}}<div id="error2" style="color:#E34234"></div>
+            </div>
+              </div>
+          </fieldset>
+           <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Area Code*:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+                {{update_profile.area_code}}<div id="error001" style="color:#E34234;"></div>
+</div>            </div>
+          </fieldset>
+          
+            <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Phone Number*:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+            {{update_profile.phone_no}}<div id="error3" style="color:#E34234"></div>
+            </div>            </div>
+          </fieldset>
+         
+
+            
+               <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Shop Name*:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+                {{update_profile.shop_name}}<div id="error4" style="color:#E34234"></div>
+</div>            </div>
+          </fieldset>
+           <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Website:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+               {{update_profile.website}}<div id="error12" style="color:red;"></div>
+</div>            </div>
+          </fieldset>
+            <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Shop Address*:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+                {{update_profile.shop_address}}<div id="error5" style="color:red;"></div>  
+</div>            </div>
+          </fieldset>
+         
+           <fieldset>
+              <div class="grid-25 grid-parent">
+                <label>Country:</label>
+              </div>
+              <div class="grid-75 grid-parent">
+                <div class="form-item">
+                {{update_profile.country}}<div id="error6" style="color:#E34234"></div>
+
+              </div>
+             </div>
+            </fieldset>
+            <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>State:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+              
+              {{update_profile.city}}<div id="err15" style="color:#E34234"></div>
+</div>            </div>
+          </fieldset>
+            <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Emergency number:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+              {{update_profile.Emg_no}}<div id="error7" style="color:#E34234"></div>
+</div>            </div>
+          </fieldset>
+            
+      <fieldset>
+            <div class="grid-25 grid-parent">
+              <label>Postal Code*:</label>
+            </div>
+            <div class="grid-75 grid-parent">
+              <div class="form-item">
+              {{update_profile.postal_code}}<div id="error_post" style="color:#E34234"></div>
+               </div>            </div>
+          </fieldset>
+              
+          
+           <fieldset>
+                <div class="grid-25 grid-parent">
+                   <label>Mechanic License:</label>
+                </div>
+                 <div class="grid-75 grid-parent">
+                    <div class="form-item">
+                        {{update_profile.member_mech_license}}<div id="" style="color:#E34234"></div>
+                    </div>   
+                 </div>
+           </fieldset>
+             <fieldset>
+                <div class="grid-25 grid-parent">
+                   <label>Mechanic License Expiry Date:</label>
+                </div>
+                 <div class="grid-75 grid-parent">
+                    <div class="form-item">
+                        {{update_profile.member_mech_license_expiry_date}}<div id="" style="color:#E34234"></div>
+                    </div>   
+                 </div>
+           </fieldset>
+            <fieldset>
+                <div class="grid-25 grid-parent">
+                   <label>ARC License:</label>
+                </div>
+                 <div class="grid-75 grid-parent">
+                    <div class="form-item">
+                        {{update_profile.member_ARC_license}}<div id="" style="color:#E34234"></div>
+                    </div>   
+                 </div>
+           </fieldset>
+            <fieldset>
+                <div class="grid-25 grid-parent">
+                   <label>ARC License Expiry Date:</label>
+                </div>
+                 <div class="grid-75 grid-parent">
+                    <div class="form-item">
+                        {{update_profile.member_ARC_license_expiry_date}}<div id="" style="color:#E34234"></div>
+                    </div>   
+                 </div>
+           </fieldset>   
+              
+
+
+            
+
+          <div class="form-footer">
+          </div>
+
+</form>
+        </div>
+      </div>
+    </div>
+  </div>
+           <div class="row" id="chnage_password" style="display:none;">
+					<form method="post" action="{% url 'password_reset:password_change' user.id %}"> {% csrf_token %}
+					 
+						<center>
+							<h2 data-onboarding="profile-properties-header" >
+								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion" >
+									<h6 style="font-family: 'Source Sans Pro',sans-serif;color: #000;font-size: 17px;padding-left: 20px;">Change Password</h6>
+								</a>
+							</h2>
+						</center><br>
+						<div id="collapsethree">
+						 <fieldset>
+					            <div class="grid-25 grid-parent">
+					              <label>Old Password*:</label>
+					            </div>
+					            <div class="grid-75 grid-parent">
+					              <div class="form-item">
+					                {{updatepassword.oldPassword}}
+						     		<div id="errs" style="color:red;"></div>
+					             </div>                    
+								</div>
+                        </fieldset>
+                        <fieldset>
+					            <div class="grid-25 grid-parent">
+					              <label>New Password*:</label>
+					            </div>
+					            <div class="grid-75 grid-parent">
+					              <div class="form-item">
+					               {{updatepassword.new_password}}
+								<div id="err1" style="color:red;"></div>
+					             </div>                    
+								</div>
+                        </fieldset>
+                         <fieldset>
+					            <div class="grid-25 grid-parent">
+					              <label>Confirm Password*:</label>
+					            </div>
+					            <div class="grid-75 grid-parent">
+					              <div class="form-item">
+					              {{updatepassword.confirm_pass}}
+					              <div id="qwerty" style="color:red;"></div>
+					             </div>                    
+								</div>
+                        </fieldset>
+						
+							
+							
+						
+							
+							<div class="pull-right">
+								<button type="submit" id="submit_frm" class="btn btn-success" >Submit</button>
+							</div>
+							<br>
+						</div>
+						
+					</form><br>
+				</div>
+
+
+ 
+ <!-- timeline -->
+ <div class="row" style="display:none;" id="time_line1">
+<div class=" col-md-8 timel" >
+		
+				<h1 id="timeline" style="font-family: 'Source Sans Pro',sans-serif;color: #000;font-size: 22px;">Timeline</h1>
+		
+				
+		<section class="interactions">
+				<div class="interactions-container">
+					<div class="popover-anchor-container">
+						<div class="profile-module col-xs-12 col-md-12 well" style=";border-color: #f4f6f6;background-color:#fff;">
+<ul id="admin-timeline">
+<div id="content-main">
+
+{% if timeline_list %}
+      <ul class="timeline">
+         {% for entry in timeline_list %} 
+	        <li class="timeline-inverted">
+          <div class="timeline-badge warning"><i class="glyphicon glyphicon-ok" style="top: 3px;left: 1px;color:#fff;"></i></div>
+          <div class="timeline-panel col-md-6">
+            <div class="timeline-heading">
+              <h4 class="timeline-title"> <b>{{user.first_name}}</b>&nbsp;{{ entry.comment1 }}<b>{{entry.comment2}}</b></h4>
+            </div>  
+              <div class="timeline-body">
+              <b></b> &nbsp;  &nbsp;{{ entry.action_create }}</b> &nbsp;  &nbsp;
+            </div>
+            
+          </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+        
+    {% else %}
+    
+    <div class="row" style="padding-top:40px;">
+        <center>
+             <label class="alert" style="background-color:inherit;color:#f38619;">
+                 <h3>No history is available for this Customer. </h3>
+             </label>
+        </center>
+     </div>    {% endif %}
+
+</div>
+</ul>
+ 
+
+		
+	 </div>
+					</div>
+				</div>
+			</section>	
+	
+
+	</div>
+	</div> 
+<!-- modal -->
+<div id="upload_image" class="modal fade col-xs-8 col-sm-8 col-md-12" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+    <form method="post" action="{% url 'Registration:user_image' user.id %}" enctype="multipart/form-data" > {% csrf_token %}
+      <div class="modal-header">
+        <h4 class="modal-title">Upload Image</h4>
+      </div>
+      <div class="modal-body">
+      
+        <p>{{userimage.user_image}}</p>
+         <div class="row" id="lblError" style="color: red;margin:5px 0px 5px 0px;"></div> 
+      </div>
+      <div class="modal-footer">
+      
+      <input type="submit" class="btn btn-success " id="upload" value="Submit">
+        <button type="button" class="btn btn-primary" data-dismiss="modal" name="cancle">Close</button>
+      </div>
+      </form>
+    </div>
+    
+
+  </div>
+</div>
+    </div></div>
+
+{%endblock%}
+
+  </body>
+</html>
+

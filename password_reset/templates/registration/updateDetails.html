@@ -1,0 +1,117 @@
+
+{% extends "base.html" %}
+
+{%block content%}
+<br>
+   <div class="container">
+     
+     <div class="panel-heading">
+             <ul class="nav nav-tabs">
+                  <li class="active"><a href="#tab1default" data-toggle="tab">Update Profile</a></li>
+                  <li><a href="#tab2default" data-toggle="tab">Change Password</a></li>
+             </ul>
+      </div>
+      
+   <div class="panel-body">
+       <div class="tab-content">
+       
+          <div class="tab-pane fade in active" id="tab1default">
+          <form method="post" action="#"> {% csrf_token %}
+                           <div class="row">
+						      <div class="col-md-4">
+								<div class="form-group">
+								  {{update_profile.first_name}}
+								</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										{{update_profile.last_name}}
+									</div>
+								</div>
+			         		 </div>
+			         		 <div class="row">
+							   <div class="col-md-4">
+								 <div class="form-group">
+								   {{update_profile.phone_no}}
+								 </div>
+							   </div>
+							</div>
+                            <div class="row">
+							  <div class="col-md-4">
+								<div class="form-group">
+								 {{update_profile.shop_name}}
+								</div>
+							  </div>
+							</div>
+					        <div class="row">
+							  <div class="col-md-4">
+								<div class="form-group">
+									{{update_profile.shop_address}}
+								</div>
+							   </div>
+					         
+							   <div class="col-md-2">
+								  <div class="form-group">
+									
+									  {{update_profile.country}}
+									
+								   </div>
+								  </div>
+							 
+							     <div class="col-md-2">
+								 <div class="dropdown">
+									{{update_profile.city}}
+								  </div>
+								  </div>
+							    </div>
+							    
+							     <div class="row">
+								     <div class="col-md-4">
+										 <div class="dropdown">
+										  <button type="submit" class="btn btn-success">Submit</button>
+										 </div>
+									</div>
+				               </div>
+				              </form>
+					     </div>
+					 
+					                  
+					  
+					    <div class="tab-pane fade" id="tab2default">
+					    <form method="post" action="/email/password_change/"> {% csrf_token %} 
+					        <div class="row">
+								<div class="col-md-4">
+								 <div class="form-group">
+								  {{updatepassword.oldPassword}}
+								 </div>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-4">
+								 <div class="form-group">
+								  {{updatepassword.new_password}}
+								 </div>
+								</div>
+								</div>
+								<div class="row">
+								<div class="col-md-4">
+								  <div class="form-group">
+									{{updatepassword.confirm_pass}}
+								  </div>
+								</div>
+                             </div>
+                              <div class="row">
+								     <div class="col-md-4">
+										 <div class="dropdown">
+										  <button type="submit" class="btn btn-success">Submit</button>
+										 </div>
+									</div>
+				               </div>
+				               </form>
+                        </div>
+                        
+                </div>
+           </div>
+   
+    </div>
+{% endblock%}

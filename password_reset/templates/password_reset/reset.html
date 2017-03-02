@@ -1,0 +1,80 @@
+{% extends "base4.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{%block head%}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <script src="{% static 'js/validation/reset_pwd.js' %}"></script>
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+  
+  
+<style>
+.recover:hover{
+	color: #fff;
+background-color: #f38619;
+border-color: #f38619;
+}
+
+.recover{
+	background-color:#FFBF40;
+	box-border:#FFBF40;
+	color:#fff;
+}
+.alert-warning{
+     background-color: #fff;
+     border-color: #fff; 
+}
+
+</style>
+
+
+<script>
+  $(document).ready(function(){
+ $('#pwd1').tooltip();
+ 
+
+});
+  
+  </script>
+
+{%endblock%}
+{% block content %}
+<body background="{% static 'images/background.png' %}" >
+
+<div class="data_reset" >
+<div class="container" style="min-height: calc(90vh - 40px);padding-top:7%;">
+<div class="col-md-6 col-sm-offset-3" style="background-color:#fff;border-radius:3px; ">
+
+      <div class="page-header" style="border-bottom: 0px solid #eee; margin: 40px 0 0px">
+      <div class="alert alert-warning" role="alert"  style="background-color:#fff;padding-top:1px;">
+      <center><img src="{% static 'images/auto_100.png' %}" ></center>
+  <a style="color:#FFBF40;font-size: 15px;"><center>{% blocktrans %}Hi, <strong>{{ username }}</strong>. Please choose your new password.{% endblocktrans %}</center></a>
+</div>
+      
+				<form method="post" action="{% url 'password_reset:password_reset_reset' token %}" role="form">
+					{% csrf_token %}
+							
+   							{{ form.password1 }}
+   							<span id="error1"style="color:red"></span>
+						
+                  <br>
+   							{{ form.password2 }}
+   							<span id="error2"style="color:red"></span>
+						<br>
+								<center><input class="btn recover" id="submit_frm" type="submit" value="{% trans 'submit' %}" style="width:50%; margin-top: 15;"></center>
+						
+				</form>
+						
+						</div>
+					
+		</div>
+					
+			
+    </div>
+    </body>
+{% endblock %}

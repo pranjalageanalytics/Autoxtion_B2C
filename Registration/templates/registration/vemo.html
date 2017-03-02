@@ -1,0 +1,126 @@
+
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+
+<script>
+
+$(document).ready(function(){
+	$("iframe").each(function() {
+	    x=$(this).attr('src');
+	    //alert(x);
+	    src_split=x.split("videos");
+	    //alert(src_split[0]+'video'+src_split[1]);
+	    $(this).attr('src', src_split[0]+'video'+src_split[1]);
+	    //$(".videos_vemo").append(x)
+	  
+	    
+		 });
+	/* var len=$(".id").length;
+	var inputs = $(".vemo");
+	alert(inputs.length/3);
+	for(var i = 0; i < inputs.length; i++){
+	    //alert($(inputs[i]).parent().attr('id'));
+	    var id_par=$(inputs[i]).parent().attr('id');
+	    //alert(id_par);
+	    //alert($(inputs[i]).val());
+	    //alert(i);
+	    if($(inputs[i]).parent().attr('id')==i){
+	    	//alert($(inputs[i]).val());
+	    	$(inputs[i]).parent().append($(inputs[i]).val());
+	    }
+	    
+	} */
+	//console.log($(".id").length);
+	/* $(".vemo").each(function() {
+    x=$(this).val();
+    //alert(x);
+    $(".videos_vemo").append(x)
+  
+    
+	 }); */
+	
+	
+	
+    });
+</script>
+<style>
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+iframe{
+    display:block; 
+    margin:0; 
+    padding:0; 
+    border:0; 
+    width: 69%;  
+}
+
+.detail{
+width:400px;
+font-size: 11px;
+color: #6B748A;
+}
+</style>
+
+
+
+{% endblock %}
+
+{% block content %}
+ <div class="page-header">
+             <h4 class="" style="color: #6B748A;font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                VIDEO LIST</h4>
+
+        </div>
+     <input type="hidden" id="group" value="{{group.name}}">
+  <div >
+
+<br>
+<table>
+<tr>
+{% for d in response.data %}
+
+<td>
+<div class="" style="margin-right: -75px;">
+<iframe src="https://player.vimeo.com{{d.uri}}" frameborder="0" title="Auto Xtion Customer Overview" webkit
+allowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+<!-- <div class="parent forloop.counter0" id={{forloop.counter0}}><input class="vemo" type="hidden" id="group" value="{{d.embed.html}}">
+
+</div>
+ -->
+ <div class="detail">
+<span><strong>Name</strong>-{{d.name}}</span>
+
+<div >{{d.description}}</div>
+</div>
+</div>
+</td>
+{% if forloop.last %}
+        </tr>
+      {% else %}
+        {% if forloop.counter|divisibleby:"3" %}
+          </tr><tr>
+        {% endif %}
+      {% endif %}
+{% endfor %}
+
+</table>
+{% endblock %}
+
+
+
+

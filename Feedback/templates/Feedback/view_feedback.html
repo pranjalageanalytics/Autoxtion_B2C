@@ -1,0 +1,89 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<script>
+$(document).ready(function(){
+	$("input").attr("disabled", true);
+	$("select").attr("disabled",true);
+	$("textarea").attr("disabled",true);
+});
+</script>
+
+{% endblock %}
+     {%block content%}
+      <input type="hidden" id="group" value="{{group.name}}">
+   <div >
+    <!-- Breadcrum -->
+  <div class="page-header">
+             <h4 class="" style="color: #6B748A;"><span class="glyphicon glyphicon-th-list"></span>
+                 FEEDBACK VIEW</h4>
+
+        </div> 
+<div class="row">  
+	    
+	<a href="{% url 'Feedback:server_new'  %}"><button class="btn btn-primary pull-right btn-md" style="margin-right:90px;" type="button">
+		<span class="fa fa-reply"> Back</span>
+	</button>
+	</a>  	
+</div>
+	<div class="name"style="padding-right:100px;font-size:15px;color:#f38619;padding-top: 15px;">
+  	 <div class="col-md-5 ">
+  	
+  		<div > Customer Name:{{ lead.name }}</div></div>
+  		<div class="col-md-7 ">
+  		<div >Date:{{ date }}</div>
+
+  	</div>
+  	</div>
+       
+  		
+
+		<div class="well">
+		{{ feedform.management_form }}
+               {% for q in qform %}
+		<div class="col-md-11" style="margin-top:5px;">
+		
+		<div class="row">
+			<div class="col-md-10 col-sm-6" style="margin-top:6px;">
+				{{q.question}}
+			</div>
+			
+			<div class="col-md-6 col-sm-6" style="margin-top:6px;">
+				{{q.answer}}
+				
+			</div>
+		</div>
+		<br>
+		<div class="row" >
+			<div class="col-md-10 col-sm-6" style="margin-top:6px;">
+				{{q.sub_question}}
+			</div>
+			<br>
+			<div class="col-md-6 col-sm-6" style="margin-top:6px;">
+				{{q.sub_answer}}
+				
+			</div>
+		</div>
+		</div>
+		
+		{% endfor %}
+
+
+
+		<div class="row"  >
+			<div class="col-md-6 col-sm-6" style="margin-top:10px;">
+			Comment:
+			<textarea id="{{forloop.counter0}}-comment" class="form-control">{{feed_main.comment}}</textarea>
+		</div>
+		</div>
+
+		</div>
+
+		<br>
+		 
+			</div>
+	
+
+
+		<br>  
+{% endblock %}

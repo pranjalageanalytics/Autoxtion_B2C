@@ -1,0 +1,367 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<style>
+.page-header {
+    padding-bottom: 9px;
+    margin: -18px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+</style>
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/validation/promo_validation.js' %}"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+ 
+
+<script type='text/javascript'>
+$(function() {
+    $('#id_member').change(function() {
+        // if changed to, for example, the last option, then
+        // $(this).find('option:selected').text() == D
+        // $(this).val() == 4
+        // get whatever value you want into a variable
+        var x = $(this).val();
+        // and update the hidden input's value
+        $('#myhidden').val(x);
+    });
+});
+</script>
+<script>
+$(document).ready(function(){
+var total_amt=$("#id_total_amount").val();
+	 if (total_amt==""){
+		 $("#id_total_amount").val(0);
+	 }
+	 else{
+	 $("#id_total_amount").val(total_amt);
+	 }
+	
+	  $('#id_discount').keyup(function() {
+	 var price=$("#id_price").val();
+	 var discount=$("#id_discount").val();
+	disc=price*(discount/100)
+	total_amount=price-disc
+	if( total_amount % 1 > 0.5 ) {
+		total_amount = Math.round(total_amount);
+		$("#id_total_amount").val(total_amount);
+    }
+	else{
+		int_total_amount=Math.floor(total_amount)
+		$("#id_total_amount").val(int_total_amount);
+	}
+	
+	
+	  });
+	  $('#id_price').keyup(function() {
+			 var price=$("#id_price").val();
+			 var discount=$("#id_discount").val();
+			disc=price*(discount/100)
+			total_amount=price-disc
+			if( total_amount % 1 > 0.5 ) {
+				total_amount = Math.round(total_amount);
+				$("#id_total_amount").val(total_amount);
+		    }
+			else{
+				int_total_amount=Math.floor(total_amount)
+				$("#id_total_amount").val(int_total_amount);
+			}
+			
+			
+			  });
+			  
+	 
+		
+	
+});
+</script>
+<script>
+
+$(document).ready(function(){
+ $("#id_company>option[value='184']").insertAfter("#id_company>option[value='']")
+    $("#id_make_year>option[value='28']").insertAfter("#id_make_year>option[value='']") 
+ if($('#edit').val()=='edit'){
+  //alert('hi');
+  var service=$("#id_Service_id option:selected").val();
+  if(service!= 25){
+   
+   $("#price").hide();
+  }
+  else{
+  $("#discount").hide();
+  }
+ }
+ else{
+  var delay = (function(){
+     var timer = 0;
+     return function(callback, ms){
+     clearTimeout (timer);
+     timer = setTimeout(callback, ms);
+    };
+   })();
+  $("#id_discount").show();
+  $("#id_price").show();
+  $('#id_discount').keyup(function() {
+           delay(function (){
+            
+            //alert("new");
+            var service=$("#id_Service_id option:selected").val();
+     // alert(service);
+      if(service!=25)
+      {
+       
+       var text = "";
+            var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+           for( var i=0; i < 4; i++ )
+              text += possible.charAt(Math.floor(Math.random() * possible.length));
+           var c=$("#id_discount").val();
+         
+           //alert(c);
+           var d="AXN";
+           d=d+text+c;
+        //alert(d);
+      
+         
+            $("#id_coupon_code").val(d);
+      
+      }
+     
+           }, 1000 );
+  });
+  
+  
+  $('#id_price').keyup(function() {
+           delay(function (){
+            
+            //alert("new");
+            var service=$("#id_Service_id option:selected").val();
+      //alert(service);
+
+       //alert("else")
+       var text = "";
+          var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+          for( var i=0; i < 4; i++ )
+              text += possible.charAt(Math.floor(Math.random() * possible.length));
+          var c=$("#id_price").val();
+          
+          //alert(c);
+          var d="AXN";
+          d=d+text+c;
+          //alert(d);
+          $("#id_coupon_code").val(d);
+       
+           }, 1000 );
+  });
+  
+  
+  //$("#id_make_year").children().detach().remove();
+  
+  
+ }
+ 
+ $("#id_member").attr("type","hidden");
+ $("#id_company").attr("class","form-control");
+ $("#id_model_id").attr("class","form-control");
+ $("#id_make_year").attr("class","form-control");
+ $("#id_Service_id").attr("class","form-control");
+ $("#id_discount").attr("class","form-control");
+ $("#id_description").attr("class","form-control");
+ $("#id_from_date").attr("class","form-control");
+ $("#id_to_date").attr("class","form-control");
+ $("#id_coupon_code").attr("class","form-control");
+ $("#id_price").attr("class","form-control");
+ $("#id_coupon_code").prop("readonly", true);
+ $("#id_total_amount").attr("class","form-control").prop("readonly", true);
+ 
+ 
+ 
+ dict=null;
+    $("#id_company" ).change(function() {
+var op=$('option:selected', $(this)).text();
+  //alert(op);
+ 
+            $.ajax({
+            url : '/promotion/test',
+            type : "GET",
+            data:{companyid : $('option:selected', $(this)).val()}
+                }).done(function(data) {
+                //alert(data);
+    dict=data;
+                $('#id_model_id').prop("disabled", false);
+                $('#id_model_id').empty();
+                $('#id_model_id').append('<option value="Please Select">Please Select</option>');
+                for (var i = 0; i < data.length; i++)
+                    {           
+                 $('#id_model_id').append('<option value="'+data[i].id+'">'+data[i].model_name+'</option>');
+            }  });
+        
+            
+
+    });
+    
+    
+    });
+</script>
+
+<script>
+  $(function() {
+     $( "#id_from_date" ).datepicker({minDate:0,dateFormat:'dd/mm/yy'});
+});
+  </script>
+  
+  <script>
+  $(function() {
+ $( "#id_to_date" ).datepicker({minDate:0,dateFormat:'dd/mm/yy'});
+});
+  
+  </script>
+ <script type="text/javascript">
+  
+</script>
+
+{% endblock %}
+
+{% block content %}
+<br>
+  <div class="row">
+<div class="page-header">
+             <h4 class="" style="color: #6B748A;"><span class="glyphicon glyphicon-th-list"></span>
+                  REOPEN PROMOTION</h4>
+
+        </div>
+<div class="row"style="margin-right: 0px;margin-left:0px;">   
+                
+          
+          <div class="dropdown pull-right">
+            <a href="{%  url 'promotion:server_list_mem'  %}" style="text-decoration:none;">
+            <button type="button" class="btn btn-primary " data-dismiss="modal">
+               <i class="fa fa-reply" aria-hidden="true">
+               </i> Back</button>
+           </a>  
+             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+               <i class="fa fa-floppy-o"></i> Save
+                <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                       <li><a id="promo" type="submit"style="cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i> Save and Exit</a></li>
+                   </ul>
+             </div>
+</div>
+<input type="hidden" id="group" value="{{group.name}}">
+<input type="hidden" id="edit" value="{{edit}}">
+<div class="contain">   
+    <div class="promotion" >      	    
+	  <form class="form-horizontal" action='' method="POST" id="promo_form" enctype="multipart/form-data">{% csrf_token %}
+        <fieldset>
+        		    
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_company">Promotion for*:</label>  
+			     <div class="col-md-4">
+			         {{form.display_to}}
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+
+       
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_company">Make*:</label>  
+			     <div class="col-md-4">
+			         {{form.company}}<div id="error1" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="model_id">Model*:</label>  
+			     <div class="col-md-4">
+			        {{form.model_id}}<div id="error2" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_make_year">Year*:</label>  
+			     <div class="col-md-4">
+			       {{form.make_year}}<div id="error3" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_company">Service Type*:</label>  
+			     <div class="col-md-4">
+			        {{form.Service_id}}<div id="error4" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group"id="price">
+			    <label class="col-md-4 control-label" for="model_id">Price*:</label>  
+			     <div class="col-md-4">
+			        {{form.price}}<div id="error9" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group"id="discount">
+			    <label class="col-md-4 control-label" for="model_id">Discount:</label>  
+			     <div class="col-md-4">
+			      {{form.discount}}  <div id="error5" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_make_year">Description*:</label>  
+			     <div class="col-md-4">
+			       {{form.description}}<div id="error6" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_company">From Date*:</label>  
+			     <div class="col-md-4">
+			       {{form.from_date}}<div id="error7" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="model_id">To Date*:</label>  
+			     <div class="col-md-4">
+			      {{form.to_date}}<div id="error8" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="model_id">Add image:</label>  
+			     <div class="col-md-4">
+			    {{form.image}}<div id="error8" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_coupon_code">Coupon Code*:</label>  
+			     <div class="col-md-4">
+			  {{form.coupon_code}}
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+			<div class="form-group">
+			    <label class="col-md-4 control-label" for="id_total_amount">Total Amount:</label>  
+			     <div class="col-md-4">
+			  {{form.total_amount}}
+                                 <div id="total_error" style="color:red"></div>
+			         <span class="help-block"> </span>  
+			    </div>
+			</div>
+       
+		    <div class="form-group">
+		      <!-- Button -->
+		      <div class="controls">
+		        
+		      </div>
+		    </div>
+       </fieldset>
+    </form>  
+ </div>
+</div>
+{% endblock %}

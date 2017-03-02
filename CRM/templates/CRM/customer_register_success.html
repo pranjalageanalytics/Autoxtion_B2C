@@ -1,0 +1,27 @@
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block content %}
+<div class="data_recover" style="background-color:#f4f6f6;margin-top:4px;">
+<div class="container"  style=" min-height: calc(72vh - 40px);" >
+ <div class="jumbotron"style="background-color:#f4f6f6;margin-top:4px;">
+ <div class="row">
+     <div class="col-md-2 col-xs-1"></div>
+     <div class="col-md-8 col-xs-10">
+      <div class="page-header" style="border-bottom: 0px solid #eee; margin: 40px 0 0px">
+      <div class="alert alert-warning" role="alert"  style="background-color:#fff;">
+  <a href="#" class="alert-link" style="color:#fbb946;font-size: 15px;">Customer Registered Successfully !!</a>
+</div>
+      </div>
+      <div class="input-group">
+		<p style="font-size:16px;">Customer has been successfully added and an email has been sent to the registered email id with login credentials </p>
+		<center ><B><a href="/registration/login/" > <label style="color:#fbb946;text-decoration:underline;cursor:pointer;"> login </label></a></B></center>
+		<center ><B><a href="/CRM/customerRegistration/" > <label style="color:#fbb946;text-decoration:underline;cursor:pointer;"> Add another Customer </label></a></B></center>
+		
+		</div>
+		</div>		
+	</div></div><br><br><br><br><br>
+	</div>		
+    </div>
+{% endblock %}

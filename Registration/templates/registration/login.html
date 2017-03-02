@@ -1,0 +1,205 @@
+
+{% extends "base1.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<script src="{% static 'js/validation/login.js' %}"></script>
+<style>
+.login:hover{
+	color: #f38619;
+background-color: #fff;
+border-color: #f38619;
+}
+
+.login{
+	
+	background-color:#f38619;
+	box-border:#f38619;
+	color:#fff;
+	
+}
+a:hover{
+
+}
+
+
+</style>
+
+<script>
+$(document).ready(function(){
+ 
+
+    $("#customer").change(function(){
+  //alert("change");
+
+      var value=$("#customer option:selected").val();
+//$('#login_Box_Div').toggle();
+
+//alert(value);
+if (value==value) {
+  //alert("if");
+  
+   $("#signup").hide();
+   $("#field").show();
+   
+  
+  
+}
+else{
+  //alert("else");
+  $("#signup").show();
+  $("#field").hide();
+ 
+}   
+   
+  
+ });
+   
+   
+
+        $("#member").change(function(){
+      //alert("change");
+
+    var valu=$("#member option:selected").val();
+    //$('#login_Box_Div').toggle();
+
+    //alert(valu);
+    if (valu==valu) {
+      //alert("if");
+      
+     $("#signup").show();
+       $("#field").hide();
+       
+      
+      
+    }
+    else{
+      //alert("else");
+      $("#signup").hide();
+      $("#field").show();
+     
+    }   
+       
+      
+     });  
+   var pass11 =document.getElementById('id_password');
+   id_password.onpaste = function(e) {
+     e.preventDefault();
+   }
+   
+   
+});
+   </script> <script>
+		 
+		 
+		 $(document).ready(function(){
+				
+				$("#btn").click(function(){
+					
+					$("#id_username").attr("class","form-control");
+					$("#id_password").attr("class","form-control");
+					
+					
+				});
+		 });
+		 </script>
+{% endblock %}
+{% block content %}
+<div class="container-fluid" style="background-color:#f4f6f6;margin-top:5px;min-height: calc(72vh - 40px);">
+   <div class="main_container">
+      <div class="page-content login-page user-actions">
+         <div class="container new_container">
+            <center><h1>Log in to your Auto Xtion account</h1></center>
+            <p class="lead text-center">With the Auto Xtion account you get access to all Auto Xtion services.</p>
+            <p> <a href="http://198.15.126.62:8010/registration/demologin/">
+                             <button class="btn login pull-right">Try Member Demo</button></a> </p>
+<form id="login" method="post">{% csrf_token  %}
+            <div class="row">
+               <div class="col-md-4"></div>
+                     <div class="col-sm-5 col-md-2 login-form">
+                         <input type="radio" name="customer1" value="member"id="member"> Member<br>
+		     </div>     
+                     <div class="col-sm-5 col-md-2 login-form" >
+                          <input type="radio" name="customer1" value="customer"id="customer"> Customer<br>
+		    </div>
+                    <div id="error3" class="col-sm-2 col-md-2" style="color:red"></div>
+               </div>			                     
+ <div class="row">
+            <div class="col-md-2"></div>
+                <div class="col-sm-3 col-md-8 login-form">
+            <hr class="separator-line" style="border-top: 1px solid #c3c5c5;">
+            </div>
+	</div>
+            {% if context1 %}
+   <center> <h5 class="alert alert-danger" style="width:30%">{{context1}}</h5></center>
+   {% endif %}
+            <div class="row">
+            <div class="col-md-4"></div>
+                <div class="col-sm-6 col-md-3 login-form">
+                    
+                        <div class="label-custom" style="width:auto;
+                                        
+									    height: auto;
+									    color:white;
+									    padding: 0px 12pt;
+									    text-transform: uppercase;
+									    font-size: 12px;
+									    background-color: #39484a;
+									    border: 1px solid #ccc;
+									    border-radius: 4px;
+									    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);"><h5>Enter Email and password</h5></i></div>
+                      
+                        <div class="form-group"><label class="control-label test" style="padding-top:10px;" for="id_username">Username*</label><input class="form-control " id="id_username" maxlength="254" name="email" placeholder="Username"  title="" /><div id="error1" style="color:red"></div></div>
+                        <div class="form-group"><label class="control-label test" for="id_password">Password*</label><input class="form-control" id="id_password" name="password" placeholder="Password"  title="" type="password" /><div id="error2" style="color:red"></div></div>
+                        <div class="forgot abc"style="padding-bottom:5px;">
+                            <a href="{% url 'password_reset:password_reset_recover' %}" class="forgot-password"><font  color="#f38619;"> Forgot your password?</font></a>
+                        </div>
+  
+              <div class="row" id="field" >
+               <div class=" col-xs-12 col-sm-12">
+                 <div class="form-group">
+                  <p><input id="field_terms" type="checkbox"  name="terms">                 
+                    <label for="field_terms">I accept the <a href="{% static 'pdf/Auto Xtion Privacy Policy Ver A.pdf' %}" target="_blank">
+                    <font color=#f38619;>Privacy Policy</font></a></label></p>
+                    <div id="errors_term" style="color:red;"></div>
+                 </div>
+               </div>           
+                        </div>
+                     
+
+                        <div class="form-actions">
+                            <button class="btn login" type="submit" id="btn">
+                                <i class="fa fa-sign-in"></i> Log in</button>
+                            
+                        </div>
+                    </form>
+                </div>
+               
+                <!-- <div class="col-sm-6 col-md-3 others-login" style="height:300px;border-left:3px solid #eee;right:5px">
+                    <h4>Log in with other services</h4>
+                    
+                    <br>
+                    
+                    <p class="help-block">If you already have an account, log in first, then connect your service account in the Profile view.</p>
+                </div> -->
+            </div>
+ <div class="row">
+            <div class="col-md-2"></div>
+                <div class="col-sm-3 col-md-8 login-form">
+            <hr class="separator-line" style="border-top: 1px solid #c3c5c5;">
+            </div></div>            
+             <div class="row" id="signup">
+            <div class="col-md-4"></div>
+                <div class="col-sm-6 col-md-3 login-form">
+                Not yet a member of Auto Xtion?
+                <a href="/registration/register/"> <font color="#f38619;">Sign Up</font> </a></div></div>
+            </div>
+        </div>
+    </div>
+      
+   <br/>
+   </div> 
+
+
+				    
+{% endblock %}
+

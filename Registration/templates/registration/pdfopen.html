@@ -1,0 +1,70 @@
+{% extends "base4.html" %}
+{% load static from staticfiles %}
+{% block head %}
+<link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+<style>
+.log{
+padding-top:5%;}
+</style>
+{% endblock %}
+{% block content %}
+<body background="{% static 'images/background.png' %}">
+<div class="container" style="min-height: calc(88vh - 40px);">
+ <div class="panel-heading log">   
+          <center><img src="{% static 'images/auto_100.png' %}" ></center>
+          </div>
+    
+    
+         <div class="container">
+
+    <div class="row">
+    <div class="col-md-2"></div>
+        <div class="col-md-8 ">
+            <!-- Nav tabs category -->
+            <ul class="nav nav-tabs faq-cat-tabs">
+                <li class="active"><a href="#" data-toggle="tab" >Downloads</a></li>
+            </ul>
+            <br>
+            <p class="release-descr"  style="color:#fff;">Learn more about  Auto Xtion | Communication Platform ! 1.0</p>
+    <hr class="separator-line" style="border-top: 1px solid #fff; opacity:0.5;font-weight:200;padding-top:-5px;">
+            <div class="row">
+                <div class="col-sm-7 col-md-6 col-lg-7">
+                    <div class="download_version">
+                        <h5 style="color:#fff;">User Manual for Member</h5>
+                       <strong style="color:#fff;"> We are pleased to present  Auto Xtion | Communication Platform 1.0.</strong>
+
+                    </div>
+               
+                </div>
+                
+                 <div class="col-sm-12 col-md-6 col-lg-5">
+                     <a href="{% static 'pdf/UserGuide - Member.pdf' %}" target="_blank"  class="btn btn-primary ">
+                         Download </a>
+                         
+                 </div>
+      
+            </div>
+                               <hr class="separator-line" style="border-top: 1px solid #fff; opacity:0.5;font-weight:200;padding-top:-5px;">
+               
+            <div class="row">
+                <div class="col-sm-7 col-md-6 col-lg-7">
+                    <div class="download_version">
+                         <h5 style="color:#fff;">User Manual for Customer</h5>
+                       <strong style="color:#fff;"> We are pleased to present  Auto Xtion | Communication Platform 1.0.</strong>
+
+                    </div>
+                </div>
+                 <div class="col-sm-12 col-md-6 col-lg-5">
+                     <a href="{% static 'pdf/UserGuide - Customer.pdf' %}" target="_blank"  class="btn btn-primary ">
+                         Download </a>
+                 </div>
+
+            </div>
+
+            </div>
+          </div>
+        </div>
+    </div>
+</body>
+    
+{% endblock %}

@@ -1,0 +1,851 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<style>
+.vin_box{
+    background-image: url('/../../static/images/square.gif');    
+    width: 495px;
+    height: 36px;
+    margin-right:2px;
+    font-size: 14px;   
+    letter-spacing: 21px;
+    background-size: 29px 36px;
+}
+</style> 
+<script>
+$(document).ready(function(){
+ $("#noty_top1").hide();
+ 
+    $("#cog").click(function(){
+        $("#noty_top").slideUp();
+        $("#noty_top1").slideUp();
+    });
+   
+        $("#noty_top").slideToggle();
+   
+});
+</script>
+<script>
+	$(document).ready(function(){
+		$("#tagscloud").hide();
+		//$( ".id_date" ).datepicker({minDate:0,dateFormat:'dd/mm/yy'});
+		
+		  $(".id_date").each(function(){
+					$(this).datepicker({minDate:0,dateFormat:'dd/mm/yy'})
+				}); 
+				
+	    var isFormValid = true;
+		$("#promo").click(function() {
+			//alert("click");
+			var isFormValid = true;
+            
+			var email_values = $('.email').map(function() { return this.value; }).get();
+			//alert(email_values);
+			
+			
+			var recipientsArray = email_values.sort(); 
+
+			var reportRecipientsDuplicate = [];
+			for (var i = 0; i < recipientsArray.length - 1; i++) {
+			    if (recipientsArray[i + 1] == recipientsArray[i]) {
+			        reportRecipientsDuplicate.push(recipientsArray[i]);
+			    }
+			}
+			
+			/* for (var x = 0; x < reportRecipientsDuplicate.length ; x++) {
+				//alert("reportRecipientsDuplicate--"+reportRecipientsDuplicate);
+				$(".email").each(function(){
+					email_val=$.trim($(this).val());
+					alert("alll email_val---"+email_val);
+			    if (reportRecipientsDuplicate[x] == email_val) {
+			    	alert("email_val---"+email_val);
+			    	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Duplicate email of driver !</div>");
+		            $(this).css("border", "1px solid red")
+			    }
+				});
+			} */
+			
+			if (reportRecipientsDuplicate.length != 0){
+				$("#tagscloud").show();
+				$("#tagscloud span").text("Duplicate entry for email- "+reportRecipientsDuplicate);
+	            isFormValid = false;
+	        }
+	        else{
+	        	$("#tagscloud").hide();
+	        }
+			
+			
+			//alert(reportRecipientsDuplicate.length);
+			
+			
+		    $(".email").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    });
+		    $(".f_name").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    });
+		    $(".last_name").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    });
+		    
+		    $(".vehicle_no").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    });
+		    $(".company").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    });
+		    $(".model").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    });
+		    $(".makeyear").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    });
+/* 		    $(".id_date").each(function(){
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($(this).val()).length == 0){
+		        	$(this).parent().next('.validation').hide();
+		            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		            $(this).css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		            $(this).removeClass("highlight");
+		            $(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc")
+		            
+		        }
+		    }); */
+		    
+		    
+		   
+		    	//alert($.trim($(this).val()).length);
+		        if ($.trim($("#id_company_name").val()).length == 0){
+		        	$("#id_company_name").parent().next('.validation').hide();
+		        	$("#id_company_name").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		        	$("#id_company_name").css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		        	$("#id_company_name").removeClass("highlight");
+		        	$("#id_company_name").parent().next().hide();
+		        	$("#id_company_name").css("border-color", "#ccc")
+		            
+		        }
+		        
+		        if ($.trim($("#id_person").val()).length == 0){
+		        	$("#id_person").parent().next('.validation').hide();
+		        	$("#id_person").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		        	$("#id_person").css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		        	$("#id_person").removeClass("highlight");
+		        	$("#id_person").parent().next().hide();
+		        	$("#id_person").css("border-color", "#ccc")
+		            
+		        }
+		        if ($.trim($("#id_email").val()).length == 0){
+		        	$("#id_email").parent().next('.validation').hide();
+		        	$("#id_email").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+		        	$("#id_email").css("border", "1px solid red")
+		            isFormValid = false;
+		        }
+		        else{
+		        	$("#id_email").removeClass("highlight");
+		        	$("#id_email").parent().next().hide();
+		        	$("#id_email").css("border-color", "#ccc")
+		            
+		        }
+		   
+		    
+		        //Company phone Validations
+		        var phone_val=$.trim($("#id_phone").val())
+		        re = /^[0-9]+$/;
+		         if( phone_val!=''){
+		        	 //alert("phone number is not null");
+		        	if(!re.test(phone_val)){
+		        		$("#id_phone").parent().next('.validation').hide();
+			        	$("#id_phone").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Phone no contains only digits!</div>");
+			        	$("#id_phone").css("border", "1px solid red")
+	                  isFormValid = false;
+		        	}
+		        	else if((phone_val.charAt(0)!=0 && phone_val.length!=8)){
+		        		//alert("if charAt!=0");
+		        	$("#id_phone").parent().next('.validation').hide();
+			        	$("#id_phone").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Landline number must contain 8 digit!</div>");
+			        	$("#id_phone").css("border", "1px solid red")	
+		        	
+	                 isFormValid = false;	
+		        	}
+		        	else if(phone_val.charAt(0)==0 && phone_val.length!=10){
+		        		
+		        		//alert("if charAt==0");
+	                $("#id_phone").parent().next('.validation').hide();
+			        	$("#id_phone").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Mobile number must contain 10 digits!</div>");
+			        	$("#id_phone").css("border", "1px solid red")
+	                  isFormValid = false;
+		        	}
+                   
+		        	else{
+		        		//alert("else");
+		        		$("#id_phone").removeClass("highlight");
+		        	$("#id_phone").parent().next().hide();
+		        	$("#id_phone").css("border-color", "#ccc")
+		        	}
+		        }
+		         		       //vehicle phone number
+		         var phone_val=$.trim($(".phone_no").val())
+			        re = /^[0-9]+$/;
+			         if( phone_val!=''){
+			        	 //alert("phone number is not null");
+			        	if(!re.test(phone_val)){
+			        		$(".phone_no").parent().next('.validation').hide();
+				        	$(".phone_no").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Phone no contains only digits!</div>");
+				        	$(".phone_no").css("border", "1px solid red")
+		                  isFormValid = false;
+			        	}
+			        	else if((phone_val.charAt(0)!=0 && phone_val.length!=8)){
+			        		//alert("if charAt!=0");
+			        	$(".phone_no").parent().next('.validation').hide();
+				        	$(".phone_no").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Landline number must contain 8 digit!</div>");
+				        	$(".phone_no").css("border", "1px solid red")	
+			        	
+		                 isFormValid = false;	
+			        	}
+			        	else if(phone_val.charAt(0)==0 && phone_val.length!=10){
+			        		
+			        		//alert("if charAt==0");
+		                $(".phone_no").parent().next('.validation').hide();
+				        	$(".phone_no").parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Mobile number must contain 10 digits!</div>");
+				        	$(".phone_no").css("border", "1px solid red")
+		                  isFormValid = false;
+			        	}
+	                   
+			        	else{
+			        		//alert("else");
+			        		$(".phone_no").removeClass("highlight");
+			        	$(".phone_no").parent().next().hide();
+			        	$(".phone_no").css("border-color", "#ccc")
+			        	}
+			        }
+
+
+		         
+		        
+		       //Vin Number validation for driver vehicle
+			        
+			        $(".vin_box").each(function(){
+			        	var vin_no = $.trim($(this).val())
+			        	
+			        if(vin_no!= "") {
+					
+			        if(vin_no.length < 17) {
+			        	//console.log("length is less");
+			          $(this).parent().next('.validation').hide();
+			            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Vin number must contain  seventeen characters and number!</div>");
+			            $(this).css("border", "1px solid red") 	
+			               
+			          isFormValid=false;
+			        }
+			        
+			        
+			        else if(!(re = /[0-9]/).test(vin_no)) {
+			        	//console.log("Number");
+			        $(this).parent().next('.validation').hide();
+			            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Vin number must contain at least one number (0-9)!</div>");
+			            $(this).css("border", "1px solid red")	
+			        
+			          isFormValid=false;
+			        }
+			        
+			        else if(!(re = /[A-Za-z]/).test(vin_no)) {
+			        	//console.log("lowercase");
+			        	$(this).parent().next('.validation').hide();
+			            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Vin number must contain at least one character!</div>");
+			            $(this).css("border", "1px solid red")	
+			        	
+			          isFormValid=false;
+			        }
+			        else if(re = /[({<_\-!\"@;,.:#$%*^&+=?'~`][/\|> })]/.test(vin_no)) {
+			        	//console.log("special char");
+			        	$(this).parent().next('.validation').hide();
+			            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Vin number will not allow special character!</div>");
+			            $(this).css("border", "1px solid red")
+			        	
+			          isFormValid=false;
+			        }
+			     
+		 			 else {
+		 				$(this).removeClass("highlight");
+			            $(this).parent().next().hide();
+		    			$(this).css("border-color", "#ccc")
+		 		 }
+		 			 
+		 		 }
+			        
+			    	});
+		       
+			      //Chasis Number validations
+			        $(".chasis_no").each(function(){
+			        	var chas_no = $.trim($(this).val())
+			        	
+			        	re_chasis = /^[0-9]+$/;
+				 		 if(chas_no!=""){
+				 			  //alert("in c");
+				 			  if (!re_chasis.test(chas_no)){
+				 				 $(this).parent().next('.validation').hide();
+						            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Enter valid Chasis No !</div>");
+						            $(this).css("border", "1px solid red")	
+				 				  
+					 				isFormValid=false;
+					 			}
+				 			  else if(chas_no.length!=6){
+				 				 $(this).parent().next('.validation').hide();
+						         $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>Chasis No must be 6 digit long!</div>");
+						         $(this).css("border", "1px solid red")	
+				 			
+			 				     isFormValid=false;
+			 			  }
+				 		 
+				 		 else {
+				 			$(this).removeClass("highlight");
+				            $(this).parent().next().hide();
+			    			$(this).css("border-color", "#ccc")
+				 		 }
+				 			   
+				 		 
+				 		 }
+			        
+			    	});   
+		  
+		   
+		    
+		    if (!isFormValid) pass;
+		    else{
+		    	
+		    	promo_form.submit();
+		    }
+		    return isFormValid;
+			
+			
+			
+		});
+		
+    $("[id$='company']").change(function(){
+                //alert("company changed");
+				dict1=null;
+				//alert("hello");
+				id1=$(this).attr('id');
+				cnt=id1.split('-');
+				//alert(id1);
+				id2='id_form2-'+cnt[1]+'-model';
+				//alert(id2);
+				id3='id_form2-'+cnt[1]+'-makeyear';
+				//alert(id3);
+				$("#"+id2).empty();
+				company=$("#"+id1+"\t option:selected ").text();
+				//alert("company"+company);
+				$.ajax({
+					url:'/CRM/get_models/',
+					type: "GET",
+					data:{company:company},
+				}).done(function(data){
+					$("#"+id2).empty();
+					 $("#"+id2).prepend("<option selected>Please Select</option>");
+					 $.each(data,function(key,value)
+					{
+						 console.log("for data"+key);
+						 $("#"+id2).append('<option value="'+data[key].id+'">'+data[key].model_name+'</option>');
+
+					});
+			});
+			});
+			});
+</script>
+{% endblock %}
+{%block content%}
+<ul class="noty-wrapper i-am-new " id="noty_top1" style="top:0;">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+    
+       <div class="noty_bar" id="noty_453371394759536000">
+      
+          <div class="noty_message"> <span class="noty_text">
+            <span class="glyphicon glyphicon-remove-sign" id="cog"></span> <i id="alert_message" ></i></span>
+          </div>
+         </div>
+        </li>
+       </ul>
+
+{% if messages %}
+<ul class="noty-wrapper i-am-new" id="noty_top">
+    <li class="bg-green" style="cursor: pointer;background-color:#000;color:#fff;opacity:0.8; height:61px;">
+       <div class="noty_bar" id="noty_453371394759536000">
+          <div class="noty_message"><span class="noty_text">
+          {% for message in messages %} {% if message.tags %}
+             <span class="glyphicon glyphicon-remove-sign" id="cog"></span> {{ message }} </span>
+          {% endif %}
+        {% endfor %}
+          </div>
+         </div>
+        </li>
+       </ul>
+    {% endif %}
+
+    <input type="hidden" id="group" value="{{ user.groups.all.0 }}">
+
+  <h4 class="" style="color: #6B748A;font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                COMPANY FORM</h4>
+<hr>
+<div id="tagscloud">
+<span class="alert alert-danger"></span>
+</div>
+ <div class="row">   
+              
+          
+          <div class="dropdown pull-right">
+             <a href="{% url 'CRM:company_index' %}">
+            <button type="button" class="btn btn-primary " data-dismiss="modal">
+               <i class="fa fa-reply" aria-hidden="true">
+               </i> Back</button>
+           </a>
+             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+               <i class="fa fa-floppy-o"></i> Save
+                <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                       <li><a id="promo" type="submit"style="cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i> Save and Exit</a></li>
+        
+                   </ul>
+             </div>
+           
+</div>
+<!-- Company details form-->
+<form method="POST" id="promo_form">
+    {% csrf_token %}
+        <div class="panel panel-default" style="margin-top: 20px;">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-briefcase" aria-hidden="true"></i> Company Details</h4>
+            </div>
+         <div class="panel-body">
+            <div class="table">
+                <div class="row">
+                    <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Comapny Name*</label>
+                            <div>{{ companyform.company_name}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Person Name*</label>
+                           <div> {{ companyform.person}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     
+                    <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Email*</label>
+                           <div> {{ companyform.email}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Phone</label>
+                            <div>{{ companyform.phone}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                </div>
+                 <div class="row">
+                    <div class="col-md-4 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Company Address</label>
+                            {{ companyform.address}}
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     
+
+                </div>
+            </div>
+         </div>
+        </div>
+<!--End of company details form  -->
+<!-- start of vehicle details form -->
+
+        {{ leadformset.management_form }}
+        {{ vehicleformset.management_form }}
+
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h4 class="panel-title"><i class="fa fa-car" aria-hidden="true"></i> Driver-Vehicle Details</h4>
+            </div>
+         <div class="panel-body">
+        {% for form1 in leadformset %}
+      
+             {{ form1.id }}
+            <div class="table">
+                <div class="row">
+                     <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">First Name*</label>
+                            <div>{{ form1.name}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Last Name*</label>
+                            <div>{{ form1.last_name}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                       <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Email*</label>
+                            <div>{{ form1.email}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Phone number</label>
+                            {{ form1.phone}}
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div> 
+                </div>
+                
+                <div class="row">
+                      <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">License</label>
+                            {{ form1.licenseid}}
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Address</label>
+                            {{ form1.address}}
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                </div>
+               
+               
+               {% for form2 in vehicleformset %}
+               {% with c=form1.instance.id d=form2.instance.lead.pk %}
+                {% if c = d %}
+              
+                   {{ form2.id }}
+                <div class="row">
+                     <div class="col-md-3 col-xs-5 col-sm-5">
+                        <div class="form-group">
+                            <label for="name">Vehicle Number*</label>
+                            <div>{{ form2.vehicle_no}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     <div class="col-md-2 col-xs-5 col-sm-5">
+                        <div class="form-group">
+                            <label for="name">Make*</label>
+                            <div>{{ form2.company}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     <div class="col-md-2 col-xs-5 col-sm-5">
+                        <div class="form-group">
+                            <label for="name">Model*</label>
+                           <div> {{ form2.model}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                    <div class="col-md-2 col-xs-4 col-sm-4">
+                        <div class="form-group">
+                            <label for="name">Year*</label>
+                            <div>{{ form2.makeyear}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                    <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Reg Expiry Date</label>
+                           <div> {{ form2.reg_expiry_date}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     </div>
+                     <div class="row">
+                    <div class="col-md-6 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">VIN Number</label>
+                            <div>{{ form2.vin_no}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     
+                    <div class="col-md-3 col-xs-6 col-sm-6">
+                        <div class="form-group">
+                            <label for="name">Chasis Number</label>
+                            <div>{{ form2.chasis_no}}</div>
+                            <div id="error1" style="color:red"></div>
+                        </div>
+                     </div>
+                     
+                     <div class="col-md-1 col-sm-offset-2" style="margin-top: 30px;">
+                     <a class="btn btn-primary delete_form hrefa" style="float:right;padding: 2px;padding-left: 5px;padding-right: 5px;" id="delete_form">
+						<span class="glyphicon glyphicon-minus-sign"></span>
+					   Delete Driver
+					   </a>
+					<!-- <div><strong>Delete</strong></div>
+					<a class="hrefa"><span class="btn fa fa-trash fa-2x delete_form" style="color:red;" id="delete_form" name="delete_form">
+                         
+                      </span></a> -->
+                      </div>
+                </div>
+                  
+                <hr>
+            </div>
+           
+              {% endif %}
+               {% endwith %}
+             {% endfor %}
+             {% endfor %}
+             
+             <input type="button" class="btn btn-danger btn-sm pull-right " value="Add More Driver" id="add_more" style="margin-right: 81px;">
+         </div>
+        
+
+    </div>
+   
+    </form>
+<!-- end of vehicle detials form -->
+
+<script>
+    $('#add_more').click(function() {
+        cloneMore('div.table:last', 'form');
+        
+    });
+</script>
+
+<script>
+    $(".delete_form").click(function() {
+        return deleteForm(this, 'form');
+      });
+// delete forms through js
+
+     function deleteForm(btn, prefix) {
+       //alert(prefix);
+       var formCount = parseInt($('#id_form1-TOTAL_FORMS').val());
+       //alert(formCount);
+       if (formCount > 1) {
+    	   
+    	   $(btn).parents('.table').find(':input').each(function() {
+          	 if ($(this).attr('type')=="hidden"){
+                  	 //alert("AAA"+$(this).val());
+                  	 if($(this).val()!=0){
+                  		 var a=	 $(this).siblings('.hrefa')
+                  		// alert(a);
+                  		 var url_path= window.location.href
+                  		spliturl=url_path.split("UpdateCompany");
+                  		 //alert(spliturl[0]);
+                  		$('a').attr("href", "/CRM/driver_delete_ajax/"+$(this).val())
+                  		window.location.replace(spliturl[0]+"driver_delete_ajax/"+$(this).val());
+                  		
+                  	 }
+                  	 else{
+                  		 //alert(null);
+                  		  $(btn).parents('.table').remove();
+                  		 //$(btn).parents('.table').remove();
+                  	 }
+          	 
+         
+          	 }
+           }); 
+    	   
+         // Delete the item/form
+        
+         $(btn).parents('.table').find(':input,select').each(function() {
+
+         });
+         var forms = $('.table'); // Get all the forms
+         //alert('#id_' + prefix + '-TOTAL_FORMS');
+         // Update the total number of forms (1 less than before)
+         $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+
+         var i = 0;
+         // Go through the forms and set their indices, names and IDs
+         for (formCount = forms.length; i < formCount; i++) {
+           $(forms.get(i)).find('input,select,textarea,Date,checkbox').each(function() {
+            updateElementIndex(this, prefix, i);
+           });
+         }
+
+       } // End if
+       else {
+           //alert("Can't Delete!!!Atleast One Shift will be there!");
+	 document.getElementById('alert_message').innerHTML="Atleast One driver will be there!";
+        //document.getElementById('noty_top1').style.visibility="visible";
+        $("#noty_top1").show();
+
+       }
+       return false;
+     }
+
+    function updateElementIndex(el, prefix, ndx) {
+
+           var id_regex = new RegExp('(' + prefix + '-\\d+-)');
+           var replacement = prefix + '-' + ndx + '-';
+           if ($(el).attr("for")) $(el).attr("for", $(el).attr("for").replace(id_regex,
+        replacement));
+           if (el.id) el.id = el.id.replace(id_regex, replacement);
+           if (el.name) el.name = el.name.replace(id_regex, replacement);
+         }
+
+//add form through js
+    function cloneMore(selector, type) {
+    	$(".id_date").datepicker("destroy");
+	//alert(type)
+    var newElement = $(selector).clone(true);
+    var total = $('#id_form1-TOTAL_FORMS').val();
+    //alert("total "+total)
+    var iNumtotal = parseInt(total)+1;
+    //alert(iNumtotal)
+    $('#id_form1-TOTAL_FORMS').val(iNumtotal);
+    $('#id_form2-TOTAL_FORMS').val(iNumtotal);
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+        //alert((total-1));
+        
+    });
+    newElement.find('select').each(function() {
+    	//alert($(this).attr('id'));
+        var name1 = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        //alert(name1);
+        splitData=name1.split("-");
+    	formCount = splitData[2]
+    	//alert("formCount "+formCount)
+    	formCount1 = splitData[1]
+    	var iNum = parseInt(formCount1)
+    	var iNum1 = iNum +1;
+    	//alert("formCount1 "+iNum1)
+    	formCount2 = splitData[0]
+    	//alert("formCount2 "+formCount2)
+    	var name2=formCount2+'-'+(total-1)+'-'+formCount
+    	//alert(name2)
+        var id1 = 'id_' + name1;
+        $(this).attr({'name': name1, 'id': id1}).val('').removeAttr('checked');
+    });
+    newElement.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+        $(this).attr('for', newFor);
+    });
+    total++;
+    $('#id_' + type + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+    $(".id_date").each(function(){
+		$(this).datepicker({minDate:0,dateFormat:'dd/mm/yy'})
+	});
+    //$('#id_form2-1-reg_expiry_date').datepicker({minDate:0,dateFormat:'dd/mm/yy'})
+}
+
+</script>
+{% endblock %}

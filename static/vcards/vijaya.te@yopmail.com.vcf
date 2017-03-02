@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:vijaya.te@yopmail.com
+FN:payment auto
+N:auto;payment;;;
+NOTE:shop address of payment\,Tasmania\,Australia
+TEL;TYPE=cell:123456789
+URL:www.1.com
+END:VCARD

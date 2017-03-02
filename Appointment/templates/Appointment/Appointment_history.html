@@ -1,0 +1,211 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% block head %}
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+<!-- DataTables CSS -->
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css"> 
+<!-- DataTables -->
+<script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.12/js/dataTables.bootstrap4.min.js"></script>
+
+ <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.css">
+ <script src="//cdnjs.cloudflare.com/ajax/libs/timepicker/1.3.5/jquery.timepicker.min.js"></script>  
+  <script type="text/javascript" src="{% static 'js/wickedpicker.js' %}"></script>
+     
+      <link rel="stylesheet" href="{% static 'css/timeline.css' %}">
+  
+   <script type="text/javascript" src="{% static 'js/validation/filter_appointmenthistory.js' %}"></script>
+    
+    
+<style>
+.timeline > li > .timeline-badge {
+    color: #fff;
+    width: 50px;
+    height: 50px;
+    line-height: 50px;
+    font-size: 1.4em;
+    text-align: center;
+    position: absolute;
+    top: 16px;
+    left: 14%;
+    margin-left: -25px;
+    background-color: #999999;
+    z-index: 0 !important;
+    border-top-right-radius: 50%;
+    border-top-left-radius: 50%;
+    border-bottom-right-radius: 50%;
+    border-bottom-left-radius: 50%;
+}
+.page-header {
+    padding-bottom: 9px;
+    margin: 10px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+
+</style>  
+<script>
+
+
+
+$(document).ready(function(){
+$('#appointment_filter').on('click', function () {
+		//alert("modal close");
+        $('.modal-body').find('lable,input,textarea,select').val('');
+        
+});	
+	
+	$('.act_del').click(function() {
+		  //alert(this.id);
+		  //$("#app_done").attr("href","app_done/"+this.id );
+		$("#app_done").attr("action","app_done/"+this.id );
+		});
+	
+	$('#appointment_table').DataTable({
+		responsive: {
+	        details: false
+	    }
+	});
+$('[data-toggle="tooltip"]').tooltip();
+$("#id_month").attr("class","form-control");
+$("#id_date_update_0").attr("class","form-control");
+$("#id_date_update_1").attr("class","form-control");
+$("#id_status").attr("class","form-control");
+$("#id_date_update_0" ).datepicker({dateFormat:'yy-mm-dd'});
+$("#id_date_update_1" ).datepicker({dateFormat:'yy-mm-dd'});
+});
+</script>  
+    
+{% endblock %}
+{% block content%}
+ <input type="hidden" id="group" value="{{group.name}}">
+  <div class="page-header">
+             <h4 class="" style="color: #6B748A; font-size: 17px;"><span class="glyphicon glyphicon-th-list"></span>
+                APPOINTMENT HISTORY LIST</h4>
+
+        </div>
+<div class="row pull-right">
+ 
+ <div class="dropdown " style="margin-bottom:10px;margin-right:6px">
+    <button class="btn btn-danger dropdown-toggle" type="button" data-toggle="dropdown"><span class="glyphicon glyphicon-wrench"></span>&nbsp;Filters
+    <span class="caret"></span></button>
+    <ul class="dropdown-menu">
+      <li><a href="#" data-toggle="modal" data-target="#Modalfilter" ><i class="fa fa-filter" aria-hidden="true"></i>&nbsp;&nbsp;Filters</a></li>
+      <li><a href="/appointment/appointment_history/"><i class="fa fa-list" aria-hidden="true"></i>&nbsp;&nbsp;All Results</a></li>
+    </ul>
+    
+      <a href="{% url "Appointment:server_list" %}"   style="color:white;">
+      <button class="btn btn-primary " type="button"  style="margin-right:16px;" >
+          <span  class="fa fa-reply"  ></span>   Back
+              </button></a>
+  </div>
+    </div>
+<div class="container" style="margin-top: 61px !important;">
+   
+    <div class="row " >
+
+
+{% if customer_appointment %}
+      <ul class="timeline">
+         {% for Appointment in filter.qs reversed%}  
+	        <li class="timeline-inverted">
+          <div class="timeline-badge warning"><i class="glyphicon glyphicon-ok" style="top:16px;left:3px;"></i></div>
+          <div class="timeline-panel col-md-6">
+            <div class="timeline-heading">
+              <h4 class="timeline-title">  {{ Appointment.status }} of customer 
+       <strong>{{Appointment.customer.name}} 
+           {% if Appointment.customer.last_name %}
+            {{Appointment.customer.last_name}}
+           {% endif %} </strong>         
+           on {{Appointment.date_update}} for request  {{ Appointment.request.service_type }}  </h4>
+            </div> 
+            
+              <div class="timeline-body">
+              <b>From time</b> &nbsp; : &nbsp;{{Appointment.from_time}}&nbsp;&nbsp; <br> <b>To time</b> &nbsp; : &nbsp;{{Appointment.to_time}}
+            </div>
+            {% if Appointment.totalamount %}
+             <div class="timeline-body"><b>Amount for Upsell &nbsp; : &nbsp; </b>
+               {{ Appointment.totalamount }} 
+            </div>
+            {% endif %}
+            <div class="timeline-body"><b>Comment &nbsp; : &nbsp; </b>
+               {{ Appointment.coment }} 
+            </div>
+            {% if Appointment.totalamount %}
+            <a href='{% url 'Appointment:appointment_history_detail' Appointment.id  %}' class="btn btn-danger" style="float:right;padding: 1px;" id="add_more">
+	<span class="glyphicon glyphicon-plus-sign"></span>
+   View Details
+   </a>
+   {% endif %}
+          </div>
+        </li>
+        {% endfor %}
+
+    </ul>
+        <div class="row">
+        
+
+            <div class="label  col-md-3 " style="margin:-10px 10px 22px 92px;
+            padding:1em 1em;
+            font-size: 1em;
+            background-color:#f38619;">No more history available</div>
+            </div>
+    {% else %}
+    
+    <div class="row" style="padding-top:40px;">
+        <center>
+             <label class="alert" style="background-color:inherit;color:#f38619;">
+                 <h3>No history is available for this Customer. </h3>
+             </label>
+        </center>
+     </div>    {% endif %}
+    
+    
+	 
+		</div>
+</div>
+</div>
+ <div class="modal fade modal" id="Modalfilter" role="dialog">
+    <div class="modal-dialog ">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Appointment Filter</h4>
+        </div>
+        <div class="modal-body">
+        <form action="" method="get">
+        <div class="row">
+        <div class="col-md-offset-3">
+	         <div class="row">
+			  <div class="col-md-6">
+	        <div class="form-group">
+	        <label for="email">Date appointment:</label>
+	      {{ filter.form.date_update}}
+	      </div></div></div>
+                
+	       <div class="row">
+     <div class="col-md-6">
+         <p> <center>OR</center></p> 
+          </div></div>
+            			  <div class="row">
+			  <div class="col-md-6">
+	        <div class="form-group">
+	        <label >Month appointment:</label>
+	      {{ filter.form.month }}
+	      </div></div></div>
+	         
+	         <button type="submit" class="btn btn-success" id="filter_submit">Submit</button>
+	        </div></div>
+    </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal" id="appointment_filter">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>    
+ 
+{% endblock %}

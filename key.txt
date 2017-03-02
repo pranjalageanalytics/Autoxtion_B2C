@@ -1,0 +1,5 @@
+SECRET_KEY='-0w!^848%f1n0m%e(ies4nqm73f@u-$7bzgf08^4+auscx6gzu'
+STRIPE_PUBLISHABLE='pk_test_QpKhTGGkfRZwQkxhwHBRilvC'
+STRIPE_SECRET='sk_test_uvDej3g68C0YnjKjcXloHWZ7'
+DB_PASSWORD=wAst8Buc
+EMAIL_PASSWORD=Autoxtion@2016

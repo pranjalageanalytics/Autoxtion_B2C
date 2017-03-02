@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:elijah.essence@gmail.com
+FN:Elijah Maran
+N:Maran;Elijah;;;
+NOTE:example\,Sydney\,Australia
+TEL;TYPE=cell:457434662
+URL:http://www.autoxtion.com.au
+END:VCARD

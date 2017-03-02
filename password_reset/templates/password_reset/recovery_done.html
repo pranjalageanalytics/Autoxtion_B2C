@@ -1,0 +1,70 @@
+{% extends "base4.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+{%block head%}
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  
+  <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
+
+  <style>
+  .alert-warning{
+  	color: #8a6d3b;
+    background-color: #fff;
+    border-color: #fff;
+  }
+  .page-header{
+  border-bottom:1px solid #fff
+  
+  }
+  @media screen and (max-width:680px) {
+  h2, .h2 {
+    font-size: 18px;
+}
+}
+ @media (min-width:300) and (max-width:320px) {
+  h2, .h2 {
+    font-size: 20px;
+}
+}
+ @media (min-width:700) and (max-width:1366px) {
+  .h2, .h2 {
+    font-size: 25px;
+}
+}
+
+  
+  </style>
+  
+{%endblock%}
+{% block content %}
+<body background="{% static 'images/background.png' %}" >
+<div class="data_recover" style="min-height: calc(88vh - 40px);"><br>
+	<div class="container" style="min-height: calc(93vh - 40px);">
+		<center ><h2 class="use">
+  		<div class="container" style="min-height: calc(70vh - 40px);">
+			<div class="row log">
+        		<div class="col-md-6 col-sm-offset-3" style="padding-top:55px;">
+            		<div class="panel-heading">   
+          				<center><img src="{% static 'images/auto_100.png' %}" ></center>
+         			 </div><br>
+                
+                
+                	<center >
+                		
+                		<p style="color:#fff;font-size:23px;">Your password has been successfully reset. You can use it right now on the login page.</p>
+                	</center>
+          		</div>
+          		<div  class="col-md-4 col-sm-offset-4" style="padding-top:15px;">
+                        
+                            <center ><B><a href="/registration/login/"><font style="color:#f38619;text-decoration:underline;font-size: 20px;"> login</font> </a></B></center>
+          		</div>
+            </div>
+         </div>
+      </div>
+</div>
+    </body>
+{% endblock %}

@@ -1,0 +1,9 @@
+BEGIN:VCARD
+VERSION:3.0
+EMAIL;TYPE=HOME:ab.lincoln@yopmail.com
+FN:Abrahm bhai Lincoln
+N:Lincoln;Abrahm bhai;;;
+NOTE:Pune\,Victoria\,Australia
+TEL;TYPE=cell:12345678
+URL:www.ab.com
+END:VCARD

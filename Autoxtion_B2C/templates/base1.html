@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static from staticfiles %}
+<head>
+  <title>Auto Xtion</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="icon" type="image/png" href="{% static 'images/ico2.png' %}">
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height:auto;}
+    
+   
+    
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: auto) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;}
+   
+  </style>
+  {% block head %}
+
+{%endblock%}
+</head>
+<body>
+
+   <nav class="upper-nav" style="background-color:#fff;
+    box-shadow: 1px 2px 5px #888888;">
+  <div class="container-fluid">
+    <div class=" row ">
+    
+      <div class="col-md-4"></div>
+      
+      <div class="col-md-3"><center> <a href="/registration/login/"><img alt="" src="/static/images/logo_new.png"></a></center></div>
+      
+      
+    </div>
+    
+  </div>
+  </nav>
+   
+{%block content%}
+          {% endblock%}
+   
+<!-- start of footer-->
+
+ <footer style="">
+	<div class="foot"style="background-color:#39484A; color: #CCCCCC; padding-top:20px;">
+	<div class="container">
+			<div class="row" >
+			 <div class=" col-md-2 col-xs-4 logo" "><img alt="logo" src="/static/images/logo_new.png">		
+					
+		  </div>
+		   <div class=" col-md-1 col-xs-3" style="padding-top:85px;" >
+	<center><p id="footer_crm"><span class="glyphicon  glyphicon-menu-right" style="padding-left:8px;"></span><a href="/registration/login/"><font color="#f38619"> Home</font> </a></p>
+      <center><p id="footer_crm"><span class="glyphicon  glyphicon-menu-right"></span><a href="{% url 'Registration:faq' %}" target="_blank"><font color="#f38619">  FAQ </font> </a></p>
+     </center>
+     <center><p id="footer_crm"><span class="glyphicon  glyphicon-menu-right" style="padding-left:7px;"></span><a href="{% url 'Registration:pdfopen' %}" target="_blank" ><font color="#f38619">  HELP </font> </a></p></center>
+     </div>
+			  
+					 
+					 
+						<div class=" col-md-4 col-xs-7" style="float:right">
+							<h3>CONTACT US</h3> 
+							<hr class="separator-line">
+							<p>P.O. Box 2557</p>
+							<p> North Parramatta,1750</p>
+                          				<p>Email: info@autoxtion.com.au</p>
+							
+					   </div>
+		
+		</div></div>
+  </div>
+ </footer>
+ <div class="footer-small" style="background-color:#2c383a;color:#fff;padding:5px;">
+      <center><font>&copy;Auto Xtion 2016</font></center>
+   </div>
+<!-- end of footer -->
+</body>
+</html>

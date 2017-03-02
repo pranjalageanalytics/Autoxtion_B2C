@@ -1,0 +1,490 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+  <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+  <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+
+<style>
+.tot_amount { display: block; border: 1px solid #d7d6d6; background: #fff; padding: 10px 10px 10px 25px;}
+.unit { position: absolute; display: block; left: 18px; top: 26px; z-index: 9; }
+.thumb-image {
+    height: 18%;
+    width: 43%;
+}
+ol, ul {
+    margin-top: 0;
+    margin-bottom: 10px;
+   
+    list-style: none; 
+}
+
+
+.Page-display {
+    min-height: calc(80vh - 40px);
+    width: 100%;
+    height: auto;
+    background-color: #fff;
+    margin-top: 5px;
+}
+.page-header {
+    padding-bottom: 9px;
+    margin: -18px 0 20px !important;
+    border-bottom: 1px solid #eee;
+}
+</style>
+
+<script>
+
+$(document).ready(function(){
+	
+
+	 /* $(".get_image").each(function() {	
+		 new_image=$(this).find("a").attr("href");
+		 alert(new_image);
+		 var img=$(this).find('#image-holder');
+		 var image_holder = $("#image-holder");
+		 alert($(this).find('#image-holder').attr('id'));
+		 img.empty();
+	     $("<img />", {
+	         "src": new_image,
+	         "class": "thumb-image"
+	       }).appendTo(img);
+	     img.show();
+	     
+	});  */
+	
+	$(".desc_text").attr('rows', '5');
+	var sum = 0;
+    $(".tot_amount").each(function() {
+   	 var	t= $(this).val();
+    	//alert(t);
+    	
+    	//sum += +$(this).val();
+    	sum += Number($(this).val());
+        //alert(sum);
+});
+    $("#total_amount").val(sum);
+	
+	 var checkids= []
+		 $(":checkbox:checked").each(function(){
+		// alert($(this).val());
+		
+		 checkids.push($(this).val());
+			 
+		
+	    
+	
+	var new_data;
+	var counter = {};
+	$("[id$='-service']").each(function() {	
+	var opt=$('option:selected', $(this)).val();
+	idservice=$(this).attr('id');
+	cnt=idservice.split('-');
+    idsub='id_form-'+cnt[1]+'-sub_service';
+     
+  var removeArray= []
+  removeArray.push(idsub);
+  
+  $.ajax({
+      url : '/appointment/subservice_ajax',
+      type : "GET",
+      data:{serviceid : $('option:selected', $(this)).val()}
+          }).done(function(data) {
+       
+      dict=data;
+    
+	
+		$('#'+removeArray).empty();
+		
+		for (var i = 0; i < data.length; i++) //	id_form-0-sub_service_0, name=form-0-sub_service
+		    {           
+		 //$('#id_form-'+cnt[1]+'-sub_service').append('<option value="'+data[i].id+'">'+data[i].service_type_name+'</option>');
+		  $('#'+removeArray).append('<div class="chk"><li style=" margin-left: -38px;"><input class="aa" id='+removeArray+' name=form-'+cnt[1]+'-sub_service type="checkbox" value="'+data[i].id+'">'+data[i].service_type_name+'</li></div>');
+		
+		} 
+		
+		
+		
+		
+		
+      });
+  
+  
+	});
+	
+ });
+	 
+    $(document).ajaxComplete(function(){
+    	 $(".chk").find('[value=' + checkids.join('], [value=') + ']').prop("checked", true);	
+    });
+	 
+    
+    $(".delete_form").click(function() {
+        return deleteForm(this, 'form');
+      });
+     function deleteForm(btn, prefix) {
+       var formCount = parseInt($('#id_' + prefix + '-TOTAL_FORMS').val());
+      
+       if (formCount > 1) {
+         // Delete the item/form
+        // $(btn).parents('.table').remove();
+         $(btn).parents('.table').find(':input').each(function() {
+        	 if ($(this).attr('type')=="hidden"){
+                	 //alert("AAA"+$(this).val());
+                	 if($(this).val()!=0){
+                		 var a=	 $(this).siblings('.hrefa')
+                		$('a').attr("href", "/appointment/upcell_delete_ajax/"+$(this).val())
+                		
+                	 }
+                	 else{
+                		 //alert(null);
+                		 $(btn).parents('.table').remove();
+                	 }
+        	 
+       
+        	 }
+         }); 
+         var forms = $('.table'); // Get all the forms
+         //alert('#id_' + prefix + '-TOTAL_FORMS');
+         // Update the total number of forms (1 less than before)
+         $('#id_' + prefix + '-TOTAL_FORMS').val(forms.length);
+         
+         var i = 0;
+         // Go through the forms and set their indices, names and IDs
+         for (formCount = forms.length; i < formCount; i++) {
+           $(forms.get(i)).find('input,select,textarea,Date,checkbox').each(function() {
+             updateElementIndex(this, prefix, i);
+           });
+         }
+
+       } // End if
+       else {
+           alert("Can't Delete!!!Atleast One Shift will be there!");
+       }
+       return false;
+     }
+    
+	$("#promo").click(function() {
+		//alert("click");
+		//alert("click");
+		var isFormValid = true;
+
+	    $(".service_type").each(function(){
+	        if ($.trim($(this).val()).length == 0){
+	        	$(this).parent().next('.validation').hide();
+	        	$(this).parent().next('.unit').show();
+	            $(this).parent().after("<div class='validation' style='color:red;padding-left: 15px;'>This field is required</div>");
+	            $(this).css("border", "1px solid red")
+	            isFormValid = false;
+	        }
+	        else{
+	            $(this).removeClass("highlight");
+	            
+	        }
+	    });
+	    re = /^[0-9]+(\.[0-9][0-9]?)?$/;
+	    $(".tot_amount").each(function(){
+	    	if ($.trim($(this).val()).length != 0){
+	    		if(!re.test($.trim($(this).val()))) {
+		             //$("#error001").show();
+		             $(this).parent().next('.validation').hide();
+		              $(this).parent().after("<div class='validation' style='color:red;padding-left: 1px;'>Enter valid price !</div>");
+	            $(this).css("border", "1px solid red")
+	            isFormValid = false;
+		          	//alert("in fname if "+flag);
+		           
+		                }
+	    		else{
+	    			
+	    			$(this).parent().next().hide();
+	    			$(this).css("border-color", "#ccc");
+	    		}
+	    		
+	           
+	        }
+	        else{
+	            $(this).removeClass("highlight");
+	            
+	            
+	            
+	        }
+	    });
+	    if (!isFormValid) pass;
+	    else{
+	    	promo_form.submit();
+	    }
+	    return isFormValid;
+	});
+	$("#total_amount").prop('readonly', true);
+	//$("[id$='-sub_service']").empty();
+	//$(".sub_hide_show").hide();
+	$('#add_more').click(function() {
+        cloneMore('div.table:last', 'form');
+    });
+	
+	
+	function cloneMore(selector, type) {
+	    var newElement = $(selector).clone(true);
+	    var total = $('#id_' + type + '-TOTAL_FORMS').val();
+	    //console.log('hi',total);
+	    newElement.find(':input').each(function() {
+	    	
+	        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+	        //alert(name);
+	        var id = 'id_' + name;
+	        //alert(id);
+	        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+	    });
+	     newElement.find('ul').each(function() {
+	    	//console.log('k',total);
+	    	//alert("aaa"+$(this).attr("id"));
+	    	var ids=$(this).attr("id");
+	    	splitData=ids.split("_");
+	    	formCount = splitData[2]
+	    	formCount1 = splitData[1]
+	    	
+	    	var jointname= formCount1+"_"+formCount;
+	    	//alert(jointname)
+	        var name1 = jointname.replace('-' + (total-1) + '-','-' + total + '-');
+	        //alert(name);
+	        var id1 = 'id_' + name1;
+	        //alert(id);
+	        $(this).attr({'name': name1, 'id': id1}).val('').removeAttr('checked');
+	    }); 
+	    newElement.find('label').each(function() {
+	        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+	        $(this).attr('for', newFor);
+	    });
+	    total++;
+	    $('#id_' + type + '-TOTAL_FORMS').val(total);
+	    $(selector).after(newElement);
+	};
+	
+	
+	//service_id= $('#id_form-0-sub_service').attr('id');
+	//alert("service_id"+service_id);
+	
+	$("[id$='-service']").change(function(){
+		//alert("change");
+		idservice=$(this).attr('id');
+		//alert(idservice);
+		cnt=idservice.split('-');
+	    //alert(id1);
+	    idsub='id_form-'+cnt[1]+'-sub_service';
+	    
+	    	
+	   
+	    //id_form-0-sub_service
+	    //console.log("sub  "+idsub);
+	    //console.log("cnt  "+cnt[1]);
+	    var op=$('option:selected', $(this)).val();
+	    //alert(op);
+	    
+	   $.ajax({
+            url : '/appointment/subservice_ajax',
+            type : "GET",
+            data:{serviceid : $('option:selected', $(this)).val()}
+                }).done(function(data) {
+               //alert(data);
+    dict=data;
+                $('#id_form-'+cnt[1]+'-sub_service').prop("disabled", false);
+                $('#id_form-'+cnt[1]+'-sub_service').empty();
+                //$('#idsub').append('<option value="Please Select">Please Select</option>');
+                for (var i = 0; i < data.length; i++) //	id_form-0-sub_service_0, name=form-0-sub_service
+                    {           
+                 //$('#id_form-'+cnt[1]+'-sub_service').append('<option value="'+data[i].id+'">'+data[i].service_type_name+'</option>');
+                  $('#id_form-'+cnt[1]+'-sub_service').append('<li style=" margin-left: -38px;"><input id=id_form-'+cnt[1]+'-sub_service_'+cnt[1]+' name=form-'+cnt[1]+'-sub_service type="checkbox" value="'+data[i].id+'">'+data[i].service_type_name+'</li>');
+                 //$("#idsub").append($('<option>', {value:data[i].id, text: data[i].service_type}));
+            } 
+            }); 
+	   
+	});
+	
+	$("[id$='-amount']").keyup(function() {
+		//alert("keypress");
+	var sum = 0;
+     $(".tot_amount").each(function() {
+    	 var	t= $(this).val();
+     	//alert(t);
+     	
+     	//sum += +$(this).val();
+     	sum += Number($(this).val());
+        //alert(sum);
+});
+     $("#total_amount").val(sum);
+	});	
+	
+	$("[id$='-service']").change(function(){
+		//alert("change");
+		idservice=$(this).attr('id');
+		//alert(idservice);
+		cnt=idservice.split('-');
+		
+	});
+	
+ 
+ 
+ $("#id_member").attr("type","hidden");
+ 
+ 
+ $(".selectfilter").attr("class","form-control");
+ $("#id_model_id").attr("class","form-control");
+
+ 
+ 
+ 
+ dict=null;
+    $("#id_company" ).change(function() {
+var op=$('option:selected', $(this)).text();
+  //alert(op);
+ 
+            $.ajax({
+            url : '/promotion/test',
+            type : "GET",
+            data:{companyid : $('option:selected', $(this)).val()}
+                }).done(function(data) {
+                //alert(data);
+    dict=data;
+                $('#id_model_id').prop("disabled", false);
+                $('#id_model_id').empty();
+                $('#id_model_id').append('<option value="Please Select">Please Select</option>');
+                for (var i = 0; i < data.length; i++)
+                    {           
+                 $('#id_model_id').append('<option value="'+data[i].id+'">'+data[i].model_name+'</option>');
+            }  });
+        
+            
+
+    });
+    
+    
+    });
+</script>
+
+
+<script>
+ //var status=validate();
+ //if (status==true)
+// {
+ //alert("success");
+  //  $('#promoform').submit();
+    //}
+
+</script>
+
+{% endblock %}
+
+{% block content %}
+<br>
+ <div class="page-header upsell">
+             <h4 class="" style="color: #6B748A;font-size:17px;"><span class="glyphicon glyphicon-th-list"></span>
+                 UPSELL FORM</h4>
+
+        </div> 
+  <form class="form-horizontal" action='' enctype="multipart/form-data" method="POST"id="promo_form" onsubmit="return validate();">{% csrf_token %}
+ <div class="row"style="margin-right: 0px;margin-left:0px;margin-bottom: 15px;">   
+       <div class="col-md-12 ">         
+          
+          <div class="dropdown pull-right" style="margin-left: 13px;">
+             <button class="btn btn-success dropdown-toggle" type="button" data-toggle="dropdown">
+               <i class="fa fa-floppy-o"></i> Save
+                <span class="caret"></span></button>
+                    <ul class="dropdown-menu">
+                       <li><a id="promo" type="submit"style="cursor: pointer;"><i class="fa fa-check" aria-hidden="true"></i> Save and Exit</a></li>
+                           
+                   </ul>
+             </div>
+             
+         <a href="{%  url 'Appointment:server_list'  %}">
+            <button type="button" class="btn btn-primary pull-right" data-dismiss="modal">
+               <i class="fa fa-reply" aria-hidden="true">
+               </i> Back</button>
+           </a>
+      
+</div></div>
+<input type="hidden" id="group" value="{{group.name}}">
+<input type="hidden" id="edit" value="{{edit}}">
+<div class="contain">   
+    <div class="promotion" >      	    
+	
+	  
+	  	 {{ testform.management_form}}
+ 
+      {% for form in testform %}
+        <div class='table'>
+      {{ form.id }}
+        <fieldset>
+		   <div class="row">
+		   <div class="col-md-3">
+                   			<strong>Service Type*:</strong><div>{{form.service}}</div>
+					</div>
+					
+					<div class="col-md-3">
+                   			<strong>Sub Service:</strong>{{form.sub_service}}
+					</div>
+					 <div class="col-md-3 get_image">
+                   			<strong>Image:</strong>{{form.image}}
+                   			<div id="image-holder" style="padding-top:18px;"></div>
+					</div>
+					
+					<div class="col-md-2">
+                   			<strong>Price:</strong><div>{{form.amount}}</div><span class="unit">A$</span>
+					</div>
+					<div class="col-md-1">
+					<div><strong>Delete</strong></div>
+					<a class="hrefa"><span class="btn fa fa-trash fa-2x delete_form" style="color:red;" id="delete_form" name="delete_form">
+                         
+                      </span></a></div>
+					
+					<!-- <div class="col-md-2" style="padding-top: 15px;">
+                   	<a class="btn btn-primary delete_form" style="float:right;padding: 2px;padding-left: 8px;padding-right: 19px;" id="delete_form">
+						<span class="glyphicon glyphicon-minus-sign"></span>
+					   Delete
+					   </a>
+					</div> -->
+						
+		   </div>
+		    <div class="row">
+		  <div class="col-md-4">
+                   			<strong>Description:</strong>{{form.description}}
+					</div>
+		  <div class="col-md-5 col-sm-offset-2">
+            
+            </div>
+		   </div>
+		
+		
+			</fieldset> 
+			</div>
+			<hr>
+		{% endfor %}
+	
+			<a class="btn btn-primary" style="margin-bottom:10px;float:right;margin-right: 18px;" id="add_more">
+	<span class="glyphicon glyphicon-plus-sign"></span>
+   Add More
+   </a>
+		<div class="col-md-4 col-sm-offset-8" style="    margin-bottom: 23px;">
+		<strong>Total Amount:</strong>
+		<input class="form-control" id="total_amount" name="tot_amount" type="text">
+		</div>
+		
+	
+		
+			
+		    <div class="form-group">
+		      <!-- Button -->
+		     
+		    </div>
+       </fieldset>
+    </form>
+ </div>
+</div>
+   
+{% endblock %}

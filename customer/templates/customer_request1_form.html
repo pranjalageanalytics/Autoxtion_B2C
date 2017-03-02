@@ -1,0 +1,163 @@
+{% extends "base2.html" %}
+{% load static from staticfiles %}
+{% load i18n %}
+
+{% block head %}
+<style>
+.desc{
+height:40px;
+padding-top: 25px;
+}
+</style>
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="{% static 'js/validation/request_validation.js' %}"></script>
+<script type='text/javascript'>
+
+
+
+$(function() {
+    $('#id_customer').change(function() {
+    	
+        // if changed to, for example, the last option, then
+        // $(this).find('option:selected').text() == D
+        // $(this).val() == 4
+        // get whatever value you want into a variable
+        var x = $(this).val();
+        // and update the hidden input's value
+        $('#myhidden').val(x);
+    });
+   $('#id_promotion').change(function() {
+    	
+        // if changed to, for example, the last option, then
+        // $(this).find('option:selected').text() == D
+        // $(this).val() == 4
+        // get whatever value you want into a variable
+        var x = $(this).val();
+        // and update the hidden input's value
+        $('#myhidden2').val(x);
+        
+    });
+});
+</script>
+<script>
+
+$(document).ready(function(){
+	
+	$("#id_customer").attr("type","hidden");
+	$("#id_promotion").attr("class","form-control");
+	$("#id_description").attr("class","form-control");
+	$("#id_service_type").attr("class","form-control");
+	$("#id_customer").attr("class","form-control");
+	$(".data_request").attr("class","form-control");
+	$("#id_description").attr("placeholder","kindly suggest the time to get my car etc.")
+	
+	   
+	$.ajax({
+		 url:'/customer/get_lead/',
+	        type:"GET",
+	  }).done(function(data){
+		console.log(data);
+		   $('#myhidden').val(data.customer);
+		  
+	});
+	
+	
+	dict=null;
+    $("#id_service_type" ).change(function() {
+
+        $('#id_promotion').prop('disabled',false);
+            $.ajax({
+            url : '/customer/get_promo'+requestid,
+            type : "GET",
+            data:{requestid : $('option:selected', $(this)).val()}
+                }).done(function(data) {
+                //alert(data);
+				dict=data;
+				console.log(data)
+                $('#id_promotion').prop("disabled", false);
+                $('#id_promotion').empty();
+                $('#id_promotion').append('<option value="Please Select">Please Select</option>');
+                for (var i = 0; i < data.length; i++)
+                    {        	  
+                	$('#id_promotion').append('<option value="'+data[i].id+'">'+data[i].description+'</option>');
+            }
+        });
+            
+
+    });
+	
+    });
+
+</script>
+
+{% endblock %}
+{% block content %}
+
+<input type="hidden" id="group" value="{{group.name}}">
+<div class="container register">
+<div class="page_head">
+
+<ol class="breadcrumb">
+       <li><a href="{% url 'customer:server_list'  %}" class="active_class">Request</a></li>
+       <li><a href="#">Add Request</a></li>
+       </ol>
+
+
+</div>  
+     
+
+<div class="row contact-upper-section ">
+		
+            
+               
+<div class="contact-form  col-sm-6 ">
+                <h3 class="visible-xs">Contact form</h3>
+                <form id="contact" action="" method="post">{% csrf_token %}
+
+           
+<div class="form-group">
+				    
+				            <label for="id_customer" class="control-label"></label>
+        
+           
+                          <input id="myhidden" name="customer" type="hidden"  value="{{request.user.id}}"> 
+				     
+				     </div>
+				 <div class="form-group">
+				     
+				     <label for="id_promotion" class="control-label"></label>
+        
+           
+                          <input id="myhidden2" name="promotion" type="hidden"  value="{{promo}}"> 
+				    
+				      </div>
+
+<div class="form-group">
+    <input id="myhidden3"  type="hidden"  value="{{promo_detail.Service_id.pk}}"> 
+    <input id="myhidden4"  type="hidden"  value="{{promo_detail.Service_id}}"> 
+   
+        <label for="id_service_type" class="control-label">Service Type*</label>
+          {{form.service_type}}<div id="error1"style="color:red"></div>	
+        </div>
+			
+<div class="form-group">
+    
+        <label for="id_service_type" class="control-label">Request Description*</label>
+        
+        
+           {{form.description}}<div id="error2"style="color:red"></div>	
+        
+    
+</div>
+        
+                    
+                   <input class="btn btn-primary" id="promo" type="submit" value="{% trans 'SUBMIT' %}" >
+                </form>
+            </div>
+        </div>
+       
+    </div>
+
+
+{% endblock %}
